@@ -1,0 +1,202 @@
+= Basic temporal sequence of things =
+
+The system is driven by the script "lc.py", which consists of four
+types of functions which are mapped to URLs by mod_python: functions
+which display input forms, functions which process input form data and
+redirect to other pages (never displaying anything), functions which
+display data, and error pages.  Anytime a new analysis is done, the
+program takes some kind of input through a form, uses that input to
+create a new complex object, stores that object in the database, then
+redirects to another page (either a display page or another form).  In
+the beginning of each function, there is a section that tests that the
+preconditions for that function have been met and "errors out" if they
+haven't been met.  At the end of each function, there is another set
+of code that checks to make sure postconditions have been met and
+everything is in good working order.  When things don't go right, the
+appropriate error page is returned after cleaning up any data that is
+in process, mapping exception names to error pages.
+
+The templating, object, and script interaction deserve some
+attention. There is a main template, in which the sidebar provides
+navigation, the header and footer don't currently do anything, and the
+middle right place displays the real thing.  Each display or form
+function in lc.py updates the search list of this main template,
+either with an "as_html()" method from an object to be displayed, a
+list of objects from a database query, or a form based on a template.
+Once the item on the search list is change, the template is "run" and
+the results are returned for apache to serve up as one big unit.
+
+A special function is the image returning function.  Since html
+needs a IMG tag with a source attribute that points to some data in
+the form of a URL, there is a function that grabs the appropriate
+image from the database and returns it.  The html returned from
+"as_html()" can have links embedded to this function which use GET
+strings to grab appropriate data.  This function queries the database
+using the object ID within the database and another identifier to get
+the type of image that belongs to that object (so 'xxxx' for the
+object id and 'forecast' for which of the images belonging to 'xxxx').
+string to identify the name of the 
+
+== Pre and post conditions ==
+
+(This is kind of a template, with the page in caps and everything else
+in lower case.  Would like to make it a wrapper, but I am not sure
+how.)
+
+* Log page view
+
+* Check that session is OK, redirect to bad session URL if not
+
+* Set up "try"
+
+* Reset searchList for templates (for now, set main=None)
+
+* PERFORM WHATEVER
+
+* If no exception, (1) reset session, 
+
+* If an exception, (1) store exception info in database, (2) redirect
+  to error page
+
+* REDIRECT OR RETURN DATA
+
+
+== Typical form URL ==
+
+* Do preconditions
+
+* Grab template for this URL
+
+* Embed this URL's template in application template as main
+
+* Return processed templates together
+
+* Do postconditions
+
+
+== Typical processing URL ==
+
+* Preconditions
+
+* Translate POST or GET data into local data
+
+* Create a new object with that data
+
+* Pickle and store that object, with other useful stuff
+
+* Do postconditions
+
+* Redirect, either to display or base 
+
+
+== Typical display URL ==
+
+* Preconditions
+
+* Query and unpickle an object 
+
+* Embed object within ApplicationTemplate (note that object must have
+  a __str__ function that will expand nicely).
+
+* Postconditions
+
+* Return processed templates
+
+
+== Pre-Login URL ==
+
+* Log page view
+
+* If called with data or flag, put session might be bad thing in
+  searchList=main
+
+* Else, set an LARE Overview template as main in searchList
+
+* Return processed templates
+
+
+== Image URL ==
+
+* Preconditions
+
+* Grab appropriate image from DB, using GET object id and
+
+* Create special html header thing and send image
+
+* Postconditions
+
+
+
+= Class hierarchy =
+
+For now the class hierarchies are all flat. There may be call to
+create a superclass for all the objects which can be stored and
+displayed as "data", mostly to give them some reasonable default
+methods for display.  Otherwise it may only be an excercise in object
+oriented aesthetics.
+
+= Code layout in the filesystem =
+
+TOP 
+	lc.py
+	config-file (this might be just an import)
+	CLASS-CODE (for objects in analytical processes, like LcObject.py,
+		with corresponding .tmpl for each .py)
+	TEMPLATES (templates for lc.py, using def blahblah as naming convention) 
+	INSTALL
+		database schema
+		install script
+     
+
+= Database layout =
+
+There are two things the database does:  
+
+1.  Session and login storage.
+
+2.  Object and image storage.
+
+= Error handling = 
+
+Things that can go wrong, in ascending order badness.
+
+==  "Reasonable" errors: ==
+
+* Input problem -- bad input for one of the transformations, either
+   bad text or mispecified object input.
+
+* Authorization or authentication problem.  Either you couldn't
+   login, or you tried to do an admin task with user level privileges.
+
+* A dropped session problem.  One problem is that the cookies
+   necessary to create the session are missing or screwy, especially
+   important as cookies allow redirection to be a feasible strategy
+   for process -> store -> redirect system.
+
+== Errors that should only happen with handwritten GET or POST data ==
+
+* Data problem -- something weird with the database -- missing data
+   that we thought would be there.
+
+* Object versioning problem -- pickled objects being unpickled into a
+   different class version and not behaving nicely.
+
+== Errors that imply a bug or something ridiculous ==
+
+* An OS interface problem -- a file won't open, directory unreadable
+   or unwriteable
+
+* Code problem -- a bug in the code, such as a syntax error, a
+   screwed up loop, etc.
+
+== Error Approach ==
+
+* With an error, insert the error into the DB, do any cleanup, then
+  redirect to the error page.  This error page will query the DB and
+  give some useful information, possibly redirecting somewhere else.
+
+* Problems with session errors, as we don't know who we are dealing
+  with -- they are special, will go to the pre login screen,
+  displaying some sort of error message.
+
+* Assumes that we can roll back to the beginning of a process.

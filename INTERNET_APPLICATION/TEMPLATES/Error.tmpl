@@ -1,0 +1,12 @@
+## -*-html-*-
+
+#if $LC_ERROR_MESSAGE
+<!-- note this is used with session errors, because they don't embed the Index.html within the bigger application page. -->
+<div class="Error">
+<hr>
+<p><b>ERROR: </b> $LC_ERROR_MESSAGE </p>
+<p>Use your <emph>back</emph> button to fix the changes and try again.</p>
+</div>
+#else
+No error message
+#end if

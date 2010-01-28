@@ -1,0 +1,13 @@
+\#LCFIT BEGIN
+<Location "/larry">
+        AuthType Basic
+        AuthName "lcfit"
+        AuthUserFile $APACHE_CONFIG_ROOT/lcfit.htpasswd
+        Require valid-user
+</Location>
+
+<Location ~ "$LCFIT_WWW_ROOT/Registration(|Process)">
+        Satisfy Any
+        Allow from all
+</Location>
+\#LCFIT END

@@ -1,0 +1,98 @@
+## -*-html-*-  Template for daily maintenance email
+
+Run Start Time:  
+
+$RUN_START_TIME
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Disk usage:  
+
+$DF_OUTPUT
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Uptime and logins:  
+
+$W_OUTPUT
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Count of session in last day by username:
+
+#if len($LC_SESSION_COUNTS) >= 1:
+#echo "\n%12.12s %12.12s\n" % ("Username", "Count")
+#for $row in $LC_SESSION_COUNTS
+#echo "\n%12.12s %12.12s\n" % ($row[0], $row[1])
+#end for
+#else:
+#echo "No sessions in past 24 hours"
+#end if
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Count of unterminated sessions by username:
+
+#if len($LC_SESSION_TOTALS) >= 1:
+#echo "\n%12.12s %12.12s\n" % ("Username", "Count")
+#for $row in $LC_SESSION_COUNTS
+#echo "\n%12.12s %12.12s\n" % ($row[0], $row[1])
+#end for
+#else:
+#echo "No unterminated sessions"
+#end if
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#if len($LC_DAILY_OBJECT_INFO) >= 1:
+#echo "%12.12s %12.12s %12.12s\n" % ("Owner", "Classtype", "Count")
+#for $row in $LC_DAILY_OBJECT_INFO
+#echo "%12.12s %12.12s %12.12s\n" % ($row[0], $row[1], $row[2])
+#end for
+#else:
+#echo "No new objects in past 24 hours"
+#end if
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Number of testing objects deleted: $TEST_OBJECTS_DELETE_COUNT
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#if len($LC_PENDING_REG) >= 1:
+#echo "%-20.20s %-20.20s %-20.20s %-20.20s %-20.20s %-20.20s %-20.20s %-20.20s\n" % ("Email", "Username", "Password", "Timestamp", "Fullname", "Affil", "Reasons", "Howfind")
+#echo "\n"
+
+#for $row in $LC_PENDING_REG
+
+#echo "%-20.20s %-20.20s %-20.20s %-20.20s %-20.20s %-20.20s %-20.20s %-20.20s\n" % ($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7])
+#end for
+
+
+#for $row in $LC_PENDING_REG
+
+----
+#echo "psql -U webbs -d larrydb -c \"select new_lc_user(\'%-.30s\', \'%-.30s\');\" && \n" % ($row[1], $row[2])
+
+#echo "/usr/sbin/htpasswd -b /etc/apache2/lcfit.htpasswd \"%-.30s\" \"%-.30s\"  && \n" % ($row[1], $row[2])
+
+#echo "echo Dear %s, you have been registered with the LCFIT program, \\\n" % ($row[4])
+#echo "     with username / password = \"%s\" / \"%s\".  \\\n" % ($row[1], $row[2])
+#echo '    | mail \"%s\" -a \"Reply-To:webbs@demog.berkeley.edu\" \\\n' % (row[0],)
+#echo '    -s \"LCFIT Registration\" \n\n'
+----
+
+#end for
+
+#else:
+#echo "No pending registrations."
+#end if
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+$ANALOG_OUTPUT
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+$RUN_END_TIME

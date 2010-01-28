@@ -1,0 +1,31 @@
+## -*- html -*-
+
+##$LARRY_USERNAME_KEY
+
+<DIV class='LoginForm'>
+<TITLE> 
+	#if $TITLE then $TITLE else 'LCFIT (Untitled)'
+</TITLE>
+
+
+<form action='$SUBMIT_TARGET' method='post'>  
+<table>
+<tr>
+	<td valign='top'>
+		<b>Username: </b><input tabindex="1" type="text"  name='$LARRY_USERNAME_KEY' width=12>
+	</td>  
+</tr>
+<tr>
+	<td valign='top'>
+		<b>Password: </b><input tabindex="2" type="password"  name='$LARRY_PASSWORD_KEY' width=12> 
+	</td>  
+</tr>
+<tr>
+	<td valign='middle'>
+		<input type='submit' name='submit' value='SUBMIT'>
+	</td>
+</tr>  
+
+</table> 
+</form>
+</DIV>

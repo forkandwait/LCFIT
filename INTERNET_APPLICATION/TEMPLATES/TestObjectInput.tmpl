@@ -1,0 +1,31 @@
+
+<DIV class='InputRates'>
+
+#if self.varExists('request.form')
+<p>Variable "request.form" exists.</p>
+<p>Request.form as dict: $dict($request.form)</p>
+#else
+<p>Variable "request.form" does NOT exist.</p>
+#end if
+
+#if self.varExists('session')
+<p>Variable "session" exists.</p>
+session:  $session
+#else
+<p>Variable "session" does NOT exist.</p>
+#end if
+
+<form action='Foo' method='post'>
+
+<select size='1' name='${LARRY_OBJECT_SERIALNO_PREFIX}hmd_object'>
+#set $L = $lcdb.listObjectsFromClass(className='LcHMDObject.HMD', sessionId=$session[LARRY_SESSION_KEY])
+#for $objectId in $L
+<option> $objectId </option>
+#end for
+</select>
+
+<INPUT type="submit" value="Send"><INPUT type="reset">
+</form>
+
+
+</DIV>

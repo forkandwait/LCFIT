@@ -1,0 +1,7 @@
+  Title: (descriptive name of analysis)
+  AgeGroups: 0 1 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85
+  YearsOnRecordStart: 1950
+  YearsOnRecordEnd:   1994
+  YearsToForecast:    60
+  Trajectories:       100
+  SaveMxForecasts:    1

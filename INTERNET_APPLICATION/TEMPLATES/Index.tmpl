@@ -1,0 +1,18 @@
+## -*-html-*-
+
+#if $ERROR_MESSAGE
+<!--barfoo-->
+<div class="Error">
+<hr>
+<p><b>ERROR: </b> $ERROR_MESSAGE </p>
+<p>Use your <emph>back</emph> button to fix the changes and try again.</p>
+</div>
+
+#else
+<!--foobar-->
+<div class="Index">
+<center><h2>Welcome to LCFIT</h2></center>
+</div>
+#end if
+
+

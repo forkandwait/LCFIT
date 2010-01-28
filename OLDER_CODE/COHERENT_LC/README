@@ -1,0 +1,87 @@
+FOR CORRELATED FORECAST OF A GROUP OF COUNTRIES
+
+My notes:
+
+I think the way into this codestuff is through multicountry0hmd0.m or maybe multicountry0hmd.m.
+Then tag to the code that is important.
+
+Useful thing to find all the places that some of the coherent data goes:  `grep -i -n -e '.*bxkt.*' *`
+
+The code is interrelated in all sorts of weird ways, and often uses the filesystem to store
+intermediate results, results that I would have stored in variables.  I need to draw a picture of a
+typical coherent (or what he calls multicountry) process.
+
+I think I need to trace multicountry0hmd.m.
+
+**** 
+email 2006-10-11
+Hi, Webb: 
+
+I am not sure if I understand the problem, I since heard from you last time everything was fine. 
+
+The data for the two sexes of Sweden are in the folder â€˜Swedenâ€™, which I resend, with all others, in the zipped file. 
+
+The way I do for the paper is as follows ( there are too many data for all the tables, so I don't  copy and paste them): 
+
+Set the path of Matlab as .. \SendBerkeleyCoherentLC. 
+
+TWO SEX TO BE RUN AT MATLAB PROMPT:
+
+The Bxkt for two-sex case is produced by running 
+
+>> group0s 
+
+To get Figure 1 and Table 1, run 
+
+>> group1s 
+
+
+
+MULTICOUNTRY TO BE RUN AT MATLAB PROMPT:
+To produce the common factor Bx and Kt (saved as BXKT) for the group of countries and Tables 2-6, run 
+
+>> multicountry1hmd 
+
+To produce Table 7, run 
+
+>> multicountry0hmd 
+
+To produce Figures 2-8, run 
+
+>> multicountry0hmd0 
+
+END
+
+If these are not what you need, you may call me at (212)963-7535. Hope things go well with you. 
+
+Nan 
+
+****
+Li Nan's notes (ahem) with my additions:
+
+mortGO.m -- stuff for "general" LC on a single group; includes code for missing data, resampling on
+bx, and probably other stuff that I haven't been to figure out.
+
+multicountry2GCS.m - Non-div forecasts with specific factor.
+multicountry2GC.m - Non-div forecasts without specific factor.
+multicountry2S.m - Separate forecast(ordinary LC).
+
+multisfact.m -- make specific factor for Fig3.  This code is actually
+a function call which returns a projected kt and an empirical kt with
+bx bbased on an input of the collective Bx and Kt
+
+multicountry0hmd.m - main code and pictures using HMD, calls
+multicountry0hmd0.m - make pictures
+
+multicountry1hmd.m - make a group, for HMD
+multicountry1hmdG.m - test whether non-group members can be non-divergently forecasted with the group, for HMD
+
+group0.m - organize data and determine whether or not in a group.  I think this takes multiple
+datasets and creates the intermediate files for bx etc; this is one of the programs that does this,
+Swedenfor a very specific run (I think scandinavian countries).  Good example?
+
+group1.m-forecasting
+
+group0s.m - organize data and determine whether or not in a group, for 2 sexes
+group1s.m-forecasting, for 2 sexes
+

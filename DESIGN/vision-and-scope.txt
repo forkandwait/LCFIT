@@ -1,0 +1,166 @@
+$Id: vision-and-scope.txt 453 2008-01-29 23:56:58Z webbs $
+
+1 "Business" (Institutional) Requirements
+
+1.1  Background, opportunity, and user needs.
+
+Since its discovery in 1992, the Lee-Carter method of mortality
+forecasting has become the dominant formal method in mortality
+forecasting.  There are other formal methods, and there is much
+non-algorithmic foreacasting still being done.  However, because the
+method involves several steps of data processing, several large
+matrices, and the use of a somewhat sophisticated linear algebraic
+operation (the singular value decomposition), its implementation is
+not taught in introductory first semester demographic methods courses,
+and is usually too hard for an applied researcher to
+"roll-his/her-own".  In response there has been a samizdat of
+implementations, inlcuding S-Plus and Matlab versions, of dubious
+quality.
+
+Thus the need for a version that is easy and intuitive to use,
+verified correct by Ron, and which provides a reference implementation
+of the algorithm.  The best way to provide this service is through a
+web based interface, as the complexity of the algorithm can be
+"hidden" on the web server and input can be managed through a graphic
+user interface.  The need for a reference implementation of the
+algorithm can be serverd by making the code freely available in a
+common programming language for inspection by the scientific
+community.
+
+However, there are unique challenges associated with developing
+software used in research environments: (1) The focus on exploration
+and hypothesis testing by processing datasets makes it impossible to
+describe a simple workflow.  (2) The constant evolution of
+the "state of the art" makes for a constant change of algorithms and
+implementations--with new methods, the old data may be invalidated
+unbeknownst to the researcher who generated it, or the old, still
+valid, data may be rendered unusable due to new programming
+interfaces.  (3) Because a dataset is usually part of a larger
+research project, it must be simple to use that data for further
+downstream processes rather than just presenting the results.  The
+design needs to keep these additional constraints in mind.
+
+
+
+1.2 "Business" Objectives
+
+Objective 1: Satisfy funding requirements for Grant XXX.
+
+Verification:  Hm...
+
+Objective 2: Become the consensus application for computing Lee Carter
+mortality forecasts.
+
+Verification: Citations, analysis of server usage logs, and user
+feedback.
+
+Objective 3:  Develop a new paradigm for scientific web based
+computing.
+
+Verification: Other projects using the LARE framework.
+
+
+1.3 Project Risks:
+
+Risk 1: The application will not be useful and will be ignored by the
+communtiy.
+
+Risk 2:  The application will generate incorrect data or use bad code
+and cause us embarassment.
+
+Risk 3: The application will be used as a tool to compromise our
+network.
+
+********
+
+
+********
+
+2.  Vision of Solution
+
+2.1 Vision Statement. making it important to come closer to simulating a "work space"
+environment.
+
+2.2 Major Features
+
+Feature 1: Provide a web-based form and display system that provides
+a form to enter mortality rates and other ancillary information,
+that displays the Lee Carter forecast results in an format
+amenable to further processing or presentation, that stores the
+result in a database for later re-display or further processing,
+and that provides a method to get an overview of the processed
+datasets as well as processing tools.  
+
+Feature 2: This system would also include a mechanism for
+authentication and making the results of processing visible only to
+the person whose username is associated with entering the raw data.
+
+Feature 3: Provide a method for changing, extending, and adding to
+the set of possible data processing and storage methods
+"gracefully".  By "gracefully", we mean that: (1) Adding or
+changing a new method should not reguire intimate knowledge of the
+code of the system or access to the server.  (2) When a method is
+changed, data produced by a previous version must be handled
+gracefully--either explicitly invalidated, transformed into the
+appropriate new version, or other possible things.  (3) A new
+method must have a way to specify its input, so we can facilitate
+interfaces for its creation.
+
+Feature 4: Keep the source of each population scientific method
+verified.  (1) Provide for source downloads of the algorithms so
+that interested parties can inspect them and verify the accuracy
+of results.  (2) Flag methods that have been inspected and
+validated by experts.
+
+Feature 5: Instrument the application: (1) Document the use of the
+application for granting agencies.  (2) Errors and weirdnesses are
+traceable and made available to the developers--logs, email
+alerts, undo histories.
+
+Feature 6: Provide a backup, data move, and recovery system.  
+
+2.3  Assumptions and dependencies
+
+Assumption 1: Users will have a modern browser and a fast internet connection
+
+Assumption 2: Code developers will know how to write Python
+
+Dependency 1:
+
+********
+
+3. Scope and Limitatiosn
+
+3.1  Scope of initial and subsequent releases
+
+(Grid with feature in rows, releases in columns)
+
+3.2 Limitations and Exclusions
+
+LI-1:  Format of rates entered--text conventions
+
+LI-2:  Format of new classes/code.
+
+LI-3: Format of rates -- age and year and other substantive
+demographic constraints
+
+********
+4. Institutional Context
+
+4.1 Stakeholder grid.  Row under "Stakeholder" heading: [Grant Lead,
+Anonymous users (e.g. actuaries), anonymous code submitters
+(e.g. actuaries who know Python), grant administrators, Berkeley
+demography community].  Column headings: [Major value, attitudes,
+major interests in project, constraints].
+
+4.2 Project Priority grid.  Row headings: [schedule, features,
+quality, staff, cost].  Col headings: [driver, constraint, degree of
+freedom (eg schedule lee-way)].
+
+
+
+****
+
+
+
+

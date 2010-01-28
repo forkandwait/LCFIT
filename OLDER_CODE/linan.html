@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>LC Web Test</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Test of Li Nan's LC Routines / Matlab Webserver</h1>
+<form name="form1" method="post" enctype="multipart/form-data" action="/cgi-bin/test-cgi.pl">
+  <input type="hidden" name="mlmfile" value="LCdoit">
+  <p> 
+    <input type="checkbox" name="skipCG" value="checkbox">
+    Omit Coale-Guo extension (default is to extend data matrix) </p>
+  <p> 
+    <input type="text" name="nhly" size="5" maxlength="4">
+    Final year of historical data</p>
+  <p> 
+    <input type="text" name="nffy" size="5" maxlength="4">
+    First year of projection (launch date)</p>
+  <p> 
+    <input type="text" name="nfor" size="3" maxlength="2">
+    Number of 5-yr periods to forecast</p>
+  <p> 
+    <input type="text" name="ntrj" size="5" maxlength="4">
+    Number of samples</p>
+  <input type="file" name="fileup" size="40">
+  <p><input type="submit" name="Submit" value="Submit"></p>
+
+  </form>
+
+</body>
+</html>

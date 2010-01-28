@@ -1,0 +1,65 @@
+## -*- html -*- fjfj
+<DIV class='Register'>
+
+<TITLE> 
+	#if $TITLE then $TITLE else 'LCFIT (Untitled)'
+</TITLE>
+
+<p>Please fill out the form below to register to use the LCFIT
+application.  We review all applications by hand, so it may take a few
+days before you have access.  We will send confirmation by email as
+soon as your registration is complete.</p>
+
+<p> If you find LCFIT useful, please link to us from your homepage: 
+<br>&lt;a href="http://lcfit.demog.berkeley.edu"&gt;LCFIT&lt;/a&gt;
+</p> 
+
+<p> This page will redirect to the main LCFIT page after you press
+submit. </p>
+
+<p>Note that whitespace will be stripped from the username and
+password entered below.</p>
+
+<form action='$SUBMIT_TARGET' method='post'>  
+<table>
+
+<tr>
+	<td valign='top'> <b>Full Name: </b> </td><td> <input type="text"  name='FULLNAME' width=12> </td>
+</tr>
+
+<tr>
+	<td valign='top'> <b>Email Address: </b> </td><td> <input type="text"  name='EMAIL' width=12> </td
+</tr>
+
+<tr>
+	<td valign='top'> <b>Preferred Username: </b> </td><td> <input type="text"  name='USERNAME' width=12> </td>  
+</tr>
+
+<tr>
+	<td valign='top'> <b>Preferred Password <br>(do NOT use an important password): </b> </td><td> <input type="text"  name='PASSWORD' width=12> </td>  
+</tr>
+
+<tr>
+	<td valign='top'> <b>Affiliation: </b> </td><td> <input type="text"  name='AFFILIATION' width=12> </td>  
+</tr>
+
+<tr>
+	<td valign='top'> <b>Reasons for using LCFIT: </b> </td><td> <textarea nrows=4  name='REASONS' width=12></textarea> </td>  
+</tr>
+
+
+<tr>
+	<td valign='top'> <b>How did you find us?: </b> </td><td> <textarea nrows=4  name='HOWFIND' width=12></textarea> </td>  
+</tr>
+
+
+
+<tr>
+	<td valign='middle'>
+		<input type='submit' name='submit' value='SUBMIT'>
+	</td>
+</tr>  
+
+</table> 
+</form>
+</DIV>

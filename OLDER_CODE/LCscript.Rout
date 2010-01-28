@@ -1,0 +1,65 @@
+
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 1.9.0  (2004-04-12), ISBN 3-900051-00-3
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+	UTF-8 locales are not currently supported
+
+[Previously saved workspace restored]
+
+> invisible(options(echo = TRUE))
+> # test script that implements LiNan's LC matlab code. This is in preparation for the web version
+> 
+> # prep environment before calling:  TMPDIR=/Sastemp or /tmp
+> 
+> # how called:
+> #  --restore  (store all functions, etc. in .Rdata in the project folder to minimize processing of them);
+> 
+> #  --gui=none
+> 
+> # BATCH = --restore --save --no-readline --gui=none  + redirected I/O
+> 
+> # Screen LC_data  ;
+> 
+>   # The web script has created a 'tmpdir' subdirectory name which will be used for all the calculations
+>   # and removed once the application exits (during the cleanup screen)
+> 
+>   # file upload occurs via perl and CGI::Application    The data file is placed into the CWD and is
+>   # called 'lcdata.txt'  
+> 
+>   # filechecking
+>   #inhdl=file("lcdata.txt",open="r");
+> 
+>   # for now, lcdata.txt is just numbers; we add here a routine which tries alternative ways of reading the file (test for text on the first line, test for comma separated values, and does the right thing)
+>   # 
+> 
+>   f.ReadLCData<-function(inhandle){  # needs modification for robustness
++     LCdata=read.table('lcdata.txt');
++     agelist=c(0,1,5:5:85);
++     yrlist = 1950:1994;
++     return(list(data=LCdata,ages=agelist,yrs=yrlist));
++   };
+> 
+>   LCdata=f.ReadLCData();
+> 
+>   # possibly print summary and end R session for this screen; this leaves a copy of the read data
+>   # in the tmpdir location for subsequent access by further screens
+> 
+> 
+> 
+> # Screen LC_cleanup
+>   
+> proc.time()
+[1] 1.96 0.04 2.11 0.00 0.00
+> 

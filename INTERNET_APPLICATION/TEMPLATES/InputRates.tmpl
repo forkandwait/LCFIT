@@ -1,0 +1,86 @@
+## -*- html -*-
+##$searchList()
+
+<DIV class='InputRates'>
+<form action='$TARGET' method='post'>  
+<table border=1>
+<tr> 
+	<td colspan=5><h3>Enter historical death rates:</h3>
+		<p>Use following age widths: 0-1, 1-4, 5-9, ..., 105-109, 110+.</p>
+		<p>Years go down, ages across, American decimal notation.</p> 
+		<textarea name='rates' rows=25 cols=85></textarea>
+	</td>
+</tr>
+
+<tr>
+	<td colspan=3 valign='top'>
+		<b>Start Year: </b><input type='text' name='start_year' rows=1 cols=4>
+	</td>  
+	<td colspan=3 valign='top'>
+		<b>Notes: </b><input type='text' name='notes' rows=1 cols=40>
+	</td>  
+</tr>
+
+
+<tr>
+	<td valign='top'>
+		<b>Select number of stochastic runs to perform</b></br>
+		<select size=1 name=$LARRY_NUMRUNS_KEY>
+		#for $numRun in $LARRY_POSSIBLE_NUMRUNS
+		<option #if $numRun == $LARRY_DEFAULT_NUMRUNS then 'selected' else ''#> $numRun</option>
+		#end for
+		</select>
+	</td>
+
+	<td valign='top'>
+		<b>Select number of years to project forward</b></br>
+		<select size=1 name=$LARRY_STEPS_FORWARD_KEY>
+		#for $numRun in $LARRY_POSSIBLE_STEPS_FORWARD
+		<option #if $numRun == $LARRY_DEFAULT_STEPS_FORWARD then 'selected' else ''#> $numRun</option>
+		#end for
+		</select>
+	</td>
+
+	<td valign='top'>
+		<b>Select gender: combined, female, male</b></br>
+		<select size=1 name=$LARRY_GENDER_KEY>
+		#for $choice in ('combined', 'female', 'male')
+		<option> $choice</option>
+		#end for
+		</select>
+	</td>
+
+	<td valign='top'>
+		<b>Select age for extension</b></br>
+		<select size=1 name=$LARRY_AGE_CUTOFF_KEY>
+		#for $ageCutoff in $LARRY_POSSIBLE_AGE_CUTOFFS
+		<option #if $ageCutoff == $LARRY_DEFAULT_AGE_CUTOFF then 'selected' else ''#> $ageCutoff </option>
+		#end for
+		</select>
+	</td>
+	
+	<td valign='top'>
+		<b>Select confidence interval for projection</b></br>
+		<select size=1 name=$LARRY_CONFIDENCE_INTERVAL_KEY>
+		#for $conf in $LARRY_POSSIBLE_CONFIDENCE_INTERVALS
+		<option #if $conf == $LARRY_DEFAULT_CONFIDENCE_INTERVAL then 'selected' else ''#> 
+				$conf </option>
+		#end for
+		</select>
+	</td>
+	
+	<td valign='top'>
+		<b>Flatten negative bx?</b></br>
+		<input type='checkbox' size=1 name=$LARRY_FLATTEN_BX_KEY>
+	</td>
+
+</tr>
+
+<tr>
+	<td valign='middle' colspan=5> Submit above: <input type='submit' name='submit' value='SUBMIT'> </td>
+</tr>  
+
+</table> 
+<h3> NOTE: Rows signify single year's data, columns signify age specific data, and please use 24 age categories with open interval at end.</h3>  
+</form>
+</DIV>

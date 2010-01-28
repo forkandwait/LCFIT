@@ -1,0 +1,1848 @@
+
+AR1var.m,2332
+v=4,19
+%v=5,27
+c0=6,37
+c0=.14;sec0=6,37
+c0=.14;sec0=.10;c1=6,37
+c0=.14;sec0=.10;c1=.99;sec1=6,37
+c0=.14;sec0=.10;c1=.99;sec1=.04;sigma=6,37
+c0=.14;sec0=.10;c1=.99;sec1=.04;sigma=.69;ntrj=6,37
+c0=.14;sec0=.10;c1=.99;sec1=.04;sigma=.69;ntrj=1000;nfor=6,37
+[ciak,7,100
+%v=14,186
+c0=15,196
+c0=.07;sec0=15,196
+c0=.07;sec0=.06;c1=15,196
+c0=.07;sec0=.06;c1=.93;sec1=15,196
+c0=.07;sec0=.06;c1=.93;sec1=.05;sigma=15,196
+c0=.07;sec0=.06;c1=.93;sec1=.05;sigma=.40;ntrj=15,196
+c0=.07;sec0=.06;c1=.93;sec1=.05;sigma=.40;ntrj=1000;nfor=15,196
+[ciak,16,259
+w1=25;w2=18,316
+w1=25;w2=50;w3=18,316
+w1=25;w2=50;w3=75;%50% CI18,316
+[k1,19,343
+[k1,k2,19,343
+clf;20,406
+clf;plot(k3,'.-');hold;20,406
+w1=26,689
+w1=2.5;w2=26,689
+w1=2.5;w2=50;w3=26,689
+w1=2.5;w2=50;w3=97.5;%95% CI26,689
+[k1,27,719
+[k1,k2,27,719
+clf;28,782
+clf;plot(k3,'.-');hold;28,782
+v=37,1087
+%v=38,1095
+c0=39,1105
+c0=.1;sec0=39,1105
+c0=.1;sec0=.15;c1=39,1105
+c0=.1;sec0=.15;c1=.94;sec1=39,1105
+c0=.1;sec0=.15;c1=.94;sec1=.08;sigma=39,1105
+c0=.1;sec0=.15;c1=.94;sec1=.08;sigma=.96;ntrj=39,1105
+c0=.1;sec0=.15;c1=.94;sec1=.08;sigma=.96;ntrj=1000;nfor=39,1105
+[ciak,40,1167
+%v=46,1249
+c0=47,1259
+c0=-.27;sec0=47,1259
+c0=-.27;sec0=.09;c1=47,1259
+c0=-.27;sec0=.09;c1=.95;sec1=47,1259
+c0=-.27;sec0=.09;c1=.95;sec1=.02;sigma=47,1259
+c0=-.27;sec0=.09;c1=.95;sec1=.02;sigma=.56;ntrj=47,1259
+c0=-.27;sec0=.09;c1=.95;sec1=.02;sigma=.56;ntrj=1000;nfor=47,1259
+[ciak,48,1323
+%v=54,1410
+c0=55,1420
+c0=.1;sec0=55,1420
+c0=.1;sec0=.05;c1=55,1420
+c0=.1;sec0=.05;c1=.93;sec1=55,1420
+c0=.1;sec0=.05;c1=.93;sec1=.04;sigma=55,1420
+c0=.1;sec0=.05;c1=.93;sec1=.04;sigma=.35;ntrj=55,1420
+c0=.1;sec0=.05;c1=.93;sec1=.04;sigma=.35;ntrj=1000;nfor=55,1420
+[ciak,56,1482
+%v=62,1565
+c0=63,1575
+c0=.1;sec0=63,1575
+c0=.1;sec0=.11;c1=63,1575
+c0=.1;sec0=.11;c1=.95;sec1=63,1575
+c0=.1;sec0=.11;c1=.95;sec1=.06;sigma=63,1575
+c0=.1;sec0=.11;c1=.95;sec1=.06;sigma=.74;ntrj=63,1575
+c0=.1;sec0=.11;c1=.95;sec1=.06;sigma=.74;ntrj=1000;nfor=63,1575
+[ciak,64,1637
+%v=70,1716
+c0=71,1726
+c0=.09;sec0=71,1726
+c0=.09;sec0=.06;c1=71,1726
+c0=.09;sec0=.06;c1=.98;sec1=71,1726
+c0=.09;sec0=.06;c1=.98;sec1=.05;sigma=71,1726
+c0=.09;sec0=.06;c1=.98;sec1=.05;sigma=.41;ntrj=71,1726
+c0=.09;sec0=.06;c1=.98;sec1=.05;sigma=.41;ntrj=1000;nfor=71,1726
+[ciak,72,1789
+
+AR1var1.m,128
+function 2,2
+function [k1,2,2
+function [k1,k2,2,2
+randn('state',1);rndgc=5,91
+randn('state',2);rndgce=6,134
+  stokc=7,215
+
+AR1var2.m,34
+function 2,2
+function [ciak,2,2
+
+CG_BOE.m,815
+function 1,0
+function [mx_extended,1,0
+%      mx_data,14,480
+%      mx_data, raw mx values;14,480
+%      mx_ages,15,511
+%      mx_ages, lower bound of age intervals covered by mx_data;15,511
+%         group is open ended,16,589
+%         group is open ended, as indicated by a negative value;16,589
+%      value_close: value of 5Mx at x=18,704
+end;38,1283
+% Coale-Kisker empiric observation is that the log(40,1289
+isel75 44,1501
+m80 50,1612
+m75 51,1635
+[n,53,1659
+k80 55,1681
+  value_close 59,1767
+A 67,1985
+seqmx 73,2104
+n_extend 74,2133
+addedages 75,2167
+addedmx 77,2304
+s 80,2362
+cntAddends 81,2403
+s 82,2480
+tmpdiff 87,2612
+  tmpnew = tmp*exp(k80 - i*s); % This is funky,90,2679
+  % that case,96,3133
+    tmpnew 98,3246
+  tmpdiff 100,3286
+% max of entries is unity?  No,109,3415
+
+CG_NAN.m,769
+function 1,0
+function [nmx,1,0
+% Note: We get lx, Lx for 0,...80-84; using Lifetable(8,252
+k85=14,420
+m84=15,521
+m84=drt(18)*exp(3*k85);         		% XXX 5_m_85 15,521
+HA=19,737
+cntAddends = (HA*(HA-1))/2;              % like the (A*(A+1))/2 form,20,804
+sNum 21,920
+s 22,957
+s = sNum / cntAddends;                    % s 22,957
+   [i,27,1214
+   [i,k85,27,1214
+mx5year 30,1236
+for i=1:HA; % lx,41,1588
+% ... 5-yr lx and nLx.  Looping over the 1-yr lx,45,1660
+% ... 5-yr lx and nLx.  Looping over the 1-yr lx, taking avg,45,1660
+HB=46,1758
+for i=1:HB; % nLx:48,1805
+   ki1=49,1843
+   ki2=50,1862
+   nlx(ki2+1)=lx(ki1+5);    % I think this gives l_80,55,1963
+   nlx(ki2+1)=lx(ki1+5);    % I think this gives l_80, l_85,55,1963
+% ... 5-yr mx,58,2080
+
+CG_TEST.m,469
+function 1,0
+function [stuff,1,0
+function [stuff, headings,1,0
+agesTo105 13,580
+agesTo80 14,637
+[rates_boe,ages] = CG_BOE(mxTest1, agesTo105, 110, 0); % rates,17,783
+[rates_boe,ages] = CG_BOE(mxTest1, agesTo105, 110, 0); % rates, ages,17,783
+[rates_boe,ages] = CG_BOE(mxTest1, agesTo105, 110, 0); % rates, ages, age_close,17,783
+[rates_boe,ages] = CG_BOE(mxTest1, agesTo105, 110, 0); % rates, ages, age_close, value_close17,783
+[rates_nan,18,876
+plot(21,927
+
+CoaleGt.m,296
+function 1,0
+% Note: We get lx, Lx for 0,...80-84; using Lifetable(8,193
+k85=13,323
+m84=14,353
+mA=15,378
+%mA=16,396
+%mA=1,male;mA=16,396
+s=18,433
+   H=21,512
+%Get 1-yr q(24,569
+%Get 1-yr lx(29,690
+for i=1:HA;%lx,32,740
+HB=36,830
+for i=1:HB;%nLx:37,864
+   ki1=38,894
+   ki2=39,913
+
+Mpt.m,4673
+nt=5,23
+ic=14,307
+load ..\Mplateau1\austria\m.txt15,314
+[p,16,347
+[pc,17,425
+load ..\Mplateau1\austria\f.txt18,478
+[p,19,511
+[pc,20,576
+ic=24,647
+load ..\Mplateau1\denmark\m.txt25,654
+[p,26,687
+[pc,27,765
+load ..\Mplateau1\denmark\f.txt28,818
+[p,29,851
+[pc,30,916
+ic=33,995
+load ..\Mplateau1\EW\m.txt34,1002
+[p,35,1030
+[pc,36,1108
+load ..\Mplateau1\EW\f.txt37,1161
+[p,38,1189
+[pc,39,1254
+ic=42,1323
+load ..\Mplateau1\finland\m.txt43,1330
+[p,44,1363
+[pc,45,1441
+load ..\Mplateau1\finland\f.txt46,1494
+[p,47,1527
+[pc,48,1592
+ic=52,1662
+load ..\Mplateau1\france\m.txt53,1669
+[p,54,1701
+[pc,55,1779
+load ..\Mplateau1\france\f.txt56,1832
+[p,57,1864
+[pc,58,1929
+ic=61,1999
+load ..\Mplateau1\germanyW\m.txt62,2006
+[p,63,2040
+[pc,64,2118
+load ..\Mplateau1\germanyW\f.txt65,2171
+[p,66,2205
+[pc,67,2270
+ic=70,2337
+load ..\Mplateau1\italy\m.txt71,2344
+[p,72,2375
+[pc,73,2453
+load ..\Mplateau1\italy\f.txt74,2506
+[p,75,2537
+[pc,76,2602
+ic=79,2669
+load ..\Mplateau1\japan\m.txt80,2676
+[p,81,2707
+[pc,82,2785
+load ..\Mplateau1\japan\f.txt83,2838
+[p,84,2869
+[pc,85,2934
+ic=88,3007
+load ..\Mplateau1\netherlands\m.txt89,3014
+[p,90,3051
+[pc,91,3129
+load ..\Mplateau1\netherlands\f.txt92,3182
+[p,93,3219
+[pc,94,3284
+ic=97,3353
+load ..\Mplateau1\norway\m.txt98,3361
+[p,99,3393
+[pc,100,3471
+load ..\Mplateau1\norway\f.txt101,3524
+[p,102,3556
+[pc,103,3621
+ic=106,3690
+load ..\Mplateau1\sweden\m.txt107,3698
+[p,108,3730
+[pc,109,3808
+load ..\Mplateau1\sweden\f.txt110,3861
+[p,111,3893
+[pc,112,3958
+ic=115,4032
+load ..\Mplateau1\switzerland\m.txt116,4040
+[p,117,4077
+[pc,118,4155
+load ..\Mplateau1\switzerland\f.txt119,4208
+[p,120,4245
+[pc,121,4310
+ic=124,4375
+load ..\Mplateau1\us\m.txt125,4383
+[p,126,4411
+[pc,127,4489
+load ..\Mplateau1\us\f.txt128,4544
+[p,129,4572
+[pc,130,4637
+ xxm=0;yym=139,4784
+ xxm=0;yym=0;xxf=139,4784
+ xxm=0;yym=0;xxf=0;yyf=139,4784
+         yym=142,4875
+         xxf=143,4905
+         yyf=144,4935
+%age=150,5073
+%clf;151,5090
+%clf;plot(age,drtmc,'k+-');hold;151,5090
+%clf;plot(age,drtmc,'k+-');hold;plot(151,5090
+    mx=drtmc(ns);np=158,5377
+    [mxl,159,5408
+    [mxl,mxh,159,5408
+age=162,5482
+clf;163,5498
+clf;plot(age(1:ns1),drtmc(1:ns1),'k+-','LineWidth',2.5);hold;163,5498
+ns=166,5695
+ns=21;ns1=166,5695
+ns=21;ns1=25;nt=166,5695
+ns=21;ns1=25;nt=31;%female,166,5695
+ns=21;ns1=25;nt=31;%female, 13 countries,166,5695
+%ns=167,5769
+%ns=21;ns1=167,5769
+%ns=21;ns1=23;nt=167,5769
+%ns=21;ns1=23;nt=30;%female,167,5769
+%ns=21;ns1=23;nt=30;%female, 12 countries,167,5769
+%ns=168,5870
+%ns=20;ns1=168,5870
+%ns=20;ns1=25;nt=168,5870
+    mx=drtfc(ns);np=171,5933
+    [mxl,172,5964
+    [mxl,mxh,172,5964
+ns=184,6351
+ns=16;ns1=184,6351
+ns=16;ns1=22;nt=184,6351
+%ns=185,6380
+%ns=16;ns1=185,6380
+%ns=16;ns1=20;nt=185,6380
+%ns=186,6410
+%ns=19;ns1=186,6410
+    mx=drtmc(ns);np=188,6448
+    [mxl,189,6479
+    [mxl,mxh,189,6479
+ns=21;ns1=198,6724
+ns=21;ns1=25;nt=198,6724
+ns=21;ns1=25;nt=31;%female,198,6724
+ns=21;ns1=25;nt=31;%female, 13 countries,198,6724
+%ns=199,6798
+%ns=21;ns1=199,6798
+%ns=21;ns1=23;nt=199,6798
+%ns=21;ns1=23;nt=30;%female,199,6798
+%ns=21;ns1=23;nt=30;%female, 12 countries,199,6798
+%ns=200,6899
+%ns=20;ns1=200,6899
+%ns=20;ns1=26;nt=200,6899
+    mx=drtfc(ns);np=203,6962
+    [mxl,204,6993
+    [mxl,mxh,204,6993
+ xxm=0;yym=221,7306
+ xxm=0;yym=0;xxf=221,7306
+ xxm=0;yym=0;xxf=0;yyf=221,7306
+         xxf=224,7397
+agem=229,7496
+agem=84+(1:23);agef=229,7496
+clf;231,7530
+clf; plot(agem,prom(1:23),'k+-'); hold;231,7530
+clf; plot(agem,prom(1:23),'k+-'); hold; plot(231,7530
+ xxm=242,7856
+ xxm=0;yym=242,7856
+ xxm=0;yym=0;xxf=242,7856
+ xxm=0;yym=0;xxf=0;yyf=242,7856
+         yym=245,7961
+         xxf=246,8004
+         yyf=247,8047
+age2=253,8198
+clf;254,8217
+clf;plot(age2,drtmc,'k+-');hold;254,8217
+ xxm=0;yym=260,8328
+ xxm=0;yym=0;xxf=260,8328
+ xxm=0;yym=0;xxf=0;yyf=260,8328
+         yym=264,8441
+         xxf=265,8475
+         yyf=266,8509
+age=273,8655
+%clf;275,8673
+%clf;plot(age,drtm,'+-');hold;275,8673
+%ns--at which the pop=276,8725
+ns=24;;nt=277,8752
+ns=24;;nt=31;%male,277,8752
+ns=24;;nt=31;%male, 13 countries,277,8752
+%ns=278,8816
+%ns=22;nt=278,8816
+%ns=22;nt=26;%male,278,8816
+%ns=22;nt=26;%male, 12 countries,278,8816
+    mx=drtm(ns);np=280,8894
+    [mxl,281,8923
+    [mxl,mxh,281,8923
+clf;287,9072
+clf;plot(age(1:ns),drtm(1:ns),'k+-','LineWidth',2.5);hold;287,9072
+ns=291,9264
+ns=26;nt=291,9264
+ns=26;nt=31;%female,291,9264
+%ns=292,9299
+%ns=25;nt=292,9299
+%ns=25;nt=29;%female,292,9299
+    mx=drtf(ns);np=294,9349
+    [mxl,295,9378
+    [mxl,mxh,295,9378
+
+PictG.m,195
+function 1,0
+function [e95,1,0
+function [e95,e50,1,0
+  ntrj=14,484
+  nfor=15,500
+  % (2.2) Use simulated mx 17,520
+	  end22,702
+  e95=27,790
+  e95=prctile(e0,97.5);					% prctile(27,790
+
+Run_RichCountries.m,46
+% To produce the common factor Bx and Kt 1,0
+
+Run_Sweden_2sex.m,0
+
+_fiteoc.m,188
+function 7,82
+    kto=14,240
+ n=16,260
+ n=1;kt1=16,260
+       eo1=21,369
+       n=22,405
+       kt1=24,433
+       eo1=25,463
+       n=26,499
+       eo1=29,536
+       kt1=30,554
+
+bx_normalize.m,14
+function 1,0
+
+cohorte.m,279
+function 2,2
+function [ex,2,2
+xx=size(mxh);nht=6,218
+xx=7,243
+xx=size(mxf);ntrj=7,243
+xx=size(mxf);ntrj=xx(1);nfor=7,243
+    drt0(2)=mc(i,1,2);%ASDR(20,596
+    drt=24,726
+        drt=32,962
+EX=37,1061
+end42,1206
+clf;46,1286
+clf;plot(age,ex(1:nfor),'o');hold;46,1286
+
+decomp.m,990
+%(I)Get mxc,3,4
+%(I)Get mxc, Bx and Kt,3,4
+[bxco,7,118
+yr=9,154
+plot(age,Bx);hold;15,257
+%clf;16,302
+%clf;plot(age,Bx);hold;16,302
+%For Japan,17,352
+%For Japan, mort declined faster at older ages by Bx then by bxco,17,352
+%so the bxc and ktc is a compensition to the gap of BxKt and bxcoktco,18,421
+%For others,20,534
+xx=29,705
+xx=0;yy=29,705
+        yy=33,777
+RT(ic)=1-yy/xx;%0.94-0.98, Yes,36,827
+clf;46,1004
+plot(age,deltabx(1,:));hold;47,1010
+clf;54,1382
+plot(yr,deltakt(1,:));hold;55,1388
+%Delta(63,1758
+    ms=69,1845
+    ma=70,1884
+    x=0;ys=72,1973
+    x=0;ys=0;ya=72,1973
+    x=0;ys=0;ya=0;yc=72,1973
+    x=0;ys=0;ya=0;yc=0;ysa=72,1973
+    x=0;ys=0;ya=0;yc=0;ysa=0;ysc=72,1973
+    x=0;ys=0;ya=0;yc=0;ysa=0;ysc=0;yac=72,1973
+    x=0;ys=0;ya=0;yc=0;ysa=0;ysc=0;yac=0;ysac=72,1973
+            ys=93,2447
+            ya=94,2501
+            yc=95,2555
+            ysa=96,2609
+            ysc=97,2673
+            yac=98,2737
+            ysac=99,2801
+
+e0_diff.m,32
+function ret 1,0
+e0_emp 9,205
+
+fiteo.m,146
+function 1,0
+    kto=16,365
+  n=18,386
+  n=1;kt1=18,386
+      eo1=22,479
+      n=23,514
+      kt1=25,538
+      eo1=26,567
+      n=27,602
+
+forecastm.m,2090
+%Inputs age-specific death rates mx(2,2
+load usmx.txt;13,270
+mx=14,298
+xxx=15,308
+xxx=size(mx);nht=15,308
+yrs=16,334
+nffy=17,353
+nffy=1995;ntrj=17,353
+nffy=1995;ntrj=1000;agm=17,353
+nfor=18,382
+nfor=12;%Minimum years 18,382
+xxx=28,665
+xxx=size(m5094m);nht=28,665
+xxx=size(m5094m);nht=xxx(1);nag=28,665
+pxt=29,716
+nag=30,758
+xxx=36,929
+xxx=size(mx);nht=36,929
+yrs=37,955
+nffy=38,982
+nffy=1995;ntrj=38,982
+nffy=1995;ntrj=1000;agm=38,982
+nfor=39,1011
+[mxh,40,1021
+xxx=49,1241
+xxx=size(m5094m);nht=49,1241
+xxx=size(m5094m);nht=xxx(1);nag=49,1241
+pxt=50,1292
+nag=51,1334
+xxx=57,1505
+xxx=size(mx);nht=57,1505
+yrs=58,1531
+nffy=59,1558
+nffy=1995;ntrj=59,1558
+nffy=1995;ntrj=1000;agm=59,1558
+nfor=60,1587
+[mxh,61,1597
+xxx=68,1817
+xxx=size(m5094m);nht=68,1817
+xxx=size(m5094m);nht=xxx(1);nag=68,1817
+pxt=69,1868
+nag=70,1910
+xxx=76,2081
+xxx=size(mx);nht=76,2081
+yrs=77,2107
+nffy=78,2134
+nffy=1995;ntrj=78,2134
+nffy=1995;ntrj=1000;agm=78,2134
+nfor=79,2163
+[mxh,80,2173
+xxx=87,2385
+xxx=size(m5094m);nht=87,2385
+xxx=size(m5094m);nht=xxx(1);nag=87,2385
+pxt=88,2436
+nag=89,2478
+xxx=95,2649
+xxx=size(mx);nht=95,2649
+yrs=96,2675
+nffy=97,2702
+nffy=1995;ntrj=97,2702
+nffy=1995;ntrj=1000;agm=97,2702
+nfor=98,2731
+[mxh,99,2741
+xxx=107,2955
+xxx=size(m5094m);nht=107,2955
+xxx=size(m5094m);nht=xxx(1);nag=107,2955
+pxt=108,3006
+nag=109,3048
+xxx=115,3219
+xxx=size(mx);nht=115,3219
+yrs=116,3245
+nffy=117,3272
+nffy=1995;ntrj=117,3272
+nffy=1995;ntrj=1000;agm=117,3272
+nfor=118,3301
+[mxh,119,3311
+xxx=126,3511
+xxx=size(m5094m);nht=126,3511
+xxx=size(m5094m);nht=xxx(1);nag=126,3511
+pxt=127,3562
+nag=128,3604
+xxx=134,3775
+xxx=size(mx);nht=134,3775
+yrs=135,3801
+nffy=136,3828
+nffy=1995;ntrj=136,3828
+nffy=1995;ntrj=1000;agm=136,3828
+nfor=137,3857
+[mxh,138,3867
+xxx=146,4069
+xxx=size(m5094m);nht=146,4069
+xxx=size(m5094m);nht=xxx(1);nag=146,4069
+pxt=147,4120
+nag=148,4162
+xxx=154,4333
+xxx=size(mx);nht=154,4333
+yrs=155,4359
+nffy=156,4386
+nffy=1995;ntrj=156,4386
+nffy=1995;ntrj=1000;agm=156,4386
+nfor=157,4415
+[mxh,158,4425
+
+group0.m,1718
+nc0=5,95
+nht=6,131
+%nc=8,160
+mxc=9,188
+mxc=zeros(nc0,nht,24);%country-specific mx,9,188
+pxc=10,252
+load c:\limpi\multicountry1\data\denmark\mx5000.txt;13,308
+load c:\limpi\multicountry1\data\norway\mx5000.txt;18,479
+load c:\limpi\multicountry1\data\sweden\mx5000.txt;23,648
+	mxcg=33,928
+	p=0;d=41,1113
+	  d=44,1160
+lnmx 53,1336
+Ax 54,1353
+% SVD on combined 59,1427
+Bx 61,1472
+K 62,1498
+  kt=K(i);mx1=65,1624
+  % create two more matrices,90,2208
+  % create two more matrices, first one a centering adjustment from ax only,90,2208
+  % adjustment from individual ax with common Bx and Kt.  I do this with all matrix multiplication,91,2309
+  % ... second,115,2908
+  % ... second, calculate a  measure of fit.  (For each year and age,115,2908
+  % models -- ax only,116,3012
+  % Bx,117,3096
+  % Bx,Kt are combined;117,3096
+  % Bx,Kt are combined; bxo,117,3096
+  % Bx,Kt are combined; bxo,kto are individual standard;117,3096
+  % Bx,Kt are combined; bxo,kto are individual standard; bxc,117,3096
+  xx1=119,3195
+  xx1=0;xx2=119,3195
+	  xx2=124,3459
+  end                    % I use 3 lists,126,3576
+  end                    % I use 3 lists, each of single numbers: self.epr1,126,3576
+  end                    % I use 3 lists, each of single numbers: self.epr1, self.epr2,126,3576
+  xx1=141,4168
+  xx1=0;xx2=141,4168
+  xx1=0;xx2=0;xx3=141,4168
+      % Bx,145,4287
+      % Bx,Kt are combined;145,4287
+      % Bx,Kt are combined; bxo,145,4287
+      % Bx,Kt are combined; bxo,kto are individual standard;145,4287
+      % Bx,Kt are combined; bxo,kto are individual standard; bxc,145,4287
+	  xx1=146,4380
+	  xx2=147,4424
+	  xx3=148,4482
+  a1=171,5000
+  a00=172,5015
+  sdckt=187,5524
+
+group0s.m,1039
+nc0=6,101
+nht=7,170
+mxc=8,229
+mxc=zeros(nc0,nht,24);                  % country-specific mx,8,229
+pxc=9,311
+load ./sweden/mxm5002.txt;12,388
+load ./sweden/mxf5002.txt;13,415
+load ./sweden/pxm5002.txt;14,442
+load ./sweden/pxf5002.txt;15,469
+    foo 30,997
+    mxc(ic,i,19:24) = foo(19:24);        % mxcg=31,1021
+    d=39,1284
+    d=0;                                % running total of mx,39,1284
+      d 42,1423
+  mxcg 46,1497
+Ax 52,1583
+end55,1649
+Bx 58,1678
+K 59,1705
+  mx1 65,1808
+% Do everything,69,1867
+  xx1=109,2982
+  xx1=0; xx2=109,2982
+      xx1 113,3064
+      xx2 114,3115
+  xx1=124,3422
+  xx1=0; xx2=124,3422
+  xx1=0; xx2=0; xx3=124,3422
+      xx1 128,3511
+      xx2 129,3558
+      xx3 130,3617
+  epr(ic,2) = 1-xx2/xx1; % Explanation ratio of common factor,133,3706
+  epr(ic,2) = 1-xx2/xx1; % Explanation ratio of common factor, goog enough,133,3706
+  a0=xxx(1);a1=148,4168
+  a0=xxx(1);a1=xxx(2);a00=148,4168
+  e0=159,4372
+  sdckt=160,4393
+%R^2 RW(172,4700
+clf;plot(kc(ic,:));hold;185,5030
+
+group1.m,402
+%(I)Get mxc,3,4
+%(I)Get mxc, Bx and Kt,3,4
+nfor=6,130
+ntrj=7,181
+rndgk=9,267
+nffy5=11,349
+nspt=12,362
+nhly=14,392
+%Denmark(16,406
+load c:\limpi\multicountry1\data\denmark\mx5000.txt;156,4689
+mx=157,4743
+nspt=158,4755
+[bx,159,4764
+[bx,kt,159,4764
+Ktc=167,5013
+Ktc=[Kthp Ktfp];KtD=167,5013
+Ktc=[Kthp Ktfp];KtD=[KthpD KtfpD];Time=167,5013
+clf;168,5068
+clf;plot(Time, Ktc);hold;168,5068
+
+group1s.m,325
+% (I)Get mxc,3,16
+% (I)Get mxc, Bx and Kt,3,16
+nfor=6,126
+ntrj=7,192
+rndgk=9,281
+nffy5=11,420
+nspt=12,432
+RKt=21,574
+load ./sweden/mxm5002.txt;23,602
+load ./sweden/mxf5002.txt;24,629
+load ./sweden/pxm5002.txt;25,656
+load ./sweden/pxf5002.txt;26,683
+%Male(28,711
+ef=68,1863
+clf;74,2005
+hold;76,2036
+x=88,2516
+
+lfexpt.m,228
+function 1,0
+[xxx,14,205
+kk=15,228
+	kk=21,309
+	kk=k;                               % At the qx=21,309
+llx=50,844
+%    ... recalculate Lx and qx,55,912
+%    ... recalculate Lx and qx, use new variables 55,912
+eo=67,1176
+
+lfexpt_lc.m,22
+function e0_calc 1,0
+
+mortG0.m,2266
+function 2,2
+function [mxh,2,2
+%nffy--first year of forecasting,14,488
+%nfor--number of time to be forecasted,15,523
+%ntrj--number of trajectories,16,564
+  nstp=18,600
+  xx0=20,634
+  nfst=21,652
+  %in 24,826
+  %time interval and 1000 trajectries.  Inputs: fvsg=25,925
+  %(1) Data:(nag-1)--80-84 from Gompertz;28,1074
+  xx1=29,1147
+  nht=30,1164
+  nag=31,1209
+  drt=32,1224
+  if nag<19; %For the starting age of open age group younger than 33,1245
+      drt=35,1333
+	  ka=36,1354
+	  end39,1487
+	  end;46,1636
+      mxe=47,1645
+  nag=52,1797
+  ax=58,1886
+  % SVD,62,1962
+  % SVD, where bx is sum to 62,1962
+  bx 64,2020
+  k 65,2048
+  %(3) get OLS bx 68,2096
+  %Var of bx,80,2330
+  %Var of bx, see Fox,80,2330
+    varbx(j)=cov(e(:,j))/((nht-1)*cov(k));%Var(82,2404
+	kt=k(i);mx1=93,2677
+  %(4.2) Produce historical m(96,2744
+  drft=116,3276
+  zz1=120,3369
+  zz2=121,3379
+    zz2=124,3455
+  sigma0=126,3496
+  kteo=130,3647
+  sigma=131,3673
+  bx=132,3695
+  bx95=133,3710
+  drft=134,3729
+  zzz=136,3742
+  resig=140,3810
+  %load ran_start; randn('state', start_state)147,3975
+  %load ran_start; randn('state', start_state);rndk=147,3975
+  rndk=149,4069
+  stok1=154,4214
+  stok2=155,4243
+      yyy0=159,4400
+      yyy1=160,4494
+      yyy2=161,4599
+  mxf0=173,5067
+  mxf1=174,5097
+  maf2=175,5127
+	  end;193,5603
+	  end;196,5675
+		end;199,5749
+	  end;200,5757
+	  end;203,5820
+	  end;206,5892
+		end;210,5970
+	  end;211,5978
+	  end;214,6041
+	  end;217,6113
+		end;221,6191
+	  end;222,6199
+  %(7)%pictures 230,6253
+  [kt9750,232,6276
+  [kt9750,kt500,232,6276
+  [kt9750,kt500,kt250,232,6276
+  [kt9750,kt500,kt250,e9750,232,6276
+  [kt9750,kt500,kt250,e9750,e500,232,6276
+  [kt9750,kt500,kt250,e9750,e500,e250]=pict(mxf0,stok0);%kt232,6276
+  [kt9751,233,6337
+  [kt9751,kt501,233,6337
+  [kt9751,kt501,kt251,233,6337
+  [kt9751,kt501,kt251,e9751,233,6337
+  [kt9751,kt501,kt251,e9751,e501,233,6337
+  [kt9752,234,6395
+  [kt9752,kt502,234,6395
+  [kt9752,kt502,kt252,234,6395
+  [kt9752,kt502,kt252,e9752,234,6395
+  [kt9752,kt502,kt252,e9752,e502,234,6395
+  timef=236,6455
+  clf;237,6483
+  clf;plot(yrs,kteo,'^-');hold;237,6483
+  %pause;247,7017
+  clf;253,7087
+  clf;plot(yrs,eoh,'^-');hold;253,7087
+
+multicountry0.m,2401
+%(I)Get mxc,3,4
+%(I)Get mxc, Bx and Kt,3,4
+yr=6,116
+clf;8,174
+clf;15,407
+plot(age,bxc(1,:));hold;16,413
+clf;23,771
+plot(yr,ktc(1,:));hold;24,777
+%All except Japan slower than common,32,1151
+%Japan faster than common,33,1206
+nfor=39,1322
+ntrj=40,1372
+nffy=41,1406
+randn('state',0); rndgk=42,1418
+[eof,46,1514
+[eof,drft,46,1514
+[eof,drft,sdgkt,46,1514
+[eof,drft,sdgkt,a0,46,1514
+[eof,drft,sdgkt,a0,a1,46,1514
+[eof,drft,sdgkt,a0,a1,sdckt,46,1514
+eofc=47,1593
+ic=50,1615
+[eof,51,1622
+[eof,drft,51,1622
+[eof,drft,sdgkt,51,1622
+[eof,drft,sdgkt,a0,51,1622
+[eof,drft,sdgkt,a0,a1,51,1622
+[eof,drft,sdgkt,a0,a1,sdckt,51,1622
+eoff=52,1701
+ic=55,1724
+[eof,56,1731
+[eof,drft,56,1731
+[eof,drft,sdgkt,56,1731
+[eof,drft,sdgkt,a0,56,1731
+[eof,drft,sdgkt,a0,a1,56,1731
+[eof,drft,sdgkt,a0,a1,sdckt,56,1731
+eofg=57,1810
+ic=60,1831
+[eof,61,1838
+[eof,drft,61,1838
+[eof,drft,sdgkt,61,1838
+[eof,drft,sdgkt,a0,61,1838
+[eof,drft,sdgkt,a0,a1,61,1838
+[eof,drft,sdgkt,a0,a1,sdckt,61,1838
+eofi=62,1917
+ic=65,1938
+[eof,66,1945
+[eof,drft,66,1945
+[eof,drft,sdgkt,66,1945
+[eof,drft,sdgkt,a0,66,1945
+[eof,drft,sdgkt,a0,a1,66,1945
+[eof,drft,sdgkt,a0,a1,sdckt,66,1945
+eofj=67,2024
+ic=69,2037
+[eof,70,2044
+[eof,drft,70,2044
+[eof,drft,sdgkt,70,2044
+[eof,drft,sdgkt,a0,70,2044
+[eof,drft,sdgkt,a0,a1,70,2044
+[eof,drft,sdgkt,a0,a1,sdckt,70,2044
+eofuk=71,2123
+ic=73,2137
+[eof,74,2144
+[eof,drft,74,2144
+[eof,drft,sdgkt,74,2144
+[eof,drft,sdgkt,a0,74,2144
+[eof,drft,sdgkt,a0,a1,74,2144
+[eof,drft,sdgkt,a0,a1,sdckt,74,2144
+eofus=75,2223
+yrsh=93,2448
+yrsh=1951+(1:39);yrsf=93,2448
+yr=96,2488
+yr=[yrsh yrsf];eoc=96,2488
+yr=[yrsh yrsf];eoc=[eo(1,:) eofc(2,:)];eof=96,2488
+yr=[yrsh yrsf];eoc=[eo(1,:) eofc(2,:)];eof=[eo(2,:) eoff(2,:)];eog=96,2488
+eoi=97,2577
+eoi=[eo(4,:) eofi(2,:)];eoj=97,2577
+eouk=98,2627
+eouk=[eo(6,:) eofuk(2,:)];eous=98,2627
+clf;100,2683
+plot(yr,eoc);hold;101,2689
+plot(yr,eouk,'<');plot(102,2781
+    end 122,3311
+    [mxh,123,3324
+    [kt9750,124,3376
+    [kt9750,kt500,124,3376
+    [kt9750,kt500,kt250,124,3376
+    [kt9750,kt500,kt250,e9750,124,3376
+    [kt9750,kt500,kt250,e9750,e500,124,3376
+yrf5=129,3483
+yr5=130,3504
+eosc=132,3523
+eosc=[eo(1,:) eos(1,:)];eosf=132,3523
+eosc=[eo(1,:) eos(1,:)];eosf=[eo(2,:) eos(2,:)];eosg=132,3523
+eosi=133,3597
+eosi=[eo(4,:) eos(4,:)];eosj=133,3597
+clf;139,3733
+plot(yr5,eosc);hold;140,3739
+
+multicountry0hmd.m,614
+%This code 3,19
+nfor=21,915
+ntrj=22,974
+rndgk=24,1037
+nffy=26,1133
+nffy5=27,1169
+nspt=28,1182
+ic=35,1550
+mx=37,1605
+% NOTE39,1618
+[eoh,40,1626
+[eoh,eof,40,1626
+[eoh,eof,drft,40,1626
+nhly=46,1909
+% NOTE	47,1921
+%Canada(55,2287
+mx=336,9186
+[Rsq,337,9197
+[Rsq,a0,337,9197
+[Rsq,a0,a1,337,9197
+[Rsq,a0,a1,sda0,337,9197
+[Rsq,a0,a1,sda0,sda1,337,9197
+mx=339,9289
+[Rsq,340,9300
+[Rsq,a0,340,9300
+[Rsq,a0,a1,340,9300
+[Rsq,a0,a1,sda0,340,9300
+[Rsq,a0,a1,sda0,sda1,340,9300
+mx=342,9391
+[Rsq,343,9402
+[Rsq,a0,343,9402
+[Rsq,a0,a1,343,9402
+[Rsq,a0,a1,sda0,343,9402
+[Rsq,a0,a1,sda0,sda1,343,9402
+
+multicountry0hmd0.m,3224
+% This code makes pictures,3,8
+% This code makes pictures, but also does a bunch of analyses on death rates 3,8
+RKt=14,302
+%drift;17,334
+%drift; dKt=17,334
+%drift; dKt=diff(Kt);drft=17,334
+%95% CI Non-d;19,395
+%95% CI Non-d;vn=19,395
+%Sep;20,477
+%Sep; vs=20,477
+%var96=22,552
+%var50n=23,638
+%var50s=24,725
+%Official G7 25,813
+%Official G7 2050, vof=25,813
+% Figure2,27,873
+timeh=29,938
+clf;30,958
+nfor=47,1433
+nfor=55;nfor5=47,1433
+nfor=55;nfor5=11;nspt=47,1433
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\usa\m5296.txt;48,1459
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\usa\m5296.txt;mx=48,1459
+[bx,49,1546
+[bx,kt,49,1546
+clf;50,1597
+clf;plot(age,bx);hold;50,1597
+%Figure 3. b(53,1652
+load ..\multicountry1\multicountry0\data\japan\m5296.txt;140,5219
+mx=141,5278
+nfor=142,5289
+nfor=55;nfor5=142,5289
+nfor=55;nfor5=11;nspt=142,5289
+[bx,143,5315
+[bx,kt,143,5315
+%load ..\multicountry1\multicountry0\data\usa\m5296.txt;154,5583
+load ..\multicountry1\multicountry0\data\denmark\m5296.txt;155,5641
+mx=156,5702
+nfor=157,5713
+nfor=55;nfor5=157,5713
+nfor=55;nfor5=11;nspt=157,5713
+[bx,158,5739
+[bx,kt,158,5739
+Ktc=166,5982
+Ktc=[Kthp Ktfp];KtJP=166,5982
+Ktc=[Kthp Ktfp];KtJP=[KthpJP KtfpJP];KtUS=166,5982
+Ktc=[Kthp Ktfp];KtJP=[KthpJP KtfpJP];KtUS=[KthpUS KtfpUS];Time=166,5982
+clf;167,6061
+clf;plot(Time, Ktc,'k');hold;167,6061
+epdm=177,6612
+epus=178,6659
+epjp=180,6758
+clf;183,6862
+clf;plot(timeus,epjp,'ko-','LineWidth',2);hold;183,6862
+epdm=185,6987
+epus=186,7035
+epjp=188,7135
+load BXKT;202,7743
+nfor=203,7774
+ntrj=204,7824
+timeh=205,7858
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\bulgaria\m5296.txt;206,7878
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\bulgaria\m5296.txt;mx=206,7878
+[bx,207,7970
+[bx,kt,207,7970
+clf;208,8021
+clf;plot(timeh,kt,'ko-');hold;208,8021
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\hungary\m5296.txt;209,8053
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\hungary\m5296.txt;mx=209,8053
+[bx,210,8144
+[bx,kt,210,8144
+%Lithuania(220,8430
+nffy=224,8548
+nffy=1997;nffy5=224,8548
+nspt=225,8571
+clear mx;228,8628
+load ..\multicountry1\multicountry0\data\lithuania\m6096.txt;229,8639
+mx=230,8702
+nhly=231,8713
+timeh=232,8725
+timef=233,8745
+[eofs]=multicountry2S(mx,nhly,nffy5,nfor5,ntrj);%Separate forecast234,8767
+[eoh,235,8835
+[eoh,eof,235,8835
+[eoh,eof,drft,235,8835
+[eoh,eof,drft,sdgkt,235,8835
+[eoh,eof,drft,sdgkt,a0,235,8835
+[eoh,eof,drft,sdgkt,a0,a1,235,8835
+subplot(2,2,3);plot(timeh,eoh,'k');hold;236,8924
+subplot(2,2,4);plot(timeh,eoh,'k');hold;238,9117
+%OLd Figure 264,9503
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\sweden\m5296.txt;267,9584
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\sweden\m5296.txt;%R=267,9584
+mxsd=log(m5296);axsd=268,9672
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\denmark\m5296.txt;269,9706
+load c:\users\linan\surrey04\multicountry1\multicountry0\data\denmark\m5296.txt;%R=269,9706
+mxdm=log(m5296);axdm=270,9795
+er%max at age=281,9981
+%iage=286,10125
+clf;287,10135
+clf;plot(timeh,mc(:,iage));hold;287,10135
+
+multicountry1.m,864
+function 3,4
+function [mxc,3,4
+function [mxc,mx,3,4
+function [mxc,mx,Bx,3,4
+function [mxc,mx,Bx,Kt,3,4
+function [mxc,mx,Bx,Kt,bxc,3,4
+nc0=8,94
+nc=9,130
+mxc=10,157
+pxc=11,198
+pxt=19,497
+nag=20,539
+pxt=34,1023
+nag=35,1065
+pxt=49,1540
+nag=50,1582
+pxt=64,2034
+nag=65,2076
+pxt=79,2540
+nag=80,2582
+pxt=94,3032
+nag=95,3074
+pxt=109,3524
+nag=110,3566
+    mxcg=124,3885
+       p=0;d=133,4099
+           d=136,4172
+   mxcg=141,4287
+lnmx = log(mx);Ax=146,4378
+% SVD,150,4464
+% SVD, where bx is sum to 150,4464
+[U S V] = svd(lnmx1,0);Bx 151,4493
+[U S V] = svd(lnmx1,0);Bx = V(:,1)/sum(V(:,1));K=151,4493
+   kt=K(i);mx1=155,4623
+    end181,5086
+    bx=183,5197
+    xx1=0;xx2=185,5295
+    xx1=0;xx2=0;xx3=185,5295
+        xx1=189,5395
+        xx2=190,5443
+        xx3=191,5503
+    ktoo=Kt(i);kt=197,5645
+    axo=201,5727
+%ktc=207,5825
+
+multicountry1hmd.m,7323
+function 1,0
+function [mxc,1,0
+function [mxc,mx,1,0
+function [mxc,mx,Bx,1,0
+function [mxc,mx,Bx,Kt,1,0
+function [mxc,mx,Bx,Kt,bxc,1,0
+function [mxc,mx,Bx,Kt,bxc,Ktc,1,0
+clear;4,98
+nc0=5,105
+nht=6,159
+mxc=7,184
+mxc=zeros(nc0,nht,24);%country-specific mx,7,184
+pxc=8,247
+load ./multicountry0/data/austria/m5296.txt;11,300
+load ./multicountry0/data/canada/m5296.txt;14,445
+load ./multicountry0/data/denmark/m5296.txt;17,589
+load ./multicountry0/data/england/m5296.txt;20,734
+load ./multicountry0/data/finland/m5296.txt;23,880
+load ./multicountry0/data/france/m5296.txt;26,1025
+load ./multicountry0/data/germanyw/m5296.txt;29,1170
+load ./multicountry0/data/italy/m5296.txt;32,1316
+load ./multicountry0/data/japan/m5296.txt;35,1456
+load ./multicountry0/data/netherland/m5296.txt;38,1601
+load ./multicountry0/data/norway/m5296.txt;41,1754
+load ./multicountry0/data/spain/m5296.txt;44,1898
+load ./multicountry0/data/sweden/m5296.txt;47,2041
+load ./multicountry0/data/sweitzerland/m5296.txt;50,2192
+load ./multicountry0/data/usa/m5296.txt;53,2346
+    mxcg=62,2567
+	p=0;d=70,2720
+	  d=73,2772
+lnmx = log(mx);Ax=82,2916
+% SVD,87,2999
+% SVD, where bx is sum to 87,2999
+Bx 89,3051
+Bx = bx_normalize(V(:,1)); %Bx 89,3051
+K=90,3104
+  kt=K(i);mx1=95,3185
+save BXKT Bx Kt;99,3248
+  %Separate 124,3613
+  bxo = bx_normalize(V(:,1));  %bxo=127,3694
+  xx1=133,3857
+  xx1=0;xx2=133,3857
+	  xx1=137,3932
+	  xx2=138,3974
+  %Group143,4068
+  %   axo=149,4289
+  xx1=0;xx2=152,4374
+  xx1=0;xx2=0;xx3=152,4374
+	  xx1=156,4455
+	  xx2=157,4497
+	  xx3=158,4551
+	  %   xx3=159,4621
+  a0=xxx(1);a1=174,5002
+  a0=xxx(1);a1=xxx(2);a00=174,5002
+  sdckt=184,5196
+  e0=185,5218
+%clf;plot(kc(ic,:));hold;196,5418
+% mx=202,5550
+% [RsqRW,203,5562
+% [RsqRW,RsqAR,203,5562
+% [RsqRW,RsqAR,a0,203,5562
+% [RsqRW,RsqAR,a0,a1,203,5562
+% [RsqRW,RsqAR,a0,a1,sda0,203,5562
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,203,5562
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,203,5562
+% mx=208,5694
+% [RsqRW,209,5706
+% [RsqRW,RsqAR,209,5706
+% [RsqRW,RsqAR,a0,209,5706
+% [RsqRW,RsqAR,a0,a1,209,5706
+% [RsqRW,RsqAR,a0,a1,sda0,209,5706
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,209,5706
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,209,5706
+% mx=214,5840
+% [RsqRW,215,5852
+% [RsqRW,RsqAR,215,5852
+% [RsqRW,RsqAR,a0,215,5852
+% [RsqRW,RsqAR,a0,a1,215,5852
+% [RsqRW,RsqAR,a0,a1,sda0,215,5852
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,215,5852
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,215,5852
+% mx=220,5986
+% [RsqRW,221,5998
+% [RsqRW,RsqAR,221,5998
+% [RsqRW,RsqAR,a0,221,5998
+% [RsqRW,RsqAR,a0,a1,221,5998
+% [RsqRW,RsqAR,a0,a1,sda0,221,5998
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,221,5998
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,221,5998
+% mx=226,6132
+% [RsqRW,227,6144
+% [RsqRW,RsqAR,227,6144
+% [RsqRW,RsqAR,a0,227,6144
+% [RsqRW,RsqAR,a0,a1,227,6144
+% [RsqRW,RsqAR,a0,a1,sda0,227,6144
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,227,6144
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,227,6144
+% mx=232,6276
+% [RsqRW,233,6288
+% [RsqRW,RsqAR,233,6288
+% [RsqRW,RsqAR,a0,233,6288
+% [RsqRW,RsqAR,a0,a1,233,6288
+% [RsqRW,RsqAR,a0,a1,sda0,233,6288
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,233,6288
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,233,6288
+% mx=238,6424
+% [RsqRW,239,6436
+% [RsqRW,RsqAR,239,6436
+% [RsqRW,RsqAR,a0,239,6436
+% [RsqRW,RsqAR,a0,a1,239,6436
+% [RsqRW,RsqAR,a0,a1,sda0,239,6436
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,239,6436
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,239,6436
+% mx=244,6566
+% [RsqRW,245,6578
+% [RsqRW,RsqAR,245,6578
+% [RsqRW,RsqAR,a0,245,6578
+% [RsqRW,RsqAR,a0,a1,245,6578
+% [RsqRW,RsqAR,a0,a1,sda0,245,6578
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,245,6578
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,245,6578
+% mx=250,6708
+% [RsqRW,251,6720
+% [RsqRW,RsqAR,251,6720
+% [RsqRW,RsqAR,a0,251,6720
+% [RsqRW,RsqAR,a0,a1,251,6720
+% [RsqRW,RsqAR,a0,a1,sda0,251,6720
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,251,6720
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,251,6720
+% mx=256,6860
+% [RsqRW,257,6872
+% [RsqRW,RsqAR,257,6872
+% [RsqRW,RsqAR,a0,257,6872
+% [RsqRW,RsqAR,a0,a1,257,6872
+% [RsqRW,RsqAR,a0,a1,sda0,257,6872
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,257,6872
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,257,6872
+% mx=262,7004
+% [RsqRW,263,7016
+% [RsqRW,RsqAR,263,7016
+% [RsqRW,RsqAR,a0,263,7016
+% [RsqRW,RsqAR,a0,a1,263,7016
+% [RsqRW,RsqAR,a0,a1,sda0,263,7016
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,263,7016
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,263,7016
+% mx=268,7146
+% [RsqRW,269,7158
+% [RsqRW,RsqAR,269,7158
+% [RsqRW,RsqAR,a0,269,7158
+% [RsqRW,RsqAR,a0,a1,269,7158
+% [RsqRW,RsqAR,a0,a1,sda0,269,7158
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,269,7158
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,269,7158
+% mx=274,7290
+% [RsqRW,275,7302
+% [RsqRW,RsqAR,275,7302
+% [RsqRW,RsqAR,a0,275,7302
+% [RsqRW,RsqAR,a0,a1,275,7302
+% [RsqRW,RsqAR,a0,a1,sda0,275,7302
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,275,7302
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,275,7302
+% mx=280,7446
+% [RsqRW,281,7458
+% [RsqRW,RsqAR,281,7458
+% [RsqRW,RsqAR,a0,281,7458
+% [RsqRW,RsqAR,a0,a1,281,7458
+% [RsqRW,RsqAR,a0,a1,sda0,281,7458
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,281,7458
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,281,7458
+% mx=286,7584
+% [RsqRW,287,7596
+% [RsqRW,RsqAR,287,7596
+% [RsqRW,RsqAR,a0,287,7596
+% [RsqRW,RsqAR,a0,a1,287,7596
+% [RsqRW,RsqAR,a0,a1,sda0,287,7596
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,287,7596
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,287,7596
+% mx=294,7811
+% mx=m5296;nht=294,7811
+% [epr,295,7830
+% [epr,ar,295,7830
+% load ./multicountry0/data/czech/m5296.txt;298,7890
+% mx=299,7935
+% mx=m5296;nht=299,7935
+% [epr,300,7954
+% [epr,ar,300,7954
+% load ./multicountry0/data/germanye/m5696.txt;304,8028
+% mx=305,8076
+% mx=m5696;nht=305,8076
+% Kto=306,8095
+% [epr,307,8111
+% [epr,ar,307,8111
+% load ./multicountry0/data/hungary/m5296.txt;311,8185
+% mx=312,8232
+% mx=m5296;nht=312,8232
+% [epr,313,8251
+% [epr,ar,313,8251
+% load ./multicountry0/data/lithuania/m5296.txt;317,8326
+% mx=318,8375
+% mx=m5296;nht=318,8375
+% [epr,319,8394
+% [epr,ar,319,8394
+% load ./multicountry0/data/russia/m7096.txt;324,8471
+% mx=325,8517
+% mx=m7096;nht=325,8517
+% Kto=326,8536
+% [epr,327,8553
+% [epr,ar,327,8553
+% load ./multicountry0/data/bulgaria/m5296.txt;330,8617
+% mx=331,8665
+% [RsqRW,332,8677
+% [RsqRW,RsqAR,332,8677
+% [RsqRW,RsqAR,a0,332,8677
+% [RsqRW,RsqAR,a0,a1,332,8677
+% [RsqRW,RsqAR,a0,a1,sda0,332,8677
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,332,8677
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,332,8677
+% mx=337,8807
+% [RsqRW,338,8819
+% [RsqRW,RsqAR,338,8819
+% [RsqRW,RsqAR,a0,338,8819
+% [RsqRW,RsqAR,a0,a1,338,8819
+% [RsqRW,RsqAR,a0,a1,sda0,338,8819
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,338,8819
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,338,8819
+% mx=344,8966
+% [RsqRW,345,8978
+% [RsqRW,RsqAR,345,8978
+% [RsqRW,RsqAR,a0,345,8978
+% [RsqRW,RsqAR,a0,a1,345,8978
+% [RsqRW,RsqAR,a0,a1,sda0,345,8978
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,345,8978
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,345,8978
+% mx=351,9123
+% [RsqRW,352,9135
+% [RsqRW,RsqAR,352,9135
+% [RsqRW,RsqAR,a0,352,9135
+% [RsqRW,RsqAR,a0,a1,352,9135
+% [RsqRW,RsqAR,a0,a1,sda0,352,9135
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,352,9135
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,352,9135
+% mx=358,9284
+% [RsqRW,359,9296
+% [RsqRW,RsqAR,359,9296
+% [RsqRW,RsqAR,a0,359,9296
+% [RsqRW,RsqAR,a0,a1,359,9296
+% [RsqRW,RsqAR,a0,a1,sda0,359,9296
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,359,9296
+% [RsqRW,RsqAR,a0,a1,sda0,sda1,t,359,9296
+
+multicountry1hmdG.m,358
+function 3,4
+function [epr,3,4
+function [epr,ar,3,4
+    mxcg=10,156
+     end32,617
+    kt=37,738
+    xx1=0;xx2=38,801
+    xx1=0;xx2=0;xx3=38,801
+        xx2=42,903
+        xx3=43,956
+     epr(2)=1-xx2/xx1;%Rc;46,1044
+       a0=xxx(1);a1=56,1351
+       a0=xxx(1);a1=xxx(2);a00=56,1351
+       ar=57,1392
+       sdckt=67,1623
+       rsq=68,1651
+
+multicountry1hmdo.m,1774
+function 3,4
+function [mxc,3,4
+function [mxc,mx,3,4
+function [mxc,mx,Bx,3,4
+function [mxc,mx,Bx,Kt,3,4
+function [mxc,mx,Bx,Kt,bxc,3,4
+nc0=6,89
+nht=7,126
+%nc=8,152
+mxc=9,180
+mxc=zeros(nc0,nht,24);%country-specific mx,9,180
+pxc=10,244
+load c:\limpi\multicountry0\data\austria\m5296.txt;12,298
+load c:\limpi\multicountry0\data\canada\m5296.txt;15,460
+load c:\limpi\multicountry0\data\denmark\m5296.txt;18,621
+load c:\limpi\multicountry0\data\england\m5296.txt;21,785
+load c:\limpi\multicountry0\data\finland\m5296.txt;24,948
+load c:\limpi\multicountry0\data\france\m5296.txt;27,1110
+load c:\limpi\multicountry0\data\germanyw\m5296.txt;30,1272
+load c:\limpi\multicountry0\data\italy\m5296.txt;33,1435
+load c:\limpi\multicountry0\data\japan\m5296.txt;36,1592
+load c:\limpi\multicountry0\data\netherland\m5296.txt;39,1754
+load c:\limpi\multicountry0\data\norway\m5296.txt;42,1924
+load c:\limpi\multicountry0\data\sweden\m5296.txt;45,2086
+load c:\limpi\multicountry0\data\sweitzerland\m5296.txt;48,2254
+load c:\limpi\multicountry0\data\usa\m5296.txt;51,2425
+    mxcg=60,2682
+       p=0;d=68,2842
+           d=71,2917
+lnmx = log(mx);Ax=80,3093
+% SVD,84,3180
+% SVD, where bx is sum to 84,3180
+[U S V] = svd(lnmx1,0);Bx 85,3209
+[U S V] = svd(lnmx1,0);Bx = V(:,1)/sum(V(:,1));K=85,3209
+   kt=K(i);mx1=89,3340
+    %Separate 117,3878
+     xx1=124,4108
+     xx1=0;xx2=124,4108
+        xx1=128,4204
+        xx2=129,4252
+    %Group133,4365
+    %   axo=138,4567
+     xx1=0;xx2=141,4661
+     xx1=0;xx2=0;xx3=141,4661
+        xx1=145,4763
+        xx2=146,4811
+        xx3=147,4871
+     %   xx3=148,4947
+       a0=xxx(1);a1=163,5406
+       a0=xxx(1);a1=xxx(2);a00=163,5406
+       sdckt=175,5749
+clf;182,5841
+clf;plot(kc(ic,:));hold;182,5841
+
+multicountry2.m,1453
+function 2,2
+function [eof,2,2
+function [eof,drft,2,2
+function [eof,drft,sdgkt,2,2
+function [eof,drft,sdgkt,a0,2,2
+function [eof,drft,sdgkt,a0,a1,2,2
+function [eof,drft,sdgkt,a0,a1,sdckt,2,2
+%mxt--matrix of ASDR,12,230
+%nffy--first year of forecasting,13,253
+%nfor--number of time to be forecasted,14,288
+%ntrj--number of trajectories,15,329
+xx1=17,363
+nht=18,379
+nag=19,422
+lnmx = log(mxt);ax=23,495
+% SVD,29,624
+% SVD, where bx is sum to 29,624
+[U S V] = svd(lnmx1,0);bx 30,653
+[U S V] = svd(lnmx1,0);bx = V(:,1)/sum(V(:,1));k=30,653
+epr=31,731
+    ktoo=Kt(i);kt=37,832
+    axo=41,908
+dKt=diff(Kt);drft=46,1036
+dKt=diff(Kt);drft=mean(dKt); sdgkt=46,1036
+%(5) Estimating a0,49,1100
+a0=xxx(1);a1=57,1379
+a0=xxx(1);a1=xxx(2);a00=57,1379
+sdckt=62,1483
+Rsq=63,1504
+randn('state',1); rndck=72,1598
+stokg=75,1751
+stokg=zeros(ntrj,nfor+1);stokg(:,1)=Kt(nht);%Group Kt,75,1751
+stokc=76,1811
+stokc=zeros(ntrj,nfor+1);stokc(:,1)=kt1(nht);%Local ktc,76,1811
+           if mxf(tind,tt,1)>0.78;mxf(tind,tt,1)=0.78;end;99,2500
+           if mxf(tind,tt,2)>0.66;mxf(tind,tt,2)=0.66;end;100,2569
+           for i=3:3;if mxf(tind,tt,i)>0.4;mxf(tind,tt,i)=0.39;end;101,2629
+           for i=3:3;if mxf(tind,tt,i)>0.4;mxf(tind,tt,i)=0.39;end;end;101,2629
+%(7) Forecasted Eo 108,2746
+[kt9750,109,2768
+[kt9750,kt500,109,2768
+[kt9750,kt500,kt250,109,2768
+[kt9750,kt500,kt250,e9750,109,2768
+[kt9750,kt500,kt250,e9750,e500,109,2768
+
+multicountry2GC.m,449
+function 1,0
+function [eoh,1,0
+function [eoh,eof,1,0
+function [eoh,eof,drft,1,0
+  nht=22,863
+  xxx=33,1093
+  nag=34,1111
+  drft=38,1221
+  sdgkt=39,1241
+  stokg=46,1373
+  stokg(:,1)=Kt(nht);%Group Kt,47,1402
+  % (6.3)mx --in 5-yr;55,1657
+  mxf=57,1722
+	  end;66,1965
+	  end;69,2036
+		end;73,2114
+	  end;74,2122
+	end;75,2131
+  end;76,2138
+  %(7) Forecasted Eo 81,2175
+  [e9750,82,2199
+  [e9750,e500,82,2199
+  %Male ASDR(89,2334
+
+multicountry2GCS.m,903
+function 1,0
+function [eoh,1,0
+function [eoh,eof,1,0
+function [eoh,eof,drft,1,0
+function [eoh,eof,drft,sdgkt,1,0
+function [eoh,eof,drft,sdgkt,a0,1,0
+function [eoh,eof,drft,sdgkt,a0,a1,1,0
+xxx=size(mx);nht=14,302
+xxx=25,462
+nag=26,478
+lnmx 29,511
+ax=30,529
+% SVD of the residuals36,637
+bx 38,686
+kt=39,712
+drft=44,898
+sdgkt=45,916
+% Estimate a0,47,941
+% Estimate a0, a1,47,941
+a0=xxx(1);a1=55,1218
+a0=xxx(1);a1=xxx(2);a00=55,1218
+sdckt=64,1406
+Rsq=65,1495
+sda0=68,1585
+sda1=69,1612
+rndgc=79,1833
+rndgce=82,1894
+stokg=85,1997
+stokc=87,2045
+mxf=104,2504
+	if mxf(tind,tt,1)>0.78;mxf(tind,tt,1)=0.78;end;111,2728
+	if mxf(tind,tt,2)>0.66;mxf(tind,tt,2)=0.66;end;112,2787
+	for i=3:3;if mxf(tind,tt,i)>0.4;mxf(tind,tt,i)=0.39;end;113,2837
+	for i=3:3;if mxf(tind,tt,i)>0.4;mxf(tind,tt,i)=0.39;end;end;113,2837
+%(7) Forecasted Eo 118,2925
+[e9750,119,2947
+[e9750,e500,119,2947
+
+multicountry2S.m,507
+function 1,0
+nfst=24,903
+nstp=25,921
+xxx=28,943
+nht=29,958
+nag=35,1141
+lnmx = log(mxt);ax=39,1202
+% SVD,43,1289
+% SVD, where bx is sum to 43,1289
+bx 45,1343
+k 46,1369
+%(1.2)To modify kt by fitting Eo,49,1418
+	kt=k(i);mx1=52,1496
+  kteo=58,1604
+%(2.0)Get the random numbers rdn(63,1650
+	%here the error of estimating drft term is included by 76,2092
+[e9750,92,2398
+[e9750,e500,92,2398
+aa(1)=0;aa(2)=1;aa(3:24)=5*(1:22);tt=95,2482
+clf;97,2545
+%mxo(1:ntrj,1:24)=mxf(:,nfor5,:);xo=101,2733
+
+multisfact.m,579
+function 1,0
+function [bx,1,0
+function [bx,kt,1,0
+  nht=21,645
+  %mxt--matrix of ASDR,32,816
+  %nffy--first year of forecasting,33,841
+  %nfor--number of time to be forecasted,34,878
+  %nfor--number of time to be forecasted in 5-yr interval,35,921
+  %ntrj--number of trajectories,37,1064
+  xxx=39,1100
+  nag=40,1118
+  ax=45,1198
+  % SVD,51,1327
+  % SVD, where bx is sum to 51,1327
+  bx 53,1385
+  kt=54,1413
+  drft=59,1573
+  sdgkt=60,1593
+  %(5) Estimating a0,63,1632
+  a1=78,1959
+  a00=79,1973
+  sdckt=88,2127
+  Rsq 89,2150
+  sda0=91,2220
+  sda1=92,2249
+
+multisfactAR.m,879
+function 1,0
+function [RsqRW,1,0
+function [RsqRW,RsqAR,1,0
+function [RsqRW,RsqAR,a0,1,0
+function [RsqRW,RsqAR,a0,a1,1,0
+function [RsqRW,RsqAR,a0,a1,sda0,1,0
+function [RsqRW,RsqAR,a0,a1,sda0,sda1,1,0
+function [RsqRW,RsqAR,a0,a1,sda0,sda1,z,1,0
+xxx=size(mx);nht=5,168
+%mxt--matrix of ASDR,15,325
+%nffy--first year of forecasting,16,348
+%nfor--number of time to be forecasted,17,383
+%nfor--number of time to be forecasted in 5-yr interval,18,424
+%ntrj--number of trajectories,20,563
+xxx=22,597
+xxx=size(mxt);nag=22,597
+lnmx = log(mxt);ax=26,663
+% SVD,33,789
+% SVD, where bx is sum to 33,789
+[U S V] = svd(lnmx1,0);bx 34,818
+[U S V] = svd(lnmx1,0);bx = V(:,1)/sum(V(:,1));kt=34,818
+drft=39,978
+sdgkt=40,996
+%(5) Estimating a0,43,1031
+a0=xxx(1);a1=53,1314
+a0=xxx(1);a1=xxx(2);a00=53,1314
+sdckt=61,1453
+e0=62,1474
+RsqRW=63,1488
+sda0=67,1593
+sda1=68,1620
+
+prctile.m,169
+function y 1,0
+%	Y 3,78
+xx 22,697
+[m,23,711
+    n 27,762
+    q 28,773
+    xx 29,803
+    q 31,842
+    xx 32,872
+    xx = [min(x); xx;32,872
+q 36,909
+y 38,925
+
+report503.m,877
+%(I)Get mxc,3,4
+%(I)Get mxc, Bx and Kt,3,4
+%Denmark(8,106
+clf;19,353
+subplot(2,1,1);plot(age,ax0);hold;20,359
+subplot(2,1,2);plot(age,rax01);hold;22,461
+%England(30,637
+clf;41,882
+subplot(2,1,1);plot(age,ax0);hold;42,888
+subplot(2,1,2);plot(age,rax01);hold;44,990
+%GermanyE(49,1160
+clf;61,1423
+subplot(2,1,1);plot(age,ax0);hold;62,1429
+subplot(2,1,2);plot(age,rax01);hold;64,1531
+%Japan(69,1706
+clf;80,1948
+subplot(2,1,1);plot(age,ax0);hold;81,1954
+subplot(2,1,2);plot(age,rax01);hold;83,2056
+%Netherlands(88,2224
+clf;99,2477
+subplot(2,1,1);plot(age,ax0);hold;100,2483
+subplot(2,1,2);plot(age,rax01);hold;102,2585
+%Norway(107,2759
+clf;118,3002
+subplot(2,1,1);plot(age,ax0);hold;119,3008
+subplot(2,1,2);plot(age,rax01);hold;121,3110
+%Usa(127,3281
+clf;137,3507
+subplot(2,1,1);plot(age,ax0);hold;138,3513
+subplot(2,1,2);plot(age,rax01);hold;140,3615
+
+report513.m,707
+function 2,2
+function [ax0,2,2
+function [ax0,ax1,2,2
+function [ax0,ax1,bx,2,2
+%This code does non-divergent LC forecast,3,49
+xxx=4,104
+xxx=size(mx);nht=4,104
+%mxt--matrix of ASDR,14,309
+%nffy--first year of forecasting,15,332
+%nfor--number of time to be forecasted,16,367
+%nfor--number of time to be forecasted in 5-yr interval,17,408
+%ntrj--number of trajectories,19,547
+xxx=21,581
+xxx=size(mxt);nag=21,581
+lnmx = log(mxt);ax0=25,668
+% SVD,32,838
+% SVD, where bx is sum to 32,838
+[U S V] = svd(lnmx0,0);bx 33,867
+[U S V] = svd(lnmx1,0);cx 34,916
+[U S V] = svd(lnmx1,0);cx = V(:,1)/sum(V(:,1));kt=34,916
+%(5) Estimating a0,38,1015
+a0=xxx(1);a1=46,1292
+a0=xxx(1);a1=xxx(2);a00=46,1292
+
+singlecountry.m,442
+function 3,4
+function [bxco,3,4
+nc0=8,88
+nc=9,124
+mxc=10,151
+pxc=11,192
+pxt=19,451
+nag=20,493
+pxt=34,937
+nag=35,979
+pxt=49,1414
+nag=50,1456
+pxt=64,1868
+nag=65,1910
+pxt=79,2334
+nag=80,2376
+pxt=94,2786
+nag=95,2828
+pxt=109,3238
+nag=110,3280
+    mxcg=124,3599
+    end151,4051
+    bx=153,4163
+    xx1=0;xx2=155,4261
+    xx1=0;xx2=0;xx3=155,4261
+        xx1=159,4361
+        xx2=160,4409
+    axo=169,4595
+%ktc=175,4684
+
+tryvarbx.m,1741
+load d:\linan1\mike\nmx.3396.asc;7,43
+mxo=8,78
+nhts=9,88
+nhts=1933;nht=9,88
+nhts=1933;nht=64;nht1=9,88
+[bx,10,115
+load d:\multicountry\data\austria\m5296.txt;17,261
+mxo=18,307
+nht=19,319
+nht=45;nht1=19,319
+[bx,20,336
+load d:\multicountry\data\canada\m5296.txt;23,383
+mxo=24,428
+nht=25,440
+nht=45;nht1=25,440
+[bx,26,457
+load d:\multicountry\data\denmark\m5296.txt;29,505
+mxo=30,551
+nht=31,563
+nht=45;nht1=31,563
+[bx,32,580
+load d:\multicountry\data\england\m5296.txt;35,628
+mxo=36,674
+nht=37,686
+nht=45;nht1=37,686
+[bx,38,703
+load d:\multicountry\data\finland\m5296.txt;41,751
+mxo=42,797
+nht=43,809
+nht=45;nht1=43,809
+[bx,44,826
+load d:\multicountry\data\france\m5296.txt;48,880
+mxo=49,925
+nhts=50,937
+nhts=1952;nht=50,937
+nhts=1952;nht=45;nht1=50,937
+[bx,51,964
+load d:\multicountry\data\germanyw\m5296.txt;56,1106
+mxo=57,1153
+nht=58,1165
+nht=45;nht1=58,1165
+[bx,59,1182
+load d:\multicountry\data\italy\m5296.txt;62,1228
+mxo=63,1272
+nht=64,1284
+nht=45;nht1=64,1284
+[bx,65,1301
+load d:\multicountry\data\japan\m5296.txt;69,1354
+mxo=70,1398
+nhts=71,1410
+nhts=1952;nht=71,1410
+nhts=1952;nht=45;nht1=71,1410
+[bx,72,1437
+load d:\multicountry\data\netherland\m5296.txt;77,1580
+mxo=78,1629
+nht=79,1641
+nht=45;nht1=79,1641
+[bx,80,1658
+load d:\multicountry\data\norway\m5296.txt;83,1705
+mxo=84,1750
+nht=85,1762
+nht=45;nht1=85,1762
+[bx,86,1779
+load d:\multicountry\data\sweden\m5296.txt;90,1828
+mxo=91,1873
+nht=92,1885
+nht=45;nht1=92,1885
+[bx,93,1902
+load d:\multicountry\data\sweitzerland\m5296.txt;96,1955
+mxo=97,2006
+nht=98,2018
+nht=45;nht1=98,2018
+[bx,99,2035
+load d:\multicountry\data\usa\m5296.txt;103,2086
+mxo=104,2128
+nht=105,2140
+nht=45;nht1=105,2140
+[bx,106,2157
+
+tryvarbx1.m,736
+function 3,4
+function [bx,3,4
+ax=19,281
+% SVD,23,375
+[U S V] = svd(lnmx1,0);bx 24,384
+[U S V] = svd(lnmx1,0);bx = V(:,1)/sum(V(:,1));K=24,384
+   ko=K(i);mx1=32,584
+ax1=42,753
+end49,927
+[U S V] = svd(lnmxs1,0); bx2 50,932
+k2=51,984
+%clf;53,1018
+%clf;plot(bx);hold;53,1018
+end63,1275
+   cx 67,1330
+   cx = V(:,1);h=67,1330
+   cx 69,1370
+   cx = -V(:,1);h=69,1370
+z=72,1416
+z=bx2-bx;cxo=72,1416
+nht2=75,1461
+a0=xxx(1);a1=87,1709
+a0=xxx(1);a1=xxx(2);a00=87,1709
+       sdckt=96,1915
+       Rsq=97,1943
+       sda0=sdckt/sqrt((nht-1));sda1=99,2013
+ginf=a0/(1-a1);cxi=102,2111
+det=103,2140
+time=105,2201
+clf;106,2233
+clf;subplot(2,1,1);plot(age,cxi);hold;106,2233
+subplot(2,1,2);plot(time,g,'o');hold;109,2396

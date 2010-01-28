@@ -1,0 +1,41 @@
+## -*-html-*-
+<DIV class="ListObjects">
+
+<table border=1 width=100% cellpadding=5px>
+
+## Header 
+<tr> 
+	<td>Serial Number <br>(click to view)</td>
+	<td>Class</td>
+	<td>Creator</td>
+	<td>Datetime created</td>
+	<td>Comments</td>
+	<td><b>DELETE</b></td>
+</tr>
+## End header with column names
+
+## Loop over the tuples.  Note embedded attribute in object link for debugging
+#for $objectRow in $OBJECT_LIST
+<tr> 
+	<td width=15%><a notes="$objectRow[4]" $LARRY_OBJECT_ID_KEY=$objectRow[0] 
+                        href=$LARRY_WWW_DISPLAY_OBJECT?$LARRY_OBJECT_ID_KEY=$objectRow[0]>$objectRow[0]</a></td>
+	<td width=15%>$objectRow[1]&nbsp;</td>
+	<td>$objectRow[2]&nbsp;</td>
+	<td>$objectRow[3] &nbsp;</td>
+	<td>$objectRow[4] &nbsp;</td>
+	<td><a href=$LARRY_WWW_DELETE_OBJECT?$LARRY_OBJECT_ID_KEY=$objectRow[0]>Delete</a></td>
+</tr>
+#end for 
+
+
+#*
+#for ($colName, $colValue) in zip($OBJECT_COLNAMES, $objectRow)
+<td> $colName = $colValue </td> #slurp
+#end for
+</tr> 
+#end for
+
+*#
+
+</table>
+</DIV>

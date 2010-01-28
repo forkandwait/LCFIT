@@ -1,0 +1,9 @@
+\#LCFIT BEGIN
+<IfModule mod_python.c>
+<Directory $LCFIT_ROOT>
+    SetHandler mod_python
+    PythonHandler mod_python.publisher
+    PythonDebug On
+</Directory>
+</IfModule>
+\#LCFIT END

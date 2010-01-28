@@ -1,0 +1,48 @@
+-*- text -*-
+
+* Note about the operating system.  LCFIT was developed on a Linux
+  machine, running gentoo, and ~amd64 flag for emerge.  I have tried
+  to make it as platform independent as possible, but there are
+  caveats.  (1) I can't imagine it will run on a non-Unix machine
+  without an immense amount of work.  (2) Lapack and friends can be
+  quirky to deal with, even with automatic intsall programs like
+  emerge (or rpm or apt or whatever).  (3) Every server environment
+  becomes optimized unconsciously by the administrator, and there are
+  likely to be unknown dependencies that will only be weeded out
+  through testing.
+
+* Install dependencies.  python, Cheetah, apache, mod_python, scipy,
+  numpy, matplotlib, psycopg2, lapack, postgres
+
+* Download LCFIT into a subdirectory of your apache webpages.
+  "larry-data/" will hopefully magically appear.  Make sure
+  permissions are XXX.
+
+* Edit LcConfig for administrator emails, user directories
+
+** update apache/httpd.conf.  All I have is stuff for permissions and
+   htpasswd etc.  Just make sure that the registration page is open to
+   the world, even if the other stuff is not.
+
+** update the mod_python config file
+
+	# LCFIT directory
+	<Directory /var/www/localhost/htdocs/lcfit>
+		SetHandler mod_python
+		PythonHandler mod_python.publisher
+		PythonDebug On
+	</Directory>
+
+* Install a blank database from the schema provided (which contains
+  some entries already for things like class names etc) under the
+  postgres user "larry".
+
+* Register a test user.  There should be a script based on the daily
+  email.  [From the registration page to an email to the administrator
+  would be easiest.]
+
+* Create some data from HMD
+
+* Confirm the user for the unit tests exists, run unit tests
+
+* Voila

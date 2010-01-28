@@ -1,0 +1,89 @@
+## -*-html-*-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<head>
+##<link rel="STYLESHEET" href="Larry.css" type='text/css' />
+<title>
+	#if $TITLE then $TITLE else 'LCFIT (Untitled)'
+</title> 
+</head>
+
+<body>
+<!-- Here is a view of the table layout
+
++++++++++++++++++++
++                 +
++++++++++++++++++++
++   +             +
++   +             +
++   +             +
++++++++++++++++++++
++                 +
++++++++++++++++++++
+
+-->
+
+
+
+<DIV class="Application">
+<!--big layout table -->
+<TABLE border=0>  
+
+	<!-- Top panel -->
+	<TR>
+		<TD id="header" colspan=2 height="75px" bgcolor="blue">
+			header
+		</TD>
+	</TR> 
+	
+	<!-- Middle panel containing both middle components -->
+	<TR id="centralpanel" height="450px"> <!-- Middle panel -->
+	
+		<!-- sidebar -->
+		<TD width="250px" id="sidebar" bgcolor="blue" valign=top> 
+			<ul>
+				<li><a style="color:gold" href=$LARRY_WWW_HOME>LCFIT Home</a>
+				<hr>
+				
+				<li><a style="color:gold" href=$LARRY_WWW_LIST_OBJECTS> List all forecasts</a> 
+				<hr>
+				
+				<li><a style="color:gold" href=$LARRY_WWW_INPUT_RATES>Create a new single-sex LC forecast</a>
+				<li><a style="color:gold" href=$LARRY_WWW_INPUT_RATES_MF>Create a new male-female LC forecast</a>
+				<li><a style="color:gold" href=$LARRY_WWW_INPUT_RATES_COHERENT>Create a new coherent LC forecast</a>
+				<li><a style="color:gold" href=$LARRY_WWW_HMD_CONVERTER>Convert HMD format to tab-delimited format</a>
+				<hr>
+
+				<li><a style="color:gold" href=$LARRY_WWW_LOGIN>Login as a different user</a>
+				<li><a style="color:gold" href=$LARRY_WWW_LOGOUT>Logout (jumps to LCFIT homepage)</a>
+				<hr>
+				
+
+				<li><a style="color:gold" href='http://www.mortality.org'>Human Mortality Database</a>
+				<li><a style="color:gold" href="mailto:lcfit@demog.berkeley.edu?subject=LCFIT">Email LCFIT team</a>
+				<hr>
+				
+				<li><a style="color:gold" href="http://lcfit.demog.berkeley.edu/cgi-bin/trac.cgi">Documentation, etc.</a> 
+			<ul>
+		</TD>
+
+		<!-- main component -->
+		<TD width="80%" id="main" bgcolor="gold" valign=top> 
+			#if $MAIN then $MAIN else 'No "main"'
+		</TD>
+
+	</TR> <!-- End middle panel thing  -->
+
+	<!-- Footer -->
+	<TR>
+		<TD id="footer" colspan=2 height="75px" bgcolor="blue">
+			footer
+		</TD>
+	</TR>
+
+</TABLE> <!-- End main layout -->
+</DIV>
+
+</body>
+</html>

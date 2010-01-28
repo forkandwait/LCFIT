@@ -1,0 +1,27 @@
+$Id$
+
+= Use Case Table of Contents = 
+
+(Note: each line has the following form: a number which refers to the
+UC and its file name, the actor in the use case, and the action.)
+
+1. Researcher, Login
+
+2. Researcher, View previous analyses
+
+3. Researcher, Do new analysis
+
+4. Researcher, View code used for analysis
+
+5. Admin, Back up system
+
+6. Admin, Re-load system from backup
+
+7. Admin, View usage report
+
+8. Admin, Move or build system on new server
+
+9. Admin, Upgrade or add methods (eg add missing years algorithm or
+   change algorithm for something)
+
+10. Admin, Alert users of something.

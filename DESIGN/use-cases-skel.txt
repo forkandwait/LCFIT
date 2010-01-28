@@ -1,0 +1,78 @@
+$Id: use-cases-skel.txt 453 2008-01-29 23:56:58Z webbs $
+
+*******
+
+Use Case ID:  UC-0
+
+Created By: webbs
+
+Created Date: 2006-02-03
+
+Last Updated By:  webbs
+
+Last Update Date:  2006-02-03
+
+Actors:
+
+Description:
+
+Preconditions:
+
+Postcondtions:
+
+Normal Course:
+
+	1. Do this
+
+    2. Do that
+
+	3. Do another thing
+
+	4. And another
+
+	5. Say Goodbye
+
+Alternative Courses:
+	
+	AC-1 (branch after step 2):
+		 
+		 1. Do another slightly different thing
+
+		 2. Return to step 2
+
+	AC-2 (branch after step 3):
+
+		 1. Blah
+
+		 2. Return to step 4
+
+Exceptions:
+
+	E-1 (Branching, either restarting or terminating use case
+
+	E-2 (Branching, merging back again, then skipping certain steps)
+
+	E-3 (Detour at a step--do some stuff, then pick up where left off)
+
+Includes (??): None
+
+Priority:  High, Medium, Low
+
+Frequency of use (rate or magnitude):
+
+Business Rules:  (Just reference the number of the rule)
+
+Special Requirements:
+
+	1. Special one
+
+	2. Special two
+
+Assumptions with rational:
+
+	1.  Assume user will be able to format data appropriately
+
+Notes and Issues:
+
+	1.  Blah blah
+		

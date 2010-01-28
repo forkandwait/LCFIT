@@ -1,0 +1,183 @@
+
+LcAnnotation.py,0
+
+LcCoherentPopObject.py,159
+class LcCoherentPop(39,1457
+	def _dealWithRates(42,1524
+	def _do_lc(150,6517
+	def _do_graphics(330,15882
+	def __str__(445,20350
+	def _dumpText(555,25357
+
+LcConfig.py,471
+def usr1(39,834
+def usr2(43,927
+class LcException(239,9294
+class LcInputException(244,9380
+class LcAuthException(247,9471
+class LcSessionException(250,9546
+class LcDataException(254,9738
+class LcVersionException(258,9866
+class LcOsException(262,10023
+class LcCodeException(265,10080
+def make_LcDataExceptionRedirect_disconnect(280,10634
+def make_LcDataExceptionRedirect(285,10829
+class FooException(292,11059
+	def __init__ 293,11090
+	def __str__(296,11151
+
+LcDB.py,712
+def test_pause(19,597
+def dict2object(27,894
+def try_execute(48,1594
+class LcObjDB(94,3393
+	def __init__(100,3540
+	def _try_execute(109,3965
+	class Inserter:113,4141
+		def __init__(118,4303
+		def getSerialNumber(129,4648
+		def insertObject(132,4706
+	def makeInserter(155,5519
+	def retrieveObject(160,5664
+	def listObjectInfo(176,6327
+	def listObjectsFromClass(193,6964
+	def retrieveObjectOwner(208,7536
+	def deleteObject(221,7971
+	def insertImage(228,8233
+	def retrieveImage(237,8641
+	def retrieveTextDump(251,9116
+	def authorizeUser(266,9740
+	def logout(279,10178
+	def checkSession(284,10380
+	def retrieveUsername(297,10842
+	def insertPageView(308,11216
+	def insertRegRequest(316,11562
+
+LcExtension.py,293
+def Diagnose(23,770
+def qxLessThanOne(43,1382
+def extendMx(60,1722
+def convertMxData(93,2655
+def setExtensionName(109,3199
+def LT1YrTo5Yr(124,3595
+def checkExtData(167,4769
+def checkExtResult(185,5479
+def mxExtend_Null(197,5888
+def mxExtend_Boe(205,6025
+def mxExtend_CGNan(276,8705
+
+LcHMDObject.py,183
+def s2zero(10,236
+def isfull(27,570
+def stride2MatrixList(36,697
+def hmd2lare 79,2115
+def format_grid(134,4128
+class HMD(150,4590
+	def __init__(151,4609
+	def __str__(184,5547
+
+LcMFPopObject.py,151
+class LcMFPop(29,1010
+	def _dealWithRates(31,1040
+	def _do_lc(62,2277
+	def _do_graphics(181,9357
+	def __str__(378,16934
+	def _dumpText(447,20351
+
+LcPageObjects.py,1238
+def f2d(35,1410
+class LcRegistrationForm:42,1562
+	def __init__(48,1702
+	def __call__(53,1844
+class LcRegistrationProcess:72,2377
+	def __init__(74,2506
+	def __call__(81,2707
+class LcLoginForm:129,4527
+	def __init__(136,4693
+	def __call__(142,4836
+class LcLoginProcess:163,5423
+	def __init__(171,5580
+	def _hasNecessaryData(178,5810
+	def _hasValidAuth(198,6304
+	def __call__(210,6665
+class LcLogout:250,8112
+	def __init__(252,8163
+	def __call__(256,8265
+class LcPage(266,8660
+	def _preCondition(275,8873
+	def _postCondition(296,9688
+class LcIndex(302,9837
+	def __init__(306,9991
+	def __call__(312,10168
+class LcForm(347,11349
+	def __init__(351,11555
+	def __call__(359,11788
+class LcProcess(391,12860
+	def __init__(394,13009
+	def __call__(401,13290
+class LcDisplay(478,15994
+	def __init__(480,16077
+	def __call__(485,16173
+class LcList(523,17483
+	def __init__(525,17590
+	def __call__(531,17783
+class LcDelete(569,19221
+	def __init__(570,19245
+	def __call__(574,19370
+class LcDisplayImage(600,20247
+	def __init__(603,20338
+	def __call__(606,20385
+class LcDumpText(625,20959
+	def __init__(628,21031
+	def __call__(631,21078
+class LcError:649,21701
+	def __init__(651,21742
+	def __call__(657,21880
+
+LcSinglePopObject.py,542
+def percent_line(36,1243
+def LC2nMx 52,1547
+def projAr1(63,1793
+def fitSingleKt(78,2209
+def fitMultiKt(91,2649
+def sim_kt(106,3183
+def sim_kt_ar1(145,4634
+def project_nmx(183,5996
+def lots_e0s(242,8511
+def lcInfer(281,9692
+	def rw(343,11955
+	def ar1(365,12764
+class LcSinglePop(433,15235
+	def __init__(435,15263
+	def _dealWithRates(538,18927
+	def _do_lc(574,20685
+	def _do_graphics(672,26064
+	def __str__(906,35151
+	def _dumpText(1012,40430
+	def __getattr__(1021,40755
+	def __repr__(1038,41188
+	def show_html(1043,41324
+
+LcUtil.py,519
+def Diagnose(11,203
+def D(15,378
+def Warn(18,404
+def listTypes(23,513
+def logit(31,811
+def goodRows(35,927
+def adjustAx(40,1032
+def lifeTable 138,4627
+def tablefy 296,10109
+	def formatCell(306,10424
+def mat2table(354,11968
+def mat2text(379,12620
+def kt2e0(414,13689
+def multiKt2e0(424,13964
+def fitX(435,14357
+	def curryFuncWithTarget(440,14481
+		def f(443,14588
+def parseDate(462,15191
+def parseRates(469,15357
+def emptyLikeWithNans(511,16847
+def dumpObject(517,16976
+def formatRecurse(569,18994
