@@ -18,6 +18,7 @@ import Cheetah.Template as Template
 import psycopg2
 import psycopg2.extensions
 
+# Config stuff
 DB_NAME = 'larrydb'
 EMAIL = 'webbs@demog.berkeley.edu'
 IS_DEVEL_MACHINE = True					# Is this script being run on 
