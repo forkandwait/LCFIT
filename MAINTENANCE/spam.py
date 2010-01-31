@@ -17,19 +17,23 @@ DB_NAME = 'larrydb'
 USER_NAME = 'webbs'
 PASSPHRASE = 'hdy352!!%jf'
 LCFITEMAIL = 'lcfit@demog.berkeley.edu'
-EMAILTB = 'email_test'
+EMAILTB = 'authorizedusers'
 
 # from db, grab a list of email addresses to send
 conn = psycopg2.connect(dsn='host=%s dbname=%s user=%s' % ('localhost', DB_NAME, USER_NAME))
 curs = conn.cursor()
-SQL='select distinct a.email from %s a, authorizedusers b where a.username = b.username order by a.email;' % EMAILTB
+SQL='select email from %s where email is not null order by email' % EMAILTB
 curs.execute(SQL)
 emails = []
 for row in curs.fetchall():
 	emails.append(row[0])
 	pass
 
-# from command line get subject header and message file (cheetah template);  add searchList func later.
+print emails
+
+
+# from command line get subject header and message file (cheetah
+# template); add searchList func later. Template should maybe be in db?
 subj = sys.argv[1]
 messt = open(sys.argv[2]).read()
 
