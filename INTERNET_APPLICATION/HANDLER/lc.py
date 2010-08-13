@@ -36,8 +36,8 @@ less security risk, cleaner development, etc.
 #############################################
 
 import sys
-LARRY_LIBRARY_PATH='/home/webbs/larry/INTERNET_APPLICATION'
-sys.path.append(LARRY_LIBRARY_PATH)
+LARRY_LIBRARY_PATH='/home/webbs/lcfit.git/INTERNET_APPLICATION'	# this is where all the executable files live
+sys.path.append(LARRY_LIBRARY_PATH)		# This tells us how to find these executables
 
 # Constants, system modules, etc
 from LcConfig import *
@@ -104,7 +104,7 @@ index = Index
 #####################################################
 
 LoginForm = LcPageObjects.LcLoginForm(
-	formTemplate=LARRYTEMPLATEDIR + '/LoginForm.tmpl',
+formTemplate=LARRYTEMPLATEDIR + '/LoginForm.tmpl',
 	title='LCFIT Login Form')
 LoginProcess = LcPageObjects.LcLoginProcess(
 	redirectTarget='index',
@@ -114,6 +114,7 @@ Login = LoginForm
 
 Logout = LcPageObjects.LcLogout(
 	lcdb=lcdb, redirectTarget='../../') # this redirect puts at the top of the html tree
+
 
 #####################################################
 ### Registration ###

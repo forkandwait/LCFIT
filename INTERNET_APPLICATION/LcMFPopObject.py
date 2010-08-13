@@ -134,9 +134,9 @@ class LcMFPop(LcSinglePop):
 										 ageCutoff=self.ageCutoff)
 		self.nmx_projectedMale = project_nmx(kt=self.kt_simul, bx=self.bxComb, ax=jumpoffAxMale,
 										 ageCutoff=self.ageCutoff)
-		self.nmx_projected_stochastic_median_final_F = project_nmx(kt=N.median(N.sort(self.kt_simul,0))[-1],
+		self.nmx_projected_stochastic_median_final_F = project_nmx(kt=N.median(N.sort(self.kt_simul,0)),
 																   bx=self.bxComb, ax=jumpoffAxFem, ageCutoff=self.ageCutoff)
-		self.nmx_projected_stochastic_median_final_M = project_nmx(kt=N.median(N.sort(self.kt_simul,0))[-1],
+		self.nmx_projected_stochastic_median_final_M = project_nmx(kt=N.median(N.sort(self.kt_simul,0)),
 																   bx=self.bxComb, ax=jumpoffAxMale, ageCutoff=self.ageCutoff)
 
 		self.e0s_projectedFem = lots_e0s(self.percentileIndices, self.nmx_projectedFem, self.lifeTableParams)

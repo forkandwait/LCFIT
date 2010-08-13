@@ -73,7 +73,7 @@ Number of testing objects deleted: $TEST_OBJECTS_DELETE_COUNT
 #for $row in $LC_PENDING_REG
 
 ----
-#echo "psql -U webbs -d larrydb -c \"select new_lc_user(\'%-.30s\', \'%-.30s\');\" && \n" % ($row[1], $row[2])
+#echo "psql -U webbs -d larrydb -c \"select new_lc_user(\'%-.30s\', \'%-.30s\', \'%-.30s\');\" && \n" % ($row[1], $row[2], $row[0])
 
 #echo "/usr/sbin/htpasswd -b /etc/apache2/lcfit.htpasswd \"%-.30s\" \"%-.30s\"  && \n" % ($row[1], $row[2])
 

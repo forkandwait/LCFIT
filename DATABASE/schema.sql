@@ -55,52 +55,46 @@ COMMENT ON FUNCTION auth_lc_user(text, text, cidr) IS 'Used to authorize a user 
 
 
 --
--- Name: new_lc_user(text, text); Type: FUNCTION; Schema: public; Owner: -
+-- Name: new_lc_user(text, text, text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION new_lc_user(text, text) RETURNS text
+CREATE FUNCTION new_lc_user(text, text, text) RETURNS text
     LANGUAGE plpgsql
-    AS $_$
-DECLARE
-    pending_row pending_registrations%ROWTYPE;
-    reg_rowct int;
-    authct int;
-    email_notice text;
-BEGIN
-    select * into pending_row from pending_registrations where username=$1 and password=$2 order by inserted_timestamp desc limit 1;
-    if not FOUND then
-        raise exception 'No such pending registration: %, %.', $1, $2;
-    end if;
-
-    select count(*) into authct from authorizedusers where username=$1;
-    if authct <> 0 then
-        raise exception 'Trying to register previously registered username: %.', $1;
-    end if;
-
-    select count(*) into reg_rowct from pending_registrations where username=$1 and password=$2 and finished = False;
-    if reg_rowct <= 0 then
-        RAISE EXCEPTION 'Nonexistent or finished ID/password: %, %.', $1, $2;
-    elsif reg_rowct >= 2 then
-        RAISE NOTICE 'Duplicate registration rows with same username and password.  Using most recent, %.',
-                               pending_row.inserted_timestamp;
-    else
-        RAISE NOTICE 'Registering % %.', $1, $2;
-    end if;
-
-    insert into  authorizedusers (username, password) values ($1, $2);
-    update pending_registrations set finished = True where username = $1;
-    email_notice := 'Successfully registered ' || $1 || '.';
-    return email_notice;
-END;
-
+    AS $_$                                                                                                                                                             
+DECLARE                                                                                                                                                                
+    pending_row pending_registrations%ROWTYPE;                                                                                                                         
+    reg_rowct int;                                                                                                                                                     
+    authct int;                                                                                                                                                        
+    email_notice text;                                                                                                                                                 
+BEGIN                                                                                                                                                                  
+    select * into pending_row from pending_registrations where username=$1 and password=$2 order by inserted_timestamp desc limit 1;                                   
+    if not FOUND then                                                                                                                                                  
+        raise exception 'No such pending registration: %, %.', $1, $2;                                                                                                 
+    end if;                                                                                                                                                            
+                                                                                                                                                                       
+    select count(*) into authct from authorizedusers where email=$3 or username=$1;                                                                                    
+    if authct <> 0 then                                                                                                                                                
+        update pending_registrations set finished = true where username = $1;  -- doesn't work because transaction gets rolled back                                    
+        raise exception 'Trying to register previously registered username: %. \"update pending_registrations set finished = true where username = ''%''; ', $1, $1;   
+    end if;                                                                                                                                                            
+                                                                                                                                                                       
+    select count(*) into reg_rowct from pending_registrations where username=$1 and password=$2 and email=$3 and finished = False;                                     
+    if reg_rowct <= 0 then                                                                                                                                             
+        RAISE EXCEPTION 'Nonexistent or finished ID/password: %, %.', $1, $2;                                                                                          
+    elsif reg_rowct >= 2 then                                                                                                                                          
+        RAISE NOTICE 'Duplicate registration rows with same username and password.  Using most recent, %.',                                                            
+                               pending_row.inserted_timestamp;                                                                                                         
+    else                                                                                                                                                               
+        RAISE NOTICE 'Registering % % %.', $1, $2, $3;                                                                                                                 
+    end if;                                                                                                                                                            
+                                                                                                                                                                       
+    insert into  authorizedusers (username, password, email) values ($1, $2, $3);                                                                                      
+    update pending_registrations set finished = True where email = $3;                                                                                                 
+    email_notice := 'Successfully registered ' || $1 || ' at ' || $3 || '.';                                                                                           
+    return email_notice;                                                                                                                                               
+END;                                                                                                                                                                   
+                                                                                                                                                                       
 $_$;
-
-
---
--- Name: FUNCTION new_lc_user(text, text); Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON FUNCTION new_lc_user(text, text) IS 'Adds a new user with password.';
 
 
 SET default_tablespace = '';
@@ -115,6 +109,8 @@ CREATE TABLE authorizedusers (
     username text NOT NULL,
     password text,
     timestamp_registered timestamp without time zone DEFAULT now(),
+    email text,
+    id integer NOT NULL,
     CONSTRAINT authorized_users_noblank CHECK ((char_length(username) >= 2))
 );
 
@@ -124,6 +120,25 @@ CREATE TABLE authorizedusers (
 --
 
 COMMENT ON TABLE authorizedusers IS 'This table has the usernames and passwords for people who can login to the LCFIT application.';
+
+
+--
+-- Name: authorizedusers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE authorizedusers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: authorizedusers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE authorizedusers_id_seq OWNED BY authorizedusers.id;
 
 
 --
@@ -219,6 +234,16 @@ CREATE SEQUENCE dataobjects_objectserialnumber_seq
 --
 
 ALTER SEQUENCE dataobjects_objectserialnumber_seq OWNED BY dataobjects.objectserialnumber;
+
+
+--
+-- Name: email_test; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE email_test (
+    email text,
+    username text
+);
 
 
 --
@@ -373,6 +398,13 @@ CREATE VIEW user_pageviews_activity AS
 
 CREATE VIEW user_pageviews_by_url AS
     SELECT user_pageviews.username, "substring"(user_pageviews.url, 1, 25) AS url_substr, min((user_pageviews.pageviewtimestamp)::date) AS "first date", max((user_pageviews.pageviewtimestamp)::date) AS "last date", count(*) AS count FROM user_pageviews GROUP BY user_pageviews.username, "substring"(user_pageviews.url, 1, 25) ORDER BY user_pageviews.username, count(*);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE authorizedusers ALTER COLUMN id SET DEFAULT nextval('authorizedusers_id_seq'::regclass);
 
 
 --

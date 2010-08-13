@@ -16,6 +16,7 @@ This module:
 import cPickle
 import copy
 import datetime
+import logging
 import md5
 import os
 import pprint
@@ -31,17 +32,22 @@ import textwrap
 import traceback 
 import types
 
+########################
+## Set up sysloging -- at INFO usually
+## TODO: make plain logging, since syslog depends on a server
 syslog.openlog('LCFIT', syslog.LOG_PID | syslog.LOG_NOWAIT | syslog.LOG_NDELAY)
-syslog.syslog('LcConfig.py executing')
+syslog.setlogmask(syslog.LOG_UPTO(syslog.LOG_INFO))
+syslog.syslog(syslog.LOG_DEBUG, 'LcConfig.py executing')
+
 ################################################################
-## Signal handlers for debugging -- USR1 pauses() the process, USR2 restarts it
+## Signal handlers for debugging -- USR1 pauses() the process, USR2 does 
 import signal
 def usr1(sig, stack):
-	syslog.syslog('Received usr1: %s' % sig)
+	syslog.syslog(syslog.LOG_DEBUG, 'Received usr1: %s' % sig)
 	signal.pause()
 	return True
 def usr2(sig, stack):
-	syslog.syslog('Received usr2: %s' % sig)
+	syslog.syslog(syslog.LOG_DEBUG, 'Received usr2: %s' % sig)
 	return True
 signal.signal(signal.SIGUSR1, usr1)
 signal.signal(signal.SIGUSR2, usr2)
@@ -60,8 +66,8 @@ import matplotlib as MPL
 try:
 	MPL.use('Agg')	   # matplotlib will use the Agg backend for rendering
 except RuntimeError, e:
-	syslog.syslog('Error trying to run MPL.use(): \"%s\"' % e)
-	pass
+	syslog.syslog(syslog.LOG_ERROR, 'Error trying to run MPL.use(): \"%s\"' % e)
+	raise
 import pylab as PL 
 
 
