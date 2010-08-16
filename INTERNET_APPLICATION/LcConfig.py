@@ -36,7 +36,7 @@ import types
 ## Set up sysloging -- at INFO usually
 ## TODO: make plain logging, since syslog depends on a server
 syslog.openlog('LCFIT', syslog.LOG_PID | syslog.LOG_NOWAIT | syslog.LOG_NDELAY)
-syslog.setlogmask(syslog.LOG_UPTO(syslog.LOG_INFO))
+syslog.setlogmask(syslog.LOG_UPTO(syslog.LOG_NOTICE))
 syslog.syslog(syslog.LOG_DEBUG, 'LcConfig.py executing')
 
 ################################################################
@@ -66,7 +66,7 @@ import matplotlib as MPL
 try:
 	MPL.use('Agg')	   # matplotlib will use the Agg backend for rendering
 except RuntimeError, e:
-	syslog.syslog(syslog.LOG_ERROR, 'Error trying to run MPL.use(): \"%s\"' % e)
+	syslog.syslog(syslog.LOG_ERR, 'Error trying to run MPL.use(): \"%s\"' % e)
 	raise
 import pylab as PL 
 
@@ -158,7 +158,7 @@ LARRY_PREV_REG_ERROR_PAGE='/RegistrationError-RegisteredUsername.html'
 
 ## Important filespace stuff
 APACHEFILEROOT = '/var/www/localhost/htdocs'
-LARRYBASE = '/home/webbs/larry/INTERNET_APPLICATION' # Where the executable libraries (not lc.py) live
+LARRYBASE = '/home/webbs/lcfit.git/INTERNET_APPLICATION' # Where the executable libraries (not lc.py) live
 LARRYTEMPLATEDIR = LARRYBASE + '/TEMPLATES'	# Where the templates for the webpages live
 LARRYDATADIR = APACHEFILEROOT + '/larry-data' # Where the temporary 
 

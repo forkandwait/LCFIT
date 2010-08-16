@@ -78,7 +78,7 @@ def try_execute(dbcon, sql, data=None, fetch_N='all', tries_N=3):
 			dbcon.commit()
 			return (res,dbcon)
 		except (psycopg2.OperationalError, psycopg2.InterfaceError, psycopg2.InternalError), e:
-			syslog.syslog(syslog.LOG_ERROR, "Error trying to execute query: \"%s\", \"%s\"." % (sql, e))
+			syslog.syslog(syslog.LOG_ERR, "Error trying to execute query: \"%s\", \"%s\"." % (sql, e))
 			tries_N -= 1
 			time.sleep(2**tries_comp)
 			tries_comp += 1

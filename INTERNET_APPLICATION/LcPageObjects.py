@@ -105,7 +105,7 @@ class LcRegistrationProcess:
 		try:
 			self.lcdb.insertRegRequest(data)
 		except LcDataException, e:
-			syslog.syslog(syslog.LOG_ERROR, 'Bad Registration request: %s.' % pprint.pformat(e))
+			syslog.syslog(syslog.LOG_ERR, 'Bad Registration request: %s.' % pprint.pformat(e))
 			if re.match('.*pending.*', str(e)):
 				util.redirect(req, LARRY_PREV_PEND_ERROR_PAGE)
 			elif re.match('.*in-use.*', str(e)):
@@ -513,10 +513,10 @@ class LcDisplay(LcPage):
 			req.send_http_header()
 			req.write(str(pageTemplate))
 		except (LcSessionException,):
-			syslog.syslog(syslog.LOG_ERROR, "LcDisplay: __call__.  Error.")
+			syslog.syslog(syslog.LOG_ERR, "LcDisplay: __call__.  Error.")
 			util.redirect(req, LcSessionExceptionRedirect)
 		except LcDataException:
-			syslog.syslog(syslog.LOG_ERROR, "LcDisplay: __call__.  Error.  Object ID: %s" % objId)
+			syslog.syslog(syslog.LOG_ERR, "LcDisplay: __call__.  Error.  Object ID: %s" % objId)
 			util.redirect(req, make_LcDataExceptionRedirect(objId))
 		return True
 
@@ -559,10 +559,10 @@ class LcList(LcPage):
 			req.write(str(pageTemplate)) 
 
 		except (LcSessionException), e:
-			syslog.syslog(syslog.LOG_ERROR, "LcList: __call__.  Error.")
+			syslog.syslog(syslog.LOG_ERR, "LcList: __call__.  Error.")
 			util.redirect(req, LcSessionExceptionRedirect)
 		except (LcDataException), e:
-			syslog.syslog(syslog.LOG_ERROR, "LcList: __call__.  Error.")
+			syslog.syslog(syslog.LOG_ERR, "LcList: __call__.  Error.")
 			util.redirect(req, make_LcSessionExceptionRedirect_disconnect(str(e)))
 
 

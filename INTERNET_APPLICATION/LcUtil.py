@@ -454,7 +454,7 @@ def fitX(func, target, *funcArgs, **funcKwargs):
 			syslog.syslog(syslog.LOG_WARNING, "Problem with fsolve. ier = %s, mesg = \"%s.\"\n %s\n" % \
 						  (ier, mesg.replace('\n', ' '), infodict))
 	except Exception, e:
-		syslog.syslog(syslog.LOG_ERROR, "Exception with fsolve: \"%s\".  Catching and ignoring..." % e)
+		syslog.syslog(syslog.LOG_ERR, "Exception with fsolve: \"%s\".  Catching and ignoring..." % e)
 	return out
 
 
