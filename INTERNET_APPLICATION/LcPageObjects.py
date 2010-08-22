@@ -61,7 +61,7 @@ class LcRegistrationForm:
 		formTemplate = Template.Template(file=self.formTemplate, searchList = searchList)
 
 		# ... log that we are here ...
-		syslog.syslog(syslog.LOG_DEBUG, 'LcRegistrationForm:  __call__')
+	 'LcRegistrationForm:  __call__')
 		
 		# ... write and return.
 		req.content_type = "text/html"
@@ -83,7 +83,7 @@ class LcRegistrationProcess:
 		data = f2d(req.form)	
 
 		# Log
-		syslog.syslog(syslog.LOG_DEBUG, 'LcRegistrationProcess:  __call__')
+		logging.debug( 'LcRegistrationProcess:  __call__')
 
 		## Clean and check data, display error and return if necessary.
 		for k in ['USERNAME', 'PASSWORD', 'EMAIL', 'FULLNAME', 'REASONS', 'HOWFIND', 'AFFILIATION']:
@@ -105,7 +105,7 @@ class LcRegistrationProcess:
 		try:
 			self.lcdb.insertRegRequest(data)
 		except LcDataException, e:
-			syslog.syslog(syslog.LOG_ERR, 'Bad Registration request: %s.' % pprint.pformat(e))
+			logging.error( 'Bad Registration request: %s.' % pprint.pformat(e))
 			if re.match('.*pending.*', str(e)):
 				util.redirect(req, LARRY_PREV_PEND_ERROR_PAGE)
 			elif re.match('.*in-use.*', str(e)):
@@ -143,7 +143,7 @@ class LcLoginForm:
 		"""Handle the page"""
 
 		# Log
-		syslog.syslog(syslog.LOG_DEBUG, 'LcLoginForm:  __call__')
+		logging.debug( 'LcLoginForm:  __call__')
 
 		# Build form ... 
 		searchList = []
@@ -216,7 +216,7 @@ class LcLoginProcess:
 			authId = self._hasValidAuth(req)
 			if type(authId) is types.IntType: 
 				sess[LARRY_SESSION_KEY] = authId
-				syslog.syslog(syslog.LOG_INFO, 'LcLoginProcess:  __call__.  Successfully logged in.  Auth id: %s, username: %s.' \
+				logging.info( 'LcLoginProcess:  __call__.  Successfully logged in.  Auth id: %s, username: %s.' \
 							  % (authId, req.form.get(LARRY_USERNAME_KEY, 'XX')))
 				sess.save()
 				util.redirect(req, self.redirectTarget)
@@ -229,7 +229,7 @@ class LcLoginProcess:
 			errorMessage = 'Did not pass necessary data to LoginProcess.  Data: %s.' % str(f2d(req.form))
 
 		# Log
-		syslog.syslog(syslog.LOG_INFO, 'LcLoginProcess:  __call__.  Unsuccessful login.')
+		logging.warning( 'LcLoginProcess:  __call__.  Unsuccessful login.')
 
 		# If called with incomplete form data or invalid auth, display error from template.
 		# Build page ... 
@@ -257,9 +257,9 @@ class LcLogout:
 		req.session = Session(req)
 		if req.session.has_key(LARRY_SESSION_KEY):
 			self.lcdb.logout(req.session[LARRY_SESSION_KEY])
-			syslog.syslog(syslog.LOG_DEBUG, 'LcLogout:  __call__.  Logging out session key: %s' % req.session[LARRY_SESSION_KEY])
+			logging.debug( 'LcLogout:  __call__.  Logging out session key: %s' % req.session[LARRY_SESSION_KEY])
 		req.session.invalidate()
-		syslog.syslog(syslog.LOG_WARNING, 'LcLogout:  __call__.  Logging out unkown session.')
+		logging.warning( 'LcLogout:  __call__.  Logging out unkown session.')
 		util.redirect(req, self.redirectTarget)
 
 
@@ -310,7 +310,7 @@ class LcIndex(LcPage):
 		self.title = title
 		
 	def __call__(self, req):
-		syslog.syslog(syslog.LOG_DEBUG, 'LcIndex:  __call__.')
+		logging.debug( 'LcIndex:  __call__.')
 
 		try:
 			self._preCondition(req) 
@@ -357,7 +357,7 @@ class LcForm(LcPage):
 
 		
 	def __call__(self, req):
-		syslog.syslog(syslog.LOG_DEBUG, 'LcForm:  __call__')
+		logging.debug( 'LcForm:  __call__')
 		try:
 			self._preCondition(req)
 			
@@ -436,7 +436,7 @@ class LcProcess(LcPage):
 			inserter.insertObject(obj)
 			del(inserter)
 
-			syslog.syslog(syslog.LOG_DEBUG, 'LcProcess:  __call__.  Object ID: %s.  Datapath: %s. Class: %s' % \
+			logging.debug( 'LcProcess:  __call__.  Object ID: %s.  Datapath: %s. Class: %s' % \
 						  (obj.LcID, obj.datapath, str(obj.__class__)))
 			
 			# Grab all the images from the new object and stuff them
@@ -505,7 +505,7 @@ class LcDisplay(LcPage):
 				searchList.append({LARRY_TITLE_PLACEHOLDER:'LCFIT Object ID: %i' % objId})
 			pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList)
 
-			syslog.syslog(syslog.LOG_DEBUG, "LcDisplay: __call__.  Object ID:  %s" % objId)
+			logging.debug( "LcDisplay: __call__.  Object ID:  %s" % objId)
 
 			# test postconditions and return the data 
 			self._postCondition(req)
@@ -513,10 +513,10 @@ class LcDisplay(LcPage):
 			req.send_http_header()
 			req.write(str(pageTemplate))
 		except (LcSessionException,):
-			syslog.syslog(syslog.LOG_ERR, "LcDisplay: __call__.  Error.")
+			logging.error( "LcDisplay: __call__.  Error.")
 			util.redirect(req, LcSessionExceptionRedirect)
 		except LcDataException:
-			syslog.syslog(syslog.LOG_ERR, "LcDisplay: __call__.  Error.  Object ID: %s" % objId)
+			logging.error( "LcDisplay: __call__.  Error.  Object ID: %s" % objId)
 			util.redirect(req, make_LcDataExceptionRedirect(objId))
 		return True
 
@@ -551,7 +551,7 @@ class LcList(LcPage):
 			# Check post conditions
 			self._postCondition(req)
 
-			syslog.syslog(syslog.LOG_DEBUG, "LcList: __call__.  User: %s." % currentUser)
+			logging.debug( "LcList: __call__.  User: %s." % currentUser)
 
 			# Write the result
 			req.content_type = "text/html"
@@ -559,10 +559,10 @@ class LcList(LcPage):
 			req.write(str(pageTemplate)) 
 
 		except (LcSessionException), e:
-			syslog.syslog(syslog.LOG_ERR, "LcList: __call__.  Error.")
+			logging.error( "LcList: __call__.  Error.")
 			util.redirect(req, LcSessionExceptionRedirect)
 		except (LcDataException), e:
-			syslog.syslog(syslog.LOG_ERR, "LcList: __call__.  Error.")
+			logging.error("LcList: __call__.  Error.")
 			util.redirect(req, make_LcSessionExceptionRedirect_disconnect(str(e)))
 
 
@@ -584,11 +584,11 @@ class LcDelete(LcPage):
 				self._postCondition(req)
 				objId = int(req.form[LARRY_OBJECT_ID_KEY].value)
 				self.lcdb.deleteObject(objId)
-				syslog.syslog(syslog.LOG_DEBUG, "LcDelete: __call__.  Deleted object ID: %s." % objId)
+				logging.debug( "LcDelete: __call__.  Deleted object ID: %s." % objId)
 				util.redirect(req, self.redirectTarget)
 
 		except (LcSessionException,):
-			syslog.syslog(syslog.LOG_WARNING, "LcDelete: __call__.  Error.")
+			logging.warning("LcDelete: __call__.  Error.")
 			util.redirect(req, LcSessionExceptionRedirect)
 
 		# if get LcDataException, assume clicked too many times and
@@ -634,7 +634,7 @@ class LcDumpText(LcPage):
 			objectId = int(req.form[LARRY_OBJECT_ID_KEY].value)
 			data = self.lcdb.retrieveTextDump(objectSerialNumber=objectId)
 			self._postCondition(req)
-			syslog.syslog(syslog.LOG_DEBUG, "LcDumpText: __call__.  ObjectId: %s."  % objectId)
+			logging.debug( "LcDumpText: __call__.  ObjectId: %s."  % objectId)
 
 			req.content_type = "text/tab-separated-values"
 			req.headers_out['Content-Disposition'] = 'attachment; filename=forecast-object-%i.txt' % objectId
@@ -665,7 +665,7 @@ class LcError:
 
 		pageTemplate = Template.Template(file=self.template, searchList = searchList)
 
-		syslog.syslog(syslog.LOG_DEBUG, "LcError: __call__.")
+		logging.debug( "LcError: __call__.")
 
 		# Write the result
 		req.content_type = "text/html"

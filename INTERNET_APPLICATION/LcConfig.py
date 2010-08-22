@@ -3,7 +3,7 @@ This module:
 
 * imports the standard libraries for all the other modules;
 
-* sets up syslogging, signal handling, numpy and matplotlib, Coale-Guo style extension;
+* sets up logging, signal handling, numpy and matplotlib, Coale-Guo style extension;
 
 * holds all the constants;
 
@@ -26,7 +26,7 @@ import shelve
 import string
 import smtplib
 import sys
-import syslog
+#import syslog
 import time
 import textwrap
 import traceback 
@@ -35,19 +35,24 @@ import types
 ########################
 ## Set up sysloging -- at INFO usually
 ## TODO: make plain logging, since syslog depends on a server
-syslog.openlog('LCFIT', syslog.LOG_PID | syslog.LOG_NOWAIT | syslog.LOG_NDELAY)
-syslog.setlogmask(syslog.LOG_UPTO(syslog.LOG_NOTICE))
-syslog.syslog(syslog.LOG_DEBUG, 'LcConfig.py executing')
+# syslog.openlog('LCFIT', syslog.LOG_PID | syslog.LOG_NOWAIT | syslog.LOG_NDELAY)
+# syslog.setlogmask(syslog.LOG_UPTO(syslog.LOG_NOTICE))
+# syslog.syslog(syslog.LOG_DEBUG, 'LcConfig.py executing')
+
+LARRY_LOGFILENAME='/home/webbs/lcfitlog'
+logging.basicConfig(filename=LARRY_LOGFILENAME, level=logging.DEBUG)
+logging.debug("LcConfig.py executing.")
+
 
 ################################################################
 ## Signal handlers for debugging -- USR1 pauses() the process, USR2 does 
 import signal
 def usr1(sig, stack):
-	syslog.syslog(syslog.LOG_DEBUG, 'Received usr1: %s' % sig)
+	logging.info( 'Received usr1: %s' % sig)
 	signal.pause()
 	return True
 def usr2(sig, stack):
-	syslog.syslog(syslog.LOG_DEBUG, 'Received usr2: %s' % sig)
+	logging.info( 'Received usr2: %s' % sig)
 	return True
 signal.signal(signal.SIGUSR1, usr1)
 signal.signal(signal.SIGUSR2, usr2)
@@ -66,7 +71,7 @@ import matplotlib as MPL
 try:
 	MPL.use('Agg')	   # matplotlib will use the Agg backend for rendering
 except RuntimeError, e:
-	syslog.syslog(syslog.LOG_ERR, 'Error trying to run MPL.use(): \"%s\"' % e)
+	logging.critical ('Error trying to run MPL.use(): \"%s\"' % e)
 	raise
 import pylab as PL 
 

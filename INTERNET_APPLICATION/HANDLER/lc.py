@@ -41,7 +41,7 @@ sys.path.append(LARRY_LIBRARY_PATH)		# This tells us how to find these executabl
 
 # Constants, system modules, etc
 from LcConfig import *
-syslog.syslog('lc.py executing.')
+logging.debug('lc.py executing.')
 
 ## Import mod_python infrastructure
 from mod_python import apache
@@ -76,7 +76,7 @@ import LcDB
 try:
 	lcdb = LcDB.LcObjDB(LARRYDBNAME)
 except Exception, e:
-	syslog.syslog(str(e))
+	logging.critical(str(e))
 	util.redirect(req, "http://www.yahoo.com")
 	raise
 	exit

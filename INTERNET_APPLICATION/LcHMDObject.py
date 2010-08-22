@@ -153,7 +153,7 @@ class HMD(object):
 		possible to instantiate an empty HMD object, to have its
 		__dict__ filled from the database."""
 
-		syslog.syslog(syslog.LOG_DEBUG, 'HMD start')
+		logging.debug( 'HMD start')
 		if start_year == '':
 			raise LcInputException, "Must enter a start year for HMD Object"
 		elif start_year == 'XXX':
@@ -175,7 +175,7 @@ class HMD(object):
 		if hmdinput == 'XXX':
 			return
 		else:
-			syslog.syslog(syslog.LOG_DEBUG, 'HMD Stop')
+			logging.debug( 'HMD Stop')
 			self.hmdinput = hmdinput
 			(self.femaleRates, self.maleRates, self.totalRates) = hmd2lare(hmdinput)
 			return

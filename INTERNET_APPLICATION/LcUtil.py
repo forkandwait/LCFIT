@@ -64,7 +64,7 @@ def adjustAx(mx, gender='combined'):
 	ax_new[18:-2] = N.array([2.27, 2.19, 2.08, 1.95]) # Australia 1927.  1966: 2.31 2.23 1.88 1.63 1.41 1.35
 	ax_new[-2] = 1.6					# Averaging and eyeballing Rus, Jap, US begining and end of data
 	ax_new[-1] = 1.6					# ditto
-	#syslog(syslog.LOG_DEBUG, "%s" % ax_new)
+	#logging.debug( "%s" % ax_new)
 	"""
 	AgeF-USM-USF-JM-JF-RusM-Rus
 	start 105 1.60 1.54 1.24 1.21 1.81 1.79 avg=1.531666667
@@ -108,7 +108,7 @@ def adjustAx(mx, gender='combined'):
 		if ax_distance < 0.1:
 			if True:
 				pass
-				#syslog.syslog(syslog.LOG_DEBUG, "\n\nSuccess!\nax iteration (%s): %s\n" % (iter_repeats, ax_new))
+				#logging.debug( "\n\nSuccess!\nax iteration (%s): %s\n" % (iter_repeats, ax_new))
 			return (ax_new, qx, dx, lx)
 		else:
 			# How many times around?
@@ -130,7 +130,7 @@ def adjustAx(mx, gender='combined'):
 	nqx[1] = 4*nmx[1]/(1+(LARRY_DEFAULT_AGEWIDTH/2)*nmx[1])	# 1-4
 	"""
 	raise Exception
-	syslog.syslog(syslog.LOG_WARNING, "\n\nFailure!\nax iteration (%s): \n%s\n" % (iter_repeats, pprint.pformat((ax_new, qx, mx, lx), width=10)))
+	logging.warning("\n\nFailure!\nax iteration (%s): \n%s\n" % (iter_repeats, pprint.pformat((ax_new, qx, mx, lx), width=10)))
 	raise LcException('ax not settling down. <br>ax_distance: %s, iter_repeats: %s<br>ax_dif: %s<br>new: %s<br>old: %s <br>lx: %s <br>qx: %s<br>mx: %s<br>' % \
 					  (ax_distance, iter_repeats, ax_diff, ax_new, ax_old, lx, qx, mx))
 
@@ -155,7 +155,7 @@ def lifeTable (nmxp,  ageCutoff=None, extensionMethod=LARRY_DEFAULT_EXTENSION_ME
 
 	XXX Full of magic numbers!
 	'''
-	#syslog.syslog(syslog.LOG_DEBUG, 'gender: %s' % gender)
+	#logging.debug( 'gender: %s' % gender)
 
 	assert N.isfinite(nmxp).all(), AssertionError("%s" % pprint.pformat(locals()))
 	assert len(nmxp.shape) == 1, AssertionError(
@@ -449,12 +449,12 @@ def fitX(func, target, *funcArgs, **funcKwargs):
 		(out, infodict, ier, mesg) = scipy.optimize.fsolve(
 			func=cf, x0=((2*S.rand())-0.5), full_output=1, xtol=1.0e-04)
 		if ier == 1:
-			syslog.syslog(syslog.LOG_DEBUG, "Successful fsolve\n")
+			logging.debug( "Successful fsolve\n")
 		else:
-			syslog.syslog(syslog.LOG_WARNING, "Problem with fsolve. ier = %s, mesg = \"%s.\"\n %s\n" % \
+			logging.warning("Problem with fsolve. ier = %s, mesg = \"%s.\"\n %s\n" % \
 						  (ier, mesg.replace('\n', ' '), infodict))
 	except Exception, e:
-		syslog.syslog(syslog.LOG_ERR, "Exception with fsolve: \"%s\".  Catching and ignoring..." % e)
+		logging.error( "Exception with fsolve: \"%s\".  Catching and ignoring..." % e)
 	return out
 
 
