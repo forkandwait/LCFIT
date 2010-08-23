@@ -2,7 +2,6 @@
 -- PostgreSQL database dump
 --
 
-
 SET statement_timeout = 0;
 SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
