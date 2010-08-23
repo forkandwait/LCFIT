@@ -22,7 +22,7 @@ from LcUtil import Diagnose as D
 sys.path.append('./TESTING')			# For test data
 
 ## Module Variables  ###### 
-LcObjectINFO ='$Id: LcMFPopObject.py 424 2008-01-05 23:19:40Z webbs $'
+LcObjectINFO ='LcMFPopObject'
 
 
 ###################################################################################
