@@ -20,7 +20,7 @@ from LcUtil import listTypes as LT
 sys.path.append('./TESTING')			# For test data
 
 ## Module Variables  ###### 
-LcObjectINFO ='$Id: LcSinglePopObject.py 484 2009-11-11 23:39:56Z webbs $' # Project/misc information
+LcObjectINFO ='Single Population object' # Project/misc information
 
 # Image constants
 LC_IMAGE_NAME = 'lc-model.png'				# Image with kt, ax, bx, e0u

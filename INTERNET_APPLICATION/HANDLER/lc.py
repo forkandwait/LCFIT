@@ -36,12 +36,14 @@ less security risk, cleaner development, etc.
 #############################################
 
 import sys
-LARRY_LIBRARY_PATH='/home/webbs/lcfit.git/INTERNET_APPLICATION'	# this is where all the executable files live
+sys.stderr.write("WHOAMI: \"%s\"\n" % sys.argv[0])
+LARRY_LIBRARY_PATH='/home/webbs/lcfit-devel.git/INTERNET_APPLICATION'	# where all the executable files live
 sys.path.append(LARRY_LIBRARY_PATH)		# This tells us how to find these executables
+
 
 # Constants, system modules, etc
 from LcConfig import *
-syslog.syslog('lc.py executing.')
+lcfitlogger.debug('lc.py executing.')
 
 ## Import mod_python infrastructure
 from mod_python import apache
@@ -76,7 +78,7 @@ import LcDB
 try:
 	lcdb = LcDB.LcObjDB(LARRYDBNAME)
 except Exception, e:
-	syslog.syslog(str(e))
+	lcfitlogger.critical(str(e))
 	util.redirect(req, "http://www.yahoo.com")
 	raise
 	exit
@@ -104,7 +106,7 @@ index = Index
 #####################################################
 
 LoginForm = LcPageObjects.LcLoginForm(
-formTemplate=LARRYTEMPLATEDIR + '/LoginForm.tmpl',
+	formTemplate=LARRYTEMPLATEDIR + '/LoginForm.tmpl',
 	title='LCFIT Login Form')
 LoginProcess = LcPageObjects.LcLoginProcess(
 	redirectTarget='index',

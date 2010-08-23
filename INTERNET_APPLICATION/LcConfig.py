@@ -3,7 +3,7 @@ This module:
 
 * imports the standard libraries for all the other modules;
 
-* sets up syslogging, signal handling, numpy and matplotlib, Coale-Guo style extension;
+* sets up logging, signal handling, numpy and matplotlib, Coale-Guo style extension;
 
 * holds all the constants;
 
@@ -17,6 +17,7 @@ import cPickle
 import copy
 import datetime
 import logging
+import logging.handlers
 import md5
 import os
 import pprint
@@ -26,28 +27,41 @@ import shelve
 import string
 import smtplib
 import sys
-import syslog
+#import syslog
 import time
 import textwrap
 import traceback 
 import types
 
 ########################
-## Set up sysloging -- at INFO usually
-## TODO: make plain logging, since syslog depends on a server
-syslog.openlog('LCFIT', syslog.LOG_PID | syslog.LOG_NOWAIT | syslog.LOG_NDELAY)
-syslog.setlogmask(syslog.LOG_UPTO(syslog.LOG_NOTICE))
-syslog.syslog(syslog.LOG_DEBUG, 'LcConfig.py executing')
+## Set up logging using the overly complicated python module
+
+## initialize lcfitlogger
+LARRY_LOGFILENAME='/home/webbs/lcfitlog'
+lcfitlogger = logging.getLogger('LCFIT')
+lcfitlogger.setLevel(logging.DEBUG)
+
+## set up handler and formatter, add to lcfitlogger
+ch = logging.FileHandler(filename=LARRY_LOGFILENAME)
+ch.setLevel(logging.DEBUG)
+_fstr = "%(name)s:%(levelname)s:%(asctime)s:\"%(message)s\":%(pathname)s(%(lineno)d)"
+formatter = logging.Formatter(_fstr)
+ch.setFormatter(formatter)
+lcfitlogger.addHandler(ch)
+
+## Tell the world we are operational
+lcfitlogger.debug("LcConfig.py executing.")
+
 
 ################################################################
 ## Signal handlers for debugging -- USR1 pauses() the process, USR2 does 
 import signal
 def usr1(sig, stack):
-	syslog.syslog(syslog.LOG_DEBUG, 'Received usr1: %s' % sig)
+	lcfitlogger.info( 'Received usr1: %s' % sig)
 	signal.pause()
 	return True
 def usr2(sig, stack):
-	syslog.syslog(syslog.LOG_DEBUG, 'Received usr2: %s' % sig)
+	lcfitlogger.info( 'Received usr2: %s' % sig)
 	return True
 signal.signal(signal.SIGUSR1, usr1)
 signal.signal(signal.SIGUSR2, usr2)
@@ -66,7 +80,7 @@ import matplotlib as MPL
 try:
 	MPL.use('Agg')	   # matplotlib will use the Agg backend for rendering
 except RuntimeError, e:
-	syslog.syslog(syslog.LOG_ERR, 'Error trying to run MPL.use(): \"%s\"' % e)
+	lcfitlogger.critical ('Error trying to run MPL.use(): \"%s\"' % e)
 	raise
 import pylab as PL 
 
@@ -158,7 +172,7 @@ LARRY_PREV_REG_ERROR_PAGE='/RegistrationError-RegisteredUsername.html'
 
 ## Important filespace stuff
 APACHEFILEROOT = '/var/www/localhost/htdocs'
-LARRYBASE = '/home/webbs/lcfit.git/INTERNET_APPLICATION' # Where the executable libraries (not lc.py) live
+LARRYBASE = '/home/webbs/lcfit-devel.git/INTERNET_APPLICATION' # Where the executable libraries (not lc.py) live
 LARRYTEMPLATEDIR = LARRYBASE + '/TEMPLATES'	# Where the templates for the webpages live
 LARRYDATADIR = APACHEFILEROOT + '/larry-data' # Where the temporary 
 

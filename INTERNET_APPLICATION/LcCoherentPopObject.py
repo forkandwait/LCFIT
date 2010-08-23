@@ -21,7 +21,7 @@ import LcExtension
 LcExtension.setExtensionName(LARRY_DEFAULT_EXTENSION_METHOD)
 
 ## Module Variables  ###### 
-LcObjectINFO ='$Id: LcCoherentPopObject.py 482 2008-05-28 16:51:12Z webbs $' # Project/misc information
+LcObjectINFO ='LcCoherentPopObject' # Project/misc information
 
 # Image constants
 FC_IMAGE_NAME = 'lc-forecast.png'		# Image with forecasted stuff

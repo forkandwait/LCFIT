@@ -17,12 +17,12 @@ import LcHMDObject
 import psycopg2
 
 def test_pause(dbcon):
-	"""The function to pause and syslog"""
+	"""The function to pause and log"""
 	(res,dbcon) = try_execute(dbcon, "select pg_backend_pid()", None, fetch_N='one')
 	(backend_pid,) = res
-	syslog.syslog(syslog.LOG_DEBUG, "Pausing before grabbing a cursor. Backend pid: %s." % backend_pid)
+	lcfitlogger.debug("Pausing before grabbing a cursor. Backend pid: %s." % backend_pid)
 	signal.pause()
-	syslog.syslog(syslog.LOG_DEBUG, "Un-pausing.")
+	lcfitlogger.debug( "Un-pausing.")
 
 def dict2object(classtype, instanceDictPickled):
 	"""Convert a __dict__, pickled, into an instance by unpickling it,
@@ -78,7 +78,7 @@ def try_execute(dbcon, sql, data=None, fetch_N='all', tries_N=3):
 			dbcon.commit()
 			return (res,dbcon)
 		except (psycopg2.OperationalError, psycopg2.InterfaceError, psycopg2.InternalError), e:
-			syslog.syslog(syslog.LOG_ERR, "Error trying to execute query: \"%s\", \"%s\"." % (sql, e))
+			lcfitlogger.error( "Error trying to execute query: \"%s\", \"%s\"." % (sql, e))
 			tries_N -= 1
 			time.sleep(2**tries_comp)
 			tries_comp += 1
@@ -86,7 +86,7 @@ def try_execute(dbcon, sql, data=None, fetch_N='all', tries_N=3):
 				dbcon = psycopg2.connect(dbcon.dsn)
 			except Exception, e:
 				raise LcDataException, "Exception trying to connect: \"%s\"." % str(e)
-			syslog.syslog(syslog.LOG_DEBUG, "Successfully reconnected, re-executed cursor.")
+			lcfitlogger.warning( "Successfully reconnected, re-executed cursor.")
 		except:
 			raise
 	raise 
