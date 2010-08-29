@@ -116,7 +116,7 @@ class LcRegistrationProcess:
 				raise
 
 		## Email administrator
-		mserver = smtplib.SMTP('demog.berkeley.edu')
+		mserver = smtplib.SMTP(LARRY_SMTP)
 		mserver.set_debuglevel(0)
 		headers = "From: %s\r\nSubject: %s\r\n\r\n" % \
 				            ('LCFIT', 'LCFIT Registration Alert: %s' % time.asctime())

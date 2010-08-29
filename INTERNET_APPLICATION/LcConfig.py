@@ -91,6 +91,9 @@ import pylab as PL
 # For emailing registration alerts
 LARRY_ADMIN_EMAIL = 'lcfit@demog.berkeley.edu'
 
+# SMTP Server
+LARRY_SMTP = "smtp.demog.berkeley.edu"
+
 # If True, give a backtrace instead of a nice error
 LcHardErrors = False
 
