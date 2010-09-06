@@ -18,7 +18,7 @@ sys.path.append('./TESTING')			# For test data
 import LcUtil
 from LcUtil import Diagnose as D
 import LcExtension
-LcExtension.setExtensionName(LARRY_DEFAULT_EXTENSION_METHOD)
+LcExtension.setExtensionName(LCFIT_DEFAULT_EXTENSION_METHOD)
 
 ## Module Variables  ###### 
 LcObjectINFO ='LcCoherentPopObject' # Project/misc information
@@ -47,14 +47,14 @@ class LcCoherentPop(LcSinglePop):
 		self.LcObjectINFO = LcObjectINFO
 		
 		# Age cutoff
-		self.ageCutoffIndex = LARRY_AGE_INDICES[self.ageCutoff] + 1
+		self.ageCutoffIndex = LCFIT_AGE_INDICES[self.ageCutoff] + 1
 
 		# Population data
 		self.populationText = re.sub('\n', '\n', populations) 
 		self.populationText = re.sub('\r', '', self.populationText).strip()
 		self.populationText = re.sub('\n+$', '', self.populationText)
 		self.populationText = re.sub('^\n+', '', self.populationText)
-		if LARRY_EMPTY_ALL_RE.search(self.populationText):
+		if LCFIT_EMPTY_ALL_RE.search(self.populationText):
 			self.useWeightedMx = False 
 			self.populationTextList = []
 			self.populationList = []
@@ -68,7 +68,7 @@ class LcCoherentPop(LcSinglePop):
 		self.mortRatesText = re.sub('\r', '', mortRates)
 		self.mortRatesText = re.sub('\n+$', '', self.mortRatesText)
 		self.mortRatesText = re.sub('^\n+', '', self.mortRatesText)
-		if LARRY_EMPTY_ALL_RE.search(self.mortRatesText):
+		if LCFIT_EMPTY_ALL_RE.search(self.mortRatesText):
 			raise LcException("empty rates data")		
 		self.mortRatesTextList = re.split('\n\n+', self.mortRatesText) # 
 		self.mortRatesList = [LcUtil.parseRates(rates) for rates in self.mortRatesTextList]
@@ -92,7 +92,7 @@ class LcCoherentPop(LcSinglePop):
 		# CG and takes logs of each of the rates
 		self.mortRatesListLog = []
 		for i, mxMatrix in enumerate(self.mortRatesList):
-			self.mortRatesList[i] = LcExtension.extendMx(mxData=mxMatrix, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF)
+			self.mortRatesList[i] = LcExtension.extendMx(mxData=mxMatrix, ageCutoff=LCFIT_DEFAULT_AGE_CUTOFF)
 			self.mortRatesListLog.append(N.log(self.mortRatesList[i]))
 
 		# Labels
@@ -131,7 +131,7 @@ class LcCoherentPop(LcSinglePop):
 			for mx in self.mortRatesList:
 				temp_mx += mx
 			self.averagedMx = temp_mx / len(self.mortRatesList)
-		self.averagedMx = LcExtension.extendMx(mxData=self.averagedMx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF)
+		self.averagedMx = LcExtension.extendMx(mxData=self.averagedMx, ageCutoff=LCFIT_DEFAULT_AGE_CUTOFF)
 		self.averagedMxLog = N.log(self.averagedMx)
 
 		# Check data for ok-ness in mortality (not population, since
@@ -281,8 +281,8 @@ class LcCoherentPop(LcSinglePop):
 		self.Simulation = dict(kt_comb=N.zeros((self.numRuns,self.stepsForward)),
 							   kt_resid=[N.zeros((self.numRuns, self.stepsForward))]*len(self.individualResidualLc),
 							   kt_comb_plus_resid=[N.zeros((self.numRuns, self.stepsForward))]*len(self.individualResidualLc),
-							   mx_comb=N.zeros((self.numRuns,self.stepsForward,LARRY_DEFAULT_NO_AGEWIDTHS)),
-							   mx_indiv=[N.zeros((self.numRuns,self.stepsForward,LARRY_DEFAULT_NO_AGEWIDTHS))]*len(self.individualResidualLc),
+							   mx_comb=N.zeros((self.numRuns,self.stepsForward,LCFIT_DEFAULT_NO_AGEWIDTHS)),
+							   mx_indiv=[N.zeros((self.numRuns,self.stepsForward,LCFIT_DEFAULT_NO_AGEWIDTHS))]*len(self.individualResidualLc),
 							   e0_comb=N.zeros((self.numRuns,self.stepsForward)),
 							   e0_indiv=[N.zeros((self.numRuns,self.stepsForward))]*len(self.individualResidualLc))
 
@@ -325,7 +325,7 @@ class LcCoherentPop(LcSinglePop):
 			pass
 		return							# Don't return anything useful
 
-	def _do_graphics(self, numAgeWidths=LARRY_DEFAULT_NO_AGEWIDTHS,
+	def _do_graphics(self, numAgeWidths=LCFIT_DEFAULT_NO_AGEWIDTHS,
 					 lcImageName=LC_IMAGE_NAME, fcImageName=FC_IMAGE_NAME,
 					 lnmxImageName=LNMX_IMAGE_NAME, e0sFcstImageName=E0S_FCST_IMAGE_NAME,
 					 e0sImageName=E0S_IMAGE_NAME):
@@ -337,7 +337,7 @@ class LcCoherentPop(LcSinglePop):
 		colors = 'bgrcmy' 
 		
 		##### Set up overall graphics stuff ################
-		ages = LARRY_AGES
+		ages = LCFIT_AGES
 		years_end = self.start_year + self.averagedMx.shape[0]
 		years = N.array(range(self.start_year, years_end)) 
 		assert len(years) >= 1, AssertionError("years: %s" % years)
@@ -446,7 +446,7 @@ class LcCoherentPop(LcSinglePop):
 		run_info = ''
 		# Info about the run/software/user/etc ...
 		# ... include a link to the text dump of the object...
-		dumpLink = LARRY_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
+		dumpLink = LCFIT_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
 		run_info += "<p><form action='%s'> <button name='LC_OBJECT_ID' value='%s'> Object Dump </button></form></p>" % \
 					(dumpLink,str(self.LcID))
 
@@ -469,8 +469,8 @@ class LcCoherentPop(LcSinglePop):
 		run_info +=	'Percentile values for display:\t %s\n' % self.percentiles
 		run_info += 'Number of projection runs:\t %s\n' % self.numRuns
 		run_info += 'Number of years projected forward:\t %s\n' % self.stepsForward
-		run_info += 'Width of projection step:\t %s year(s)\n' % LARRY_PROJECTION_WIDTH
-		run_info += 'Width of projection step:\t %s year(s)\n' % LARRY_PROJECTION_WIDTH
+		run_info += 'Width of projection step:\t %s year(s)\n' % LCFIT_PROJECTION_WIDTH
+		run_info += 'Width of projection step:\t %s year(s)\n' % LCFIT_PROJECTION_WIDTH
 		# ... close <pre>...
 		run_info += '</pre>'
 
@@ -485,7 +485,7 @@ class LcCoherentPop(LcSinglePop):
 		# ax for each input
 		tmp_list =[L['ax'] for L in self.individualLc] + [self.combinedLc['ax']]
 		tmp_str = LcUtil.tablefy(dataList=N.array(tmp_list),
-									sideLabels=LARRY_AGES,
+									sideLabels=LCFIT_AGES,
 									headings=self.labels + ['comb'],
 									itemName='Age') 
 		run_info += "<p>ax's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
@@ -494,7 +494,7 @@ class LcCoherentPop(LcSinglePop):
 		# bx for each input
 		tmp_list =[L['bx'] for L in self.individualLc]  + [self.combinedLc['bx']]
 		tmp_str = LcUtil.tablefy(dataList=N.array(tmp_list),
-									sideLabels=LARRY_AGES,
+									sideLabels=LCFIT_AGES,
 									headings=self.labels + ['comb'],
 									itemName='Age') 
 		run_info += "<p>bx's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
@@ -528,14 +528,14 @@ class LcCoherentPop(LcSinglePop):
 		del(tmp_array, pop)
 					  
 		# image summarizing forecast
-		fc_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
+		fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
 		fc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of forecast kts %s"></a>\n' \
 				   % (fc_img_path, fc_img_path, IMGH, IMGW, self.LcID)
 
 		# image showing e0s
-		e0_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + E0S_IMAGE_NAME
+		e0_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + E0S_IMAGE_NAME
 		e0_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of empirical e0s %s"></a>\n' \
 				   % (e0_img_path, e0_img_path, IMGH, IMGW, self.LcID)
 		
@@ -552,12 +552,12 @@ class LcCoherentPop(LcSinglePop):
 
 	def _dumpText(self):
 		self.dumpString = LcUtil.dumpObject(self,
-											helpParagraph=LARRY_DUMP_HELP,
-											dontDump=LARRY_NOTWANTED_ATTRIBUTE_DUMPS,
-											annoStructure=LARRY_VAR_ANNOTATION_COHERENT,
-											fieldsep=LARRY_FIELDSEP,
-											rowsep=LARRY_ROWSEP,
-											stanzasep=LARRY_STANZASEP)
+											helpParagraph=LCFIT_DUMP_HELP,
+											dontDump=LCFIT_NOTWANTED_ATTRIBUTE_DUMPS,
+											annoStructure=LCFIT_VAR_ANNOTATION_COHERENT,
+											fieldsep=LCFIT_FIELDSEP,
+											rowsep=LCFIT_ROWSEP,
+											stanzasep=LCFIT_STANZASEP)
 
 
 

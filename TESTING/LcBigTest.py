@@ -48,9 +48,9 @@ TEST_RESULT_SCHEMA = "Create table test_results (testId integer, test text, errc
 ANALYSIS_RESULT_SCHEMA = "Create table lcrun_results (testId integer, test text, lcId integer, lcData text);"
 
 # Names of pages and pseudo-pages
-FORM_NAMES = [LARRY_WWW_INPUT_RATES, LARRY_WWW_INPUT_RATES_MF, LARRY_WWW_INPUT_RATES_COHERENT, LARRY_WWW_HMD_CONVERTER]
-PROCESS_NAMES = [LARRY_WWW_RATES_PROCESS, LARRY_WWW_RATES_MF_PROCESS, LARRY_WWW_RATES_COHERENT_PROCESS, LARRY_WWW_HMD_PROCESS]
-LIST_NAMES = [LARRY_WWW_LIST_OBJECTS]
+FORM_NAMES = [LCFIT_WWW_INPUT_RATES, LCFIT_WWW_INPUT_RATES_MF, LCFIT_WWW_INPUT_RATES_COHERENT, LCFIT_WWW_HMD_CONVERTER]
+PROCESS_NAMES = [LCFIT_WWW_RATES_PROCESS, LCFIT_WWW_RATES_MF_PROCESS, LCFIT_WWW_RATES_COHERENT_PROCESS, LCFIT_WWW_HMD_PROCESS]
+LIST_NAMES = [LCFIT_WWW_LIST_OBJECTS]
 
 # Set up opener etc for the http connection, with Basic auth and cookies.
 auth_handler = U2.HTTPBasicAuthHandler()
@@ -97,15 +97,15 @@ def getData(url, urlData = None, method='POST'):
 
 def lcLogin():
 	""" Login, returning stuff. """
-	loginStr = urlencode({LARRY_USERNAME_KEY:USERNAME, LARRY_PASSWORD_KEY:PASSWORD, 'submit': 'SUBMIT'})
-	#print APP_URL + LARRY_WWW_LOGIN_PROCESS, loginStr
-	url_conn, url_data = getData(APP_URL + LARRY_WWW_LOGIN_PROCESS, loginStr, method='GET')
+	loginStr = urlencode({LCFIT_USERNAME_KEY:USERNAME, LCFIT_PASSWORD_KEY:PASSWORD, 'submit': 'SUBMIT'})
+	#print APP_URL + LCFIT_WWW_LOGIN_PROCESS, loginStr
+	url_conn, url_data = getData(APP_URL + LCFIT_WWW_LOGIN_PROCESS, loginStr, method='GET')
 	return (url_conn, url_data)
 
 
 def lcLogout():
 	"""Logout, returning stuff."""
-	url_conn, url_data = getData(APP_URL + LARRY_WWW_LOGOUT)
+	url_conn, url_data = getData(APP_URL + LCFIT_WWW_LOGOUT)
 	return (url_conn, url_data)
 
 
@@ -165,7 +165,7 @@ class TestLcInterface(unittest.TestCase):
 
 		lcLogout()							# Since setUp should log us in.
 
-		conn, data = getData(APP_URL + LARRY_WWW_INDEX)
+		conn, data = getData(APP_URL + LCFIT_WWW_INDEX)
 		assert checkDivClass(LcHTML_checker, data, 'class', 'Error'), \
 			   AssertionError("Tried to access page without login, should have been redirected error page.") 
 
@@ -203,7 +203,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'5',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
 
@@ -218,7 +218,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'5',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
 
@@ -233,7 +233,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'5',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
 
@@ -247,7 +247,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'5',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
 
@@ -262,7 +262,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'5',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), \
 			   AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
@@ -278,7 +278,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'5',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'Error'), \
 			   AssertionError('(%s) \n\n%s' % ('ListObjects', d)) # Shouldn't work -- bad rates
 		return
@@ -301,7 +301,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'100',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_COHERENT_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_COHERENT_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), \
 			   AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
@@ -323,7 +323,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'100',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_COHERENT_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_COHERENT_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), \
 			   AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
@@ -340,7 +340,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'100',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_COHERENT_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_COHERENT_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), \
 			   AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
@@ -358,7 +358,7 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'100',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		c,d = getData(APP_URL + LARRY_WWW_RATES_COHERENT_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_COHERENT_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), \
 			   AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
@@ -377,8 +377,8 @@ class TestLcInterface(unittest.TestCase):
 							  'stepsForward':'5',
 							  'ageCutoff':'80',
 							  'projConfidenceInterval':'0.95'})
-		#print APP_URL + LARRY_WWW_RATES_MF_PROCESS
-		c,d = getData(APP_URL + LARRY_WWW_RATES_MF_PROCESS, formData)
+		#print APP_URL + LCFIT_WWW_RATES_MF_PROCESS
+		c,d = getData(APP_URL + LCFIT_WWW_RATES_MF_PROCESS, formData)
 		assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), \
 			   AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
@@ -395,7 +395,7 @@ class TestLcInterface(unittest.TestCase):
 
 		lcLogin()
 		
-		conn, data = getData(APP_URL + LARRY_WWW_DISPLAY_OBJECT + "?LC_OBJECT_ID=-1")
+		conn, data = getData(APP_URL + LCFIT_WWW_DISPLAY_OBJECT + "?LC_OBJECT_ID=-1")
 		"""
 		assert checkDivClass(LcHTML_checker, data, 'class', 'Error'), \
 			   AssertionError("Tried to request non-existent object, should have been given error page.")
@@ -406,12 +406,12 @@ class TestLcInterface(unittest.TestCase):
 
 	def test61HMD(self):
 		""" Test HMD conversion """
-		#raise Exception(APP_URL + LARRY_WWW_HMD_PROCESS)
+		#raise Exception(APP_URL + LCFIT_WWW_HMD_PROCESS)
 		lcLogin()
 		formData = urlencode({'hmdinput':LT.Japan_HMD_nMx,
 							  'notes':'TestType=%s TestId=%s' % ('HMD converter',self.testId),
 							  'start_year':'1960'})
-		c,d = getData(APP_URL + LARRY_WWW_HMD_PROCESS, formData)
+		c,d = getData(APP_URL + LCFIT_WWW_HMD_PROCESS, formData)
 		lcLogout()
 		#assert checkDivClass(LcHTML_checker, d, 'class', 'ListObjects'), AssertionError('(%s) \n\n%s' % ('ListObjects', d))
 		return
@@ -422,7 +422,7 @@ class TestLcInterface(unittest.TestCase):
 		display page, and the datadump."""
 
 		# Download ListObject page ...
-		c,d = getData(APP_URL + LARRY_WWW_LIST_OBJECTS)
+		c,d = getData(APP_URL + LCFIT_WWW_LIST_OBJECTS)
 		f=open('listHTMLdump.html', 'w')
 		f.write(d)
 		f.close()		
@@ -456,7 +456,7 @@ class TestLcInterface(unittest.TestCase):
 		# and append to a text variable, and save.
 		f = open('objectDump-%s.txt' % self.testId, 'w')
 		for row in notesIdsList:
-			c,d = getData(APP_URL + LARRY_WWW_OBJECT_DUMP, urlencode({LARRY_OBJECT_ID_KEY:row['id']})) 
+			c,d = getData(APP_URL + LCFIT_WWW_OBJECT_DUMP, urlencode({LCFIT_OBJECT_ID_KEY:row['id']})) 
 			f.write('\n***\nLcID: %s\nTest ID: %s\nTest Type: %s\n\n' % (row['id'], row['testId'], row['testType']) + d)
 			pass
 		f.close()

@@ -17,8 +17,8 @@ session:  $session
 
 <form action='Foo' method='post'>
 
-<select size='1' name='${LARRY_OBJECT_SERIALNO_PREFIX}hmd_object'>
-#set $L = $lcdb.listObjectsFromClass(className='LcHMDObject.HMD', sessionId=$session[LARRY_SESSION_KEY])
+<select size='1' name='${LCFIT_OBJECT_SERIALNO_PREFIX}hmd_object'>
+#set $L = $lcdb.listObjectsFromClass(className='LcHMDObject.HMD', sessionId=$session[LCFIT_SESSION_KEY])
 #for $objectId in $L
 <option> $objectId </option>
 #end for

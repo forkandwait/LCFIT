@@ -16,14 +16,6 @@ import LcHMDObject
 
 import psycopg2
 
-def test_pause(dbcon):
-	"""The function to pause and log"""
-	(res,dbcon) = try_execute(dbcon, "select pg_backend_pid()", None, fetch_N='one')
-	(backend_pid,) = res
-	lcfitlogger.debug("Pausing before grabbing a cursor. Backend pid: %s." % backend_pid)
-	signal.pause()
-	lcfitlogger.debug( "Un-pausing.")
-
 def dict2object(classtype, instanceDictPickled):
 	"""Convert a __dict__, pickled, into an instance by unpickling it,
 	instantiating an object, and then updating the new object's

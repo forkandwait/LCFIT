@@ -22,10 +22,10 @@ import psycopg2.extensions
 DB_NAME = 'larrydb'
 EMAIL = 'webbs@demog.berkeley.edu'
 IS_DEVEL_MACHINE = True					# Is this script being run on 
-LARRY_WWW_FILE_ROOT = '/var/www/localhost/htdocs' # put the tar of larry here for linking and downloading
-LARRY_TMP_FILE_ROOT = '/other/webbs/daily' # put the tar  of the database here
-LARRY_TRUNK ='/home/webbs/lcfit.git'
-LARRY_DATA_DIR = LARRY_WWW_FILE_ROOT + '/larry-data'
+LCFIT_WWW_FILE_ROOT = '/var/www/localhost/htdocs' # put the tar of larry here for linking and downloading
+LCFIT_TMP_FILE_ROOT = '/other/webbs/daily' # put the tar  of the database here
+LCFIT_TRUNK ='/home/webbs/lcfit.git'
+LCFIT_DATA_DIR = LCFIT_WWW_FILE_ROOT + '/larry-data'
 PASSPHRASE = 'hdy352!!%jf'
 #SVN_ROOT = '/var/lib/svn/DEMOG_SVN'
 TEMPLATE_FILE = '/home/webbs/lcfit.git/MAINTENANCE/daily_email.tmpl'
@@ -50,9 +50,9 @@ search_dict['RUN_START_TIME'] = time.strftime('%Y-%m-%d %H:%M:%S')
 search_dict['BLAH'] = 'a string to be interpolated'
 
 # Delete all the empty temp directories in larry-data over 48 hours old
-for f in os.listdir(LARRY_DATA_DIR):
+for f in os.listdir(LCFIT_DATA_DIR):
 	try:
-		fdir = LARRY_DATA_DIR + '/' + f
+		fdir = LCFIT_DATA_DIR + '/' + f
 		os.rmdir(fdir)
 		syslog.syslog('Deleted: %s.' % fdir)
 	except OSError, e:
@@ -151,31 +151,6 @@ except:
 #  Clean up database connection
 curs.close()
 conn.close()
-
-#  XXX.  Replace with a git push and a pg_dump straight from cron
-'''
-#If running a development machine, back up source code, export
-#  source code, and db data
-if IS_DEVEL_MACHINE:
-	out = []
-	#out.append(os.system("svnadmin dump --quiet %s > %s/lcfit.svn.dump" % (SVN_ROOT, LARRY_WWW_FILE_ROOT)))
-	#out.append(os.system("bzip2 --force %s/lcfit.svn.dump" % LARRY_WWW_FILE_ROOT))
-	#out.append(os.system("svn export --force --quiet %s /tmp/larry_export" % LARRY_TRUNK))
-	#out.append(os.system("tar -cjf %s/lcfit.tar.bz2 /tmp/larry_export 2>/dev/null" % LARRY_WWW_FILE_ROOT))
-	out.append(os.system("pg_dump -a %s | gpg --batch -a --symmetric --passphrase='%s' > %s/lcfit-db.gpg" \
-					% (DB_NAME, PASSPHRASE, LARRY_TMP_FILE_ROOT)))
-	if out.count(0) < 5: 
-		sys.stderr.write("Problem backing up source and db: %s" % out)
-		sys.stderr.flush()
-else:
-	# if not a development machine, dump the database
-	out = []
-	out.append(os.system("pg_dump -a %s | gpg  -a --symmetric --passphrase='%s' > %s/lcfit-db.gpg" \
-					% (DB_NAME, PASSPHRASE, LARRY_WWW_FILE_ROOT)))
-	if out.count(0) < 1: 
-		sys.stderr.write("Problem backing up source and db: %s" % out)
-		sys.stderr.flush()
-'''
 
 #  Email results
 mserver = smtplib.SMTP('smtp.demog.berkeley.edu')

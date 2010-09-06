@@ -38,7 +38,7 @@ def goodRows(a):
 
 
 def adjustAx(mx, gender='combined'):
-	numAgeWidths = LARRY_DEFAULT_NO_AGEWIDTHS
+	numAgeWidths = LCFIT_DEFAULT_NO_AGEWIDTHS
 	
 	# Going to let qx[2] float as 2.6 since can't go to a previous x
 	ax_new = N.array([0.0] * numAgeWidths, N.float64)
@@ -127,7 +127,7 @@ def adjustAx(mx, gender='combined'):
 	"""
 	#  OLD CODE.  spine, CHECKING FOR between 0 and 1 and adjusting if not
 	nqx[0] = nmx[0] / (1 + (qx0_intercept - qx0_slope * nmx[0]) * nmx[0]) # 0-1 age .93, 1.7. based on lfexpt.m
-	nqx[1] = 4*nmx[1]/(1+(LARRY_DEFAULT_AGEWIDTH/2)*nmx[1])	# 1-4
+	nqx[1] = 4*nmx[1]/(1+(LCFIT_DEFAULT_AGEWIDTH/2)*nmx[1])	# 1-4
 	"""
 	raise Exception
 	lcfitlogger.warning("\n\nFailure!\nax iteration (%s): \n%s\n" % (iter_repeats, pprint.pformat((ax_new, qx, mx, lx), width=10)))
@@ -135,9 +135,9 @@ def adjustAx(mx, gender='combined'):
 					  (ax_distance, iter_repeats, ax_diff, ax_new, ax_old, lx, qx, mx))
 
 
-def lifeTable (nmxp,  ageCutoff=None, extensionMethod=LARRY_DEFAULT_EXTENSION_METHOD,
+def lifeTable (nmxp,  ageCutoff=None, extensionMethod=LCFIT_DEFAULT_EXTENSION_METHOD,
 			   ltFuncType='ex', beginFuncParam=0, endFuncParam=0,
-			   numAgeWidths = LARRY_DEFAULT_NO_AGEWIDTHS,
+			   numAgeWidths = LCFIT_DEFAULT_NO_AGEWIDTHS,
 			   gender='combined', ax_calc_alg='graduated',
 			   ageWidth=5, qxMax=.7, qx0_intercept=0.93, qx0_slope=1.7):
 
@@ -145,7 +145,7 @@ def lifeTable (nmxp,  ageCutoff=None, extensionMethod=LARRY_DEFAULT_EXTENSION_ME
 	From a given nMx schedule, calc and return a functional or the
 	full LT.  The columns for a full LT are nmx, nqx, lx, nLx, Ex.
 
-	extensionMethod=[LARRY_DEFAULT_EXTENSION_METHOD]
+	extensionMethod=[LCFIT_DEFAULT_EXTENSION_METHOD]
 
 	ltFuncType=["ex", "lx", "lxPercent", "depRatio", "full"]
 
@@ -169,7 +169,7 @@ def lifeTable (nmxp,  ageCutoff=None, extensionMethod=LARRY_DEFAULT_EXTENSION_ME
 	nmx = nmxp.copy()
 	
 	# set nmx's that creep in as inf to something big
-	nmx[N.isinf(nmx)] = LARRY_INF_NMX_REPLACEMENT
+	nmx[N.isinf(nmx)] = LCFIT_INF_NMX_REPLACEMENT
 	assert N.isfinite(nmx).all(), AssertionError("%s" % pprint.pformat(locals())) 
 
 	# extend nmx out to appropriate age widths.  Filling with stuff to
@@ -267,23 +267,23 @@ def lifeTable (nmxp,  ageCutoff=None, extensionMethod=LARRY_DEFAULT_EXTENSION_ME
 	# Decide what to return.  For the functionals, use the parameters
 	# to figure out what parts of the lifetable want.
 	if ltFuncType == 'ex':
-		xTmp = LARRY_AGE_INDICES[beginFuncParam]
-		assert 0 <= xTmp <= max(LARRY_AGES), "Bad age: %s" % beginFuncParam 
+		xTmp = LCFIT_AGE_INDICES[beginFuncParam]
+		assert 0 <= xTmp <= max(LCFIT_AGES), "Bad age: %s" % beginFuncParam 
 		return (float(Ex[xTmp]))
 	elif ltFuncType == 'lx':
-		xTmp = LARRY_AGE_INDICES[beginFuncParam]
-		assert 0 <= xTmp <= max(LARRY_AGES), "Bad age: %s" % beginFuncParam
+		xTmp = LCFIT_AGE_INDICES[beginFuncParam]
+		assert 0 <= xTmp <= max(LCFIT_AGES), "Bad age: %s" % beginFuncParam
 		return (float(lx[xTmp]))
 	elif ltFuncType == 'lxPercent':
 		lxTmp = beginFuncParam / 100.0
 		assert 0.0 < lxTmp <= 1.0, \
 			   AssertionError("Bad percentile: %s." % beginFuncParam)
-		lxInterp = scipy.interpolate.interp1d(lx[::-1], LARRY_AGES[::-1]) # both x and lx reversed
+		lxInterp = scipy.interpolate.interp1d(lx[::-1], LCFIT_AGES[::-1]) # both x and lx reversed
 		return lxInterp(lxTmp).ravel()[0]
 	elif ltFuncType == 'depRatio':
-		xTmpYoung =  LARRY_AGE_INDICES[beginFuncParam]
-		xTmpOld = LARRY_AGE_INDICES[endFuncParam]
-		assert 0 <= xTmpYoung < xTmpOld <= max(LARRY_AGES), \
+		xTmpYoung =  LCFIT_AGE_INDICES[beginFuncParam]
+		xTmpOld = LCFIT_AGE_INDICES[endFuncParam]
+		assert 0 <= xTmpYoung < xTmpOld <= max(LCFIT_AGES), \
 			   AssertionError ("Bad ages: Young: %s, Old: %s" % (beginFuncParam, endFuncParam))
 		ppyYoung = N.sum(nLx[0:xTmpYoung]) # Total person years
 		ppyWorking = N.sum(nLx[xTmpYoung:xTmpOld])
@@ -304,7 +304,7 @@ def tablefy (dataList, headings, sideLabels=[], itemName="Item", precision=4):
 	p_opts = N.get_printoptions()
 	N.set_printoptions(precision=precision)
 	def formatCell(x):
-		if x == LARRY_NULL_NUMBER or x is None: return '&nbsp;'
+		if x == LCFIT_NULL_NUMBER or x is None: return '&nbsp;'
 		else: return str(x)
 
 	# Transform everything into numpy arrays
@@ -322,7 +322,7 @@ def tablefy (dataList, headings, sideLabels=[], itemName="Item", precision=4):
 	colDim = len(dataList)
 	statArray = S.zeros((rowDim, colDim), N.float64)
 	#wtf = statArray.list()
-	statArray[...] = LARRY_NULL_NUMBER
+	statArray[...] = LCFIT_NULL_NUMBER
 	
 
 	# ...insert stuff into the columns, then use the matrix to build
@@ -376,7 +376,7 @@ def mat2table(mat, prec=2, name=None):
 		raise LcException, "Can't print matrices with dim > 2"
 	return outStr + '</table>\n'
 
-def mat2text(mat, indent_level=0, fieldsep=LARRY_FIELDSEP, rowsep=LARRY_ROWSEP, stanzasep=LARRY_STANZASEP):
+def mat2text(mat, indent_level=0, fieldsep=LCFIT_FIELDSEP, rowsep=LCFIT_ROWSEP, stanzasep=LCFIT_STANZASEP):
 	""" Formats a matrix.  XXX: Note that it adds terminal newlines in a strange way."""
 	
 	
@@ -421,7 +421,7 @@ def kt2e0(kt, ax, bx, lifeTableParams):
 	return (lifeTable(nmx, **lifeTableParams_copy))
 
 
-def multiKt2e0(kt, ax, bx, lifeTableParams, numAgeWidths = LARRY_DEFAULT_NO_AGEWIDTHS):
+def multiKt2e0(kt, ax, bx, lifeTableParams, numAgeWidths = LCFIT_DEFAULT_NO_AGEWIDTHS):
 	e0s = [0] * len(kt)
 	for i, k in enumerate(kt):
 		nmxTmp = N.zeros((1,numAgeWidths), N.float64).ravel()
@@ -466,7 +466,7 @@ def parseDate(data):
 		raise LcInputException, e 
 
 
-def parseRates(data, numAgeWidths = LARRY_DEFAULT_NO_AGEWIDTHS):
+def parseRates(data, numAgeWidths = LCFIT_DEFAULT_NO_AGEWIDTHS):
 	"""
 	Parse the text data and return Numeric arrays
 
@@ -474,20 +474,20 @@ def parseRates(data, numAgeWidths = LARRY_DEFAULT_NO_AGEWIDTHS):
 	"""
 
 	# Clean head and tail of data
-	data = re.sub(LARRY_HEAD_WS_RE, '', data)
-	data = re.sub(LARRY_TAIL_WS_RE, '', data)
+	data = re.sub(LCFIT_HEAD_WS_RE, '', data)
+	data = re.sub(LCFIT_TAIL_WS_RE, '', data)
 	
 	# Read in data to float/nan: Split data into lines, create nan
 	# matrix, look fo for 'NA' in bgin and let nan data stay or split
 	# into fields and insert
-	lines = re.sub(LARRY_END_WS_RE, '', data).split('\n')
-	lines = [x for x in lines if not LARRY_COMMENT_LINE_RE.match(x)] # Pull out full line comments
-	lines = [LARRY_COMMENT_TRAILING_RE.sub('',x) for x in lines] # Get rid of trailing comments
+	lines = re.sub(LCFIT_END_WS_RE, '', data).split('\n')
+	lines = [x for x in lines if not LCFIT_COMMENT_LINE_RE.match(x)] # Pull out full line comments
+	lines = [LCFIT_COMMENT_TRAILING_RE.sub('',x) for x in lines] # Get rid of trailing comments
 	
 	out = N.zeros((len(lines), numAgeWidths), N.float64)
 	out[...] = N.nan 
 	for i, line in enumerate(lines):
-		if re.match(LARRY_EMPTY_ROW_RE, line): # Leave line as all nans, to indicate missing year
+		if re.match(LCFIT_EMPTY_ROW_RE, line): # Leave line as all nans, to indicate missing year
 			#Warn("parsing empty year: i:%i, data:%r" % (i, line))
 			continue
 		else:
@@ -515,7 +515,7 @@ def emptyLikeWithNans(arr, nanRowsBool=None):
 	return a
 
 def dumpObject(obj, dontDump=[], annoStructure=[], helpParagraph='', 
-			   fieldsep=LARRY_FIELDSEP, rowsep=LARRY_ROWSEP, stanzasep=LARRY_STANZASEP):
+			   fieldsep=LCFIT_FIELDSEP, rowsep=LCFIT_ROWSEP, stanzasep=LCFIT_STANZASEP):
 	""" Dumps an object, avoids certain attributes with 'dontDump',
 	sorts and annotates the dumped fields with annoStructure:
 	[(fieldname1,explanation), (fieldname2, explanation), ...]."""

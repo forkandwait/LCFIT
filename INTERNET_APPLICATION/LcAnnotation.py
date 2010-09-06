@@ -1,8 +1,8 @@
 from LcConfig import *
 
-ageList = ', '.join([str(x) for x in LARRY_AGES])
+ageList = ', '.join([str(x) for x in LCFIT_AGES])
 
-LARRY_DUMP_HELP = """
+LCFIT_DUMP_HELP = """
 This is a dump of all of the variables that are created when you do a
 Lee-Carter analysis.  First there is a one list of list of all the
 variables.  Then there is a section in which each with annotation is
@@ -12,7 +12,7 @@ variables which are not annotated (and probably of no interest except
 to the programmer); it is sorted alphabetically and lacks explanatory
 notes."""
 
-LARRY_VAR_ANNOTATION_SINGLESEX = [
+LCFIT_VAR_ANNOTATION_SINGLESEX = [
 	['ax', 'Vector of ax values for ages = ' + ageList],
 	['bx', 'Vector of bx values for ages = ' + ageList],
 	['kt', 'Principle component of time series with adjustment by life expectancy'],
@@ -25,7 +25,7 @@ LARRY_VAR_ANNOTATION_SINGLESEX = [
 	['nmx', 'Original parsed rates from sample'],
 	]
 
-LARRY_VAR_ANNOTATION_COHERENT = [
+LCFIT_VAR_ANNOTATION_COHERENT = [
 	['R_S', 'List of R_S for each individual pop'],
 	['R_S_terms', ''],
 	['R_C', 'List of R_C for each individual pop'],
@@ -38,7 +38,7 @@ LARRY_VAR_ANNOTATION_COHERENT = [
 	 '"e0_indiv" are percentile e0''s for each given coherent population.'],
 ]
 
-LARRY_VAR_ANNOTATION_MF = [
+LCFIT_VAR_ANNOTATION_MF = [
 	['axComb', 'Combined sex: vector of ax values for ages = ' + ageList],
 	['bxComb', 'Combined sex: vector of bx values for ages = ' + ageList],
 	['ktComb', 'Combined sex: principle component of time series with adjustment by life expectancy'],

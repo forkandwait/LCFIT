@@ -9,7 +9,7 @@ object has a __call__ method, so it looks like a function to mod_python.
 
 When you see something like:
 
-Index = LcPageObjects.LcIndex(formTemplate=LARRYTEMPLATEDIR + "/Index.tmpl")
+Index = LcPageObjects.LcIndex(formTemplate=LCFIT_TEMPLATEDIR + "/Index.tmpl")
  
 what that means is that the variable Index holds a class that "walks
 like and talks like" a function.  This function is run when the user
@@ -25,7 +25,7 @@ usually one of them is "inside" the other.  This is tricky - maybe too
 tricky - but better comments should make it easier to understand.
 
 Now this is the only file that lives in the apache tree -- the others
-now live in te LARRY_LIBRARY_PATH.  This was done so that there is
+now live in te LCFIT_LIBRARY_PATH.  This was done so that there is
 less security risk, cleaner development, etc.
 
 '''
@@ -37,8 +37,8 @@ less security risk, cleaner development, etc.
 
 import sys
 sys.stderr.write("WHOAMI: \"%s\"\n" % sys.argv[0])
-LARRY_LIBRARY_PATH='/home/webbs/lcfit-devel.git/INTERNET_APPLICATION'	# where all the executable files live
-sys.path.append(LARRY_LIBRARY_PATH)		# This tells us how to find these executables
+LCFIT_LIBRARY_PATH='/home/webbs/lcfit-devel.git/INTERNET_APPLICATION'	# where all the executable files live
+sys.path.append(LCFIT_LIBRARY_PATH)		# This tells us how to find these executables
 
 
 # Constants, system modules, etc
@@ -53,7 +53,7 @@ from mod_python import util
 import Cheetah.Template as Template
 import cProfile
 
-os.environ['HOME'] = LARRYDATADIR # Need to provide a directory for pylab to cache fonts
+os.environ['HOME'] = LCFIT_DATADIR # Need to provide a directory for pylab to cache fonts
 
 import LcUtil							# Utility functions, including lifetable
 import LcPageObjects # Module provides the objects which have __call__
@@ -76,7 +76,7 @@ import LcHMDObject
 # details under __init__).
 import LcDB
 try:
-	lcdb = LcDB.LcObjDB(LARRYDBNAME)
+	lcdb = LcDB.LcObjDB(LCFIT_DBNAME)
 except Exception, e:
 	lcfitlogger.critical(str(e))
 	util.redirect(req, "http://www.yahoo.com")
@@ -95,8 +95,8 @@ database connections, etc).  See above."""
 #####################################################
 ### Index, with alias to an upper case page name ####
 #####################################################
-Index = LcPageObjects.LcIndex(formTemplate=LARRYTEMPLATEDIR + '/Index.tmpl',
-							  navTemplate=LARRYTEMPLATEDIR + '/Application.tmpl',
+Index = LcPageObjects.LcIndex(formTemplate=LCFIT_TEMPLATEDIR + '/Index.tmpl',
+							  navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
 							  lcdb=lcdb,
 							  title='LCFIT Index')
 index = Index
@@ -106,11 +106,11 @@ index = Index
 #####################################################
 
 LoginForm = LcPageObjects.LcLoginForm(
-	formTemplate=LARRYTEMPLATEDIR + '/LoginForm.tmpl',
+	formTemplate=LCFIT_TEMPLATEDIR + '/LoginForm.tmpl',
 	title='LCFIT Login Form')
 LoginProcess = LcPageObjects.LcLoginProcess(
 	redirectTarget='index',
-	messageTemplate=LARRYTEMPLATEDIR + '/LoginError.tmpl',
+	messageTemplate=LCFIT_TEMPLATEDIR + '/LoginError.tmpl',
 	lcdb = lcdb)
 Login = LoginForm
 
@@ -121,22 +121,22 @@ Logout = LcPageObjects.LcLogout(
 #####################################################
 ### Registration ###
 #####################################################
-Registration = LcPageObjects.LcRegistrationForm(formTemplate=LARRYTEMPLATEDIR + '/RegistrationForm.tmpl',
-												title='LCFIT Registration Form')
-RegistrationProcess = LcPageObjects.LcRegistrationProcess(lcdb=lcdb, errorTemplate=LARRYTEMPLATEDIR + \
+Registration = LcPageObjects.LcRegistrationForm(formTemplate=LCFIT_TEMPLATEDIR + '/RegistrationForm.tmpl',
+												title='LCFIT_ Registration Form')
+RegistrationProcess = LcPageObjects.LcRegistrationProcess(lcdb=lcdb, errorTemplate=LCFIT_TEMPLATEDIR + \
 														  '/Error.tmpl', redirectTarget='../../Registration-ThankYou.html') 
 
 #####################################################
 ### Show the __str__ representation of an object within the navigation/Application template
 #####################################################
-ShowResults = LcPageObjects.LcDisplay(lcdb=lcdb, navTemplate=LARRYTEMPLATEDIR + '/Application.tmpl')
+ShowResults = LcPageObjects.LcDisplay(lcdb=lcdb, navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl')
 
 #####################################################
 ### List all of the objects within the navigation/Application template
 #####################################################
 ListObjects = LcPageObjects.LcList(lcdb=lcdb,
-								   navTemplate=LARRYTEMPLATEDIR + '/Application.tmpl',
-								   objectListTemplate = LARRYTEMPLATEDIR + '/ObjectList.tmpl',
+								   navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
+								   objectListTemplate = LCFIT_TEMPLATEDIR + '/ObjectList.tmpl',
 								   title='LCFIT Object List')
 ## Hack to enable profiling 
 def ListObjectsProfile(req):
@@ -147,7 +147,7 @@ def ListObjectsProfile(req):
 ### Delete an object
 #####################################################
 DeleteObject = LcPageObjects.LcDelete(lcdb=lcdb,
-									  redirectTarget=LARRY_WWW_LIST_OBJECTS)
+									  redirectTarget=LCFIT_WWW_LIST_OBJECTS)
 
 #####################################################
 ### Displays an image, with no regard for which forecast it belongs too
@@ -163,16 +163,16 @@ ObjectDump = LcPageObjects.LcDumpText(lcdb=lcdb)
 ### Input single population rates
 #####################################################
 InputRates=LcPageObjects.LcForm(redirectTarget='ProcessRates',
-								formTemplate=LARRYTEMPLATEDIR + '/InputRates.tmpl',
-								navTemplate=LARRYTEMPLATEDIR + '/Application.tmpl',
+								formTemplate=LCFIT_TEMPLATEDIR + '/InputRates.tmpl',
+								navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
 								lcdb = lcdb,
 								title='LCFIT Death Rate Input (Single Sex)')
 #####################################################
 ## Input M & F rates
 #####################################################
 InputRatesMF=LcPageObjects.LcForm(redirectTarget='ProcessRatesMF',
-								formTemplate=LARRYTEMPLATEDIR + '/InputRatesMF.tmpl',
-								navTemplate=LARRYTEMPLATEDIR + '/Application.tmpl',
+								formTemplate=LCFIT_TEMPLATEDIR + '/InputRatesMF.tmpl',
+								navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
 								lcdb = lcdb,
 								title='LCFIT Death Rate Input (MF)')
 
@@ -180,8 +180,8 @@ InputRatesMF=LcPageObjects.LcForm(redirectTarget='ProcessRatesMF',
 ## Input coherent rates
 #####################################################
 InputRatesCoherent=LcPageObjects.LcForm(redirectTarget='ProcessRatesCoherent',
-										formTemplate=LARRYTEMPLATEDIR + '/InputRatesCoherent.tmpl',
-										navTemplate=LARRYTEMPLATEDIR + '/Application.tmpl',
+										formTemplate=LCFIT_TEMPLATEDIR + '/InputRatesCoherent.tmpl',
+										navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
 										lcdb = lcdb,
 										title='LCFIT Death Rate Input (Coherent)')
 
@@ -189,11 +189,11 @@ InputRatesCoherent=LcPageObjects.LcForm(redirectTarget='ProcessRatesCoherent',
 ## Process single populaton rates, store big object result,  and redirect to ListObjects
 #####################################################
 ProcessRates_ = LcPageObjects.LcProcess(targetClass=LcSinglePopObject.LcSinglePop,
-									   redirectTarget=LARRY_WWW_LIST_OBJECTS,
+									   redirectTarget=LCFIT_WWW_LIST_OBJECTS,
 									   lcdb=lcdb)
 # Profiling hack
 def ProcessRates(req):					
-	if LARRY_DO_PROFILE:
+	if LCFIT_DO_PROFILE:
 		ret = cProfile.runctx('ProcessRates_(req)',
 							  globals(), locals(), filename='/tmp/ProcessRatesSingleProf')
 		return ret
@@ -205,18 +205,18 @@ def ProcessRates(req):
 ## Process male/female rates
 #####################################################
 ProcessRatesMF = LcPageObjects.LcProcess(targetClass=LcMFPopObject.LcMFPop,
-										 redirectTarget=LARRY_WWW_LIST_OBJECTS,
+										 redirectTarget=LCFIT_WWW_LIST_OBJECTS,
 										 lcdb=lcdb)
 
 #####################################################
 ## Process coherent sets of rates
 #####################################################
 ProcessRatesCoherent_ = LcPageObjects.LcProcess(targetClass=LcCoherentPopObject.LcCoherentPop,
-												redirectTarget=LARRY_WWW_LIST_OBJECTS,
+												redirectTarget=LCFIT_WWW_LIST_OBJECTS,
 												lcdb=lcdb)
 # Profiling hack
 def ProcessRatesCoherent(req):					
-	if LARRY_DO_PROFILE:
+	if LCFIT_DO_PROFILE:
 		ret = cProfile.runctx('ProcessRatesCoherent_(req)',
 							  globals(), locals(), filename='/tmp/ProcessRatesCoherentProf')
 		return ret
@@ -229,8 +229,8 @@ def ProcessRatesCoherent(req):
 ## Get the rates
 #####################################################
 InputHMD = LcPageObjects.LcForm(redirectTarget='ProcessHMD',
-								formTemplate=LARRYTEMPLATEDIR + '/InputHMD.tmpl',
-								navTemplate=LARRYTEMPLATEDIR + '/Application.tmpl',
+								formTemplate=LCFIT_TEMPLATEDIR + '/InputHMD.tmpl',
+								navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
 								lcdb = lcdb,
 								title='LCFIT HMD Converter')
 
@@ -238,14 +238,14 @@ InputHMD = LcPageObjects.LcForm(redirectTarget='ProcessHMD',
 ## Process HMD rates and redirect to ListObjects
 #####################################################
 ProcessHMD= LcPageObjects.LcProcess(targetClass=LcHMDObject.HMD,
-									redirectTarget=LARRY_WWW_LIST_OBJECTS,
+									redirectTarget=LCFIT_WWW_LIST_OBJECTS,
 									lcdb=lcdb)
 
 #####################################################
 ## Error Infrastructure
 #####################################################
-LoginError = LcPageObjects.LcError(template=LARRYTEMPLATEDIR+'/Error.tmpl', title="LCFIT Login Error Messages")
-Error = LcPageObjects.LcError(template=LARRYTEMPLATEDIR+'/Error.tmpl', title="LCFIT Misc Error Messages")
+LoginError = LcPageObjects.LcError(template=LCFIT_TEMPLATEDIR+'/Error.tmpl', title="LCFIT_ Login Error Messages")
+Error = LcPageObjects.LcError(template=LCFIT_TEMPLATEDIR+'/Error.tmpl', title="LCFIT Misc Error Messages")
 
 #################################################
 ## main procedure.
