@@ -18,7 +18,6 @@ import copy
 import datetime
 import logging
 import logging.handlers
-import md5
 import os
 import pprint
 import random
@@ -31,6 +30,25 @@ import time
 import textwrap
 import traceback 
 import types
+
+import hashlib
+md5 = hashlib.md5()
+
+'''
+########################
+## LCFIT libraries -- do not import or face the wrath of Circular Dependency!!!
+import LcAnnotation
+import LcDB
+import LcExtension
+import LcPageObjects
+import LcUtil
+
+import LcSinglePopObject
+import LcCoherentPopObject
+import LcHMDObject
+import LcMFPopObject
+'''
+
 
 ########################
 ## Set up logging using the overly complicated python module

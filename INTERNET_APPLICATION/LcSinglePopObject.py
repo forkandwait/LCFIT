@@ -506,7 +506,8 @@ class LcSinglePop(object):
 		# Setup directory to store results and images. Uses md5 of
 		# data and other stuff for directory identifier.  Overwrite
 		# duplicate directory.
-		self.LcID = md5.new(str(start_year) + str(notes) + self.timestamp).hexdigest()
+		self.LcID = hashlib.sha224(str(start_year) + str(notes) + self.timestamp).hexdigest()
+		
 		self.datapath =	os.path.join(LCFIT_DATADIR, self.LcID)
 		try:
 			os.mkdir(self.datapath)

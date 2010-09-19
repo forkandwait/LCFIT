@@ -2,11 +2,16 @@
 algorithm per se"""
 
 from LcConfig import * 
+
 import scipy.optimize
 import scipy.interpolate
-import LcExtension
 
-#LcException = Exception
+#import LcAnnotation
+#import LcDB
+import LcExtension
+#import LcPageObjects
+#import LcUtil
+
 
 def Diagnose(*printVars):
 	outvars = ["%s\n" % str(x).translate(string.maketrans('<>', '{}')) for x in printVars ]
