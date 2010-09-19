@@ -24,10 +24,7 @@ When there are multiple templates passed to the instantiating thing,
 usually one of them is "inside" the other.  This is tricky - maybe too
 tricky - but better comments should make it easier to understand.
 
-Now this is the only file that lives in the apache tree -- the others
-now live in te LCFIT_LIBRARY_PATH.  This was done so that there is
-less security risk, cleaner development, etc.
-
+This file is simlinked from the apache tree. 
 '''
 
 
@@ -37,13 +34,14 @@ less security risk, cleaner development, etc.
 
 import sys
 sys.stderr.write("WHOAMI: \"%s\"\n" % sys.argv[0])
+
 LCFIT_LIBRARY_PATH='/home/webbs/lcfit.git/INTERNET_APPLICATION'	# where all the executable files live
 sys.path.append(LCFIT_LIBRARY_PATH)		# This tells us how to find these executables
 
 
 # Constants, system modules, etc
 from LcConfig import *
-lcfitlogger.debug('lc.py executing.')
+lcfitlogger.debug('lc.py executing. ')
 
 ## Import mod_python infrastructure
 from mod_python import apache
@@ -55,7 +53,7 @@ import cProfile
 
 os.environ['HOME'] = LCFIT_DATADIR # Need to provide a directory for pylab to cache fonts
 
-import LcUtil							# Utility functions, including lifetable
+import LcUtil		 # Utility functions, including lifetable
 import LcPageObjects # Module provides the objects which have __call__
                      # and display pages from URLs
 

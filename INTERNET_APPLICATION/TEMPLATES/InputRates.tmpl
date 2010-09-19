@@ -25,25 +25,25 @@
 <tr>
 	<td valign='top'>
 		<b>Select number of stochastic runs to perform</b></br>
-		<select size=1 name=$LARRY_NUMRUNS_KEY>
-		#for $numRun in $LARRY_POSSIBLE_NUMRUNS
-		<option #if $numRun == $LARRY_DEFAULT_NUMRUNS then 'selected' else ''#> $numRun</option>
+		<select size=1 name=$LCFIT_NUMRUNS_KEY>
+		#for $numRun in $LCFIT_POSSIBLE_NUMRUNS
+		<option #if $numRun == $LCFIT_DEFAULT_NUMRUNS then 'selected' else ''#> $numRun</option>
 		#end for
 		</select>
 	</td>
 
 	<td valign='top'>
 		<b>Select number of years to project forward</b></br>
-		<select size=1 name=$LARRY_STEPS_FORWARD_KEY>
-		#for $numRun in $LARRY_POSSIBLE_STEPS_FORWARD
-		<option #if $numRun == $LARRY_DEFAULT_STEPS_FORWARD then 'selected' else ''#> $numRun</option>
+		<select size=1 name=$LCFIT_STEPS_FORWARD_KEY>
+		#for $numRun in $LCFIT_POSSIBLE_STEPS_FORWARD
+		<option #if $numRun == $LCFIT_DEFAULT_STEPS_FORWARD then 'selected' else ''#> $numRun</option>
 		#end for
 		</select>
 	</td>
 
 	<td valign='top'>
 		<b>Select gender: combined, female, male</b></br>
-		<select size=1 name=$LARRY_GENDER_KEY>
+		<select size=1 name=$LCFIT_GENDER_KEY>
 		#for $choice in ('combined', 'female', 'male')
 		<option> $choice</option>
 		#end for
@@ -52,18 +52,18 @@
 
 	<td valign='top'>
 		<b>Select age for extension</b></br>
-		<select size=1 name=$LARRY_AGE_CUTOFF_KEY>
-		#for $ageCutoff in $LARRY_POSSIBLE_AGE_CUTOFFS
-		<option #if $ageCutoff == $LARRY_DEFAULT_AGE_CUTOFF then 'selected' else ''#> $ageCutoff </option>
+		<select size=1 name=$LCFIT_AGE_CUTOFF_KEY>
+		#for $ageCutoff in $LCFIT_POSSIBLE_AGE_CUTOFFS
+		<option #if $ageCutoff == $LCFIT_DEFAULT_AGE_CUTOFF then 'selected' else ''#> $ageCutoff </option>
 		#end for
 		</select>
 	</td>
 	
 	<td valign='top'>
 		<b>Select confidence interval for projection</b></br>
-		<select size=1 name=$LARRY_CONFIDENCE_INTERVAL_KEY>
-		#for $conf in $LARRY_POSSIBLE_CONFIDENCE_INTERVALS
-		<option #if $conf == $LARRY_DEFAULT_CONFIDENCE_INTERVAL then 'selected' else ''#> 
+		<select size=1 name=$LCFIT_CONFIDENCE_INTERVAL_KEY>
+		#for $conf in $LCFIT_POSSIBLE_CONFIDENCE_INTERVALS
+		<option #if $conf == $LCFIT_DEFAULT_CONFIDENCE_INTERVAL then 'selected' else ''#> 
 				$conf </option>
 		#end for
 		</select>
@@ -71,7 +71,7 @@
 	
 	<td valign='top'>
 		<b>Flatten negative bx?</b></br>
-		<input type='checkbox' size=1 name=$LARRY_FLATTEN_BX_KEY>
+		<input type='checkbox' size=1 name=$LCFIT_FLATTEN_BX_KEY>
 	</td>
 
 </tr>

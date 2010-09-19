@@ -135,8 +135,8 @@ class LcObjectListParser(H.HTMLParser):
 	"""Generates a list of LARE object ids and the data between the
 	anchor tags."""
 
-	from LcConfig import LARRY_OBJECT_ID_KEY
-	LC_OBJECT_ID_ATTR = LARRY_OBJECT_ID_KEY.lower()
+	from LcConfig import LCFIT_OBJECT_ID_KEY
+	LC_OBJECT_ID_ATTR = LCFIT_OBJECT_ID_KEY.lower()
 
 	def __call__(self, data, *args, **kwargs):
 		self.resetObjectLinks()

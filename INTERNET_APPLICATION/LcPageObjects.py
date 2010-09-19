@@ -38,6 +38,8 @@ sys.path.append(os.getcwd())
 from LcUtil import Diagnose as D
 from LcUtil import Warn as W
 
+
+
 ## Import mod_python infrastructure
 if __name__ != '__main__':
     from mod_python import apache
@@ -68,7 +70,7 @@ class LcRegistrationForm:
 		# Build form from template ... 
 		searchList = []
 		searchList.append({'TITLE':self.title})
-		searchList.append({'SUBMIT_TARGET':LARRY_WWW_REG_PROCESS}) 
+		searchList.append({'SUBMIT_TARGET':LCFIT_WWW_REG_PROCESS}) 
 		searchList.append(LcConfig.__dict__)
 		formTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
 										 compilerSettings={'prioritizeSearchListOverSelf' : True})
@@ -102,7 +104,7 @@ class LcRegistrationProcess:
 		for k in ['USERNAME', 'PASSWORD', 'EMAIL', 'FULLNAME', 'REASONS', 'HOWFIND', 'AFFILIATION']:
 			data[k] = data[k].strip()
 			data[k] = data[k].replace("'", "")
-			if (not data.has_key(k)) or LARRY_EMPTY_ALL_RE.match(data[k]): # Error
+			if (not data.has_key(k)) or LCFIT_EMPTY_ALL_RE.match(data[k]): # Error
 				err_mess = 'Empty strings or other bad data in form: "%s".<br>Please use the back button and correct.' % (k)
 				sl = [{'TITLE':'Registration Error','LC_ERROR_MESSAGE':err_mess}]
 				formTemplate = Template.Template(file=self.errorTemplate, searchList = sl,
@@ -121,14 +123,14 @@ class LcRegistrationProcess:
 		except LcDataException, e:
 			lcfitlogger.error( 'Bad Registration request: %s.' % pprint.pformat(e))
 			if re.match('.*pending.*', str(e)):
-				util.redirect(req, LARRY_PREV_PEND_ERROR_PAGE)
+				util.redirect(req, LCFIT_PREV_PEND_ERROR_PAGE)
 			elif re.match('.*in-use.*', str(e)):
-				util.redirect(req, LARRY_PREV_REG_ERROR_PAGE)
+				util.redirect(req, LCFIT_PREV_REG_ERROR_PAGE)
 			else:
 				raise
 
 		## Email administrator
-		mserver = smtplib.SMTP(LARRY_SMTP)
+		mserver = smtplib.SMTP(LCFIT_SMTP)
 		mserver.set_debuglevel(0)
 		headers = "From: %s\r\nSubject: %s\r\n\r\n" % \
 				            ('LCFIT', 'LCFIT Registration Alert: %s' % time.asctime())
@@ -162,7 +164,7 @@ class LcLoginForm:
 		# Build form ... 
 		searchList = []
 		searchList.append({'TITLE':self.title})
-		searchList.append({'SUBMIT_TARGET': LARRY_WWW_LOGIN_PROCESS})
+		searchList.append({'SUBMIT_TARGET': LCFIT_WWW_LOGIN_PROCESS})
 		searchList.append(LcConfig.__dict__)
 
 		formTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
@@ -194,10 +196,10 @@ class LcLoginProcess:
 		present in the form"""
 		keyList = req.form.keys()
 		
-		if  (LARRY_PASSWORD_KEY not in keyList or
-			 req.form[LARRY_PASSWORD_KEY].value == '' or
-			 LARRY_USERNAME_KEY not in keyList or
-			 req.form[LARRY_USERNAME_KEY].value == ''):
+		if  (LCFIT_PASSWORD_KEY not in keyList or
+			 req.form[LCFIT_PASSWORD_KEY].value == '' or
+			 LCFIT_USERNAME_KEY not in keyList or
+			 req.form[LCFIT_USERNAME_KEY].value == ''):
 			W('WTF?', locals())
 			return False
 		else:
@@ -212,8 +214,8 @@ class LcLoginProcess:
 	def _hasValidAuth(self, req):
 		""" Ask the database to set up a session for a valid user,
 		return either True or False"""
-		rval = self.lcdb.authorizeUser(req.form[LARRY_USERNAME_KEY].value,
-									   req.form[LARRY_PASSWORD_KEY].value,
+		rval = self.lcdb.authorizeUser(req.form[LCFIT_USERNAME_KEY].value,
+									   req.form[LCFIT_PASSWORD_KEY].value,
 									   req.get_remote_host(apache.REMOTE_NOLOOKUP))
 		if rval == False:
 			return False
@@ -224,14 +226,14 @@ class LcLoginProcess:
 	def __call__(self, req):
 		"""Handle the page"""
 		errorMessage = 'No error yet!'
-		sess = Session(req, timeout=LARRY_SESSION_TIMEOUT)
+		sess = Session(req, timeout=LCFIT_SESSION_TIMEOUT)
 		if self._hasNecessaryData(req):
 			# ... if authorized, use the returned ID, set session, and redirect
 			authId = self._hasValidAuth(req)
 			if type(authId) is types.IntType: 
-				sess[LARRY_SESSION_KEY] = authId
+				sess[LCFIT_SESSION_KEY] = authId
 				lcfitlogger.info( 'LcLoginProcess:  __call__.  Successfully logged in.  Auth id: %s, username: %s.' \
-							  % (authId, req.form.get(LARRY_USERNAME_KEY, 'XX')))
+							  % (authId, req.form.get(LCFIT_USERNAME_KEY, 'XX')))
 				sess.save()
 				util.redirect(req, self.redirectTarget)
 				return
@@ -247,9 +249,9 @@ class LcLoginProcess:
 
 		# If called with incomplete form data or invalid auth, display error from template.
 		# Build page ... 
-		searchList = [{LARRY_ERROR_MESSAGE_PLACHOLDER : errorMessage}] 
-		searchList.append({LARRY_TITLE_PLACEHOLDER:self.title})
-		searchList.append({LARRY_FORM_TARGET_PLACEHOLDER : LARRY_WWW_LOGIN_FORM})
+		searchList = [{LCFIT_ERROR_MESSAGE_PLACHOLDER : errorMessage}] 
+		searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
+		searchList.append({LCFIT_FORM_TARGET_PLACEHOLDER : LCFIT_WWW_LOGIN_FORM})
 		searchList.append(LcConfig.__dict__)
 
 		formTemplate = Template.Template(file=self.messageTemplate, searchList = searchList,
@@ -270,9 +272,9 @@ class LcLogout:
 
 	def __call__(self, req):
 		req.session = Session(req)
-		if req.session.has_key(LARRY_SESSION_KEY):
-			self.lcdb.logout(req.session[LARRY_SESSION_KEY])
-			lcfitlogger.debug( 'LcLogout:  __call__.  Logging out session key: %s' % req.session[LARRY_SESSION_KEY])
+		if req.session.has_key(LCFIT_SESSION_KEY):
+			self.lcdb.logout(req.session[LCFIT_SESSION_KEY])
+			lcfitlogger.debug( 'LcLogout:  __call__.  Logging out session key: %s' % req.session[LCFIT_SESSION_KEY])
 		req.session.invalidate()
 		lcfitlogger.warning( 'LcLogout:  __call__.  Logging out unkown session.')
 		util.redirect(req, self.redirectTarget)
@@ -297,15 +299,15 @@ class LcPage(object):
 		if req.session.is_new():
 			req.session.invalidate()
 			raise LcSessionException, "new session--expected initialized"
-		if not req.session.has_key(LARRY_SESSION_KEY):
+		if not req.session.has_key(LCFIT_SESSION_KEY):
 			req.session.invalidate()
 			raise LcSessionException, "no session id stored in cookie"
-		if not self.lcdb.checkSession(req.session[LARRY_SESSION_KEY]):
+		if not self.lcdb.checkSession(req.session[LCFIT_SESSION_KEY]):
 			req.session.invalidate()
 			raise LcSessionException, "unable to validate session id with database"
 
 		# .. made it!
-		self.lcdb.insertPageView(req.session[LARRY_SESSION_KEY], req.unparsed_uri, pprint.pformat(f2d(req.form)))
+		self.lcdb.insertPageView(req.session[LCFIT_SESSION_KEY], req.unparsed_uri, pprint.pformat(f2d(req.form)))
 		return True
 		
 	def _postCondition(self, req, saveDict = {}):
@@ -331,16 +333,16 @@ class LcIndex(LcPage):
 			self._preCondition(req) 
 
 			# Deal with possible error messages
-			if req.form.has_key(LARRY_ERROR_MESSAGE_KEY):
-				errorMessage = req.form[LARRY_ERROR_MESSAGE_KEY].value
+			if req.form.has_key(LCFIT_ERROR_MESSAGE_KEY):
+				errorMessage = req.form[LCFIT_ERROR_MESSAGE_KEY].value
 			else:
 				errorMessage = None
-			searchList = [{LARRY_ERROR_MESSAGE_PLACHOLDER : errorMessage,
+			searchList = [{LCFIT_ERROR_MESSAGE_PLACHOLDER : errorMessage,
 						  'request':req, 'session':req.session, 'lcdb':self.lcdb,
-						   LARRY_TITLE_PLACEHOLDER:self.title}]			
+						   LCFIT_TITLE_PLACEHOLDER:self.title}]			
 			innerTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
 											  compilerSettings={'prioritizeSearchListOverSelf' : True})
-			searchList.append({LARRY_NAV_MAIN_PLACEHOLDER : str(innerTemplate)})
+			searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(innerTemplate)})
 			searchList.append(LcConfig)
 			pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
 											 compilerSettings={'prioritizeSearchListOverSelf' : True}) 
@@ -357,7 +359,7 @@ class LcIndex(LcPage):
 			if LcHardErrors:
 				raise 
 			else:
-				redirectString = LARRY_WWW_INDEX + '?' + LARRY_ERROR_MESSAGE_KEY + '=' + str(mess)
+				redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + str(mess)
 				util.redirect(req, redirectString)
 	
 
@@ -382,16 +384,16 @@ class LcForm(LcPage):
 			# template, then pass an expanded str()'ed version of it
 			# to navigation (outsided) template in the searchList.  A
 			# little bit funky - my apologies.
-			searchList = [{LARRY_FORM_TARGET_PLACEHOLDER : self.redirectTarget,
+			searchList = [{LCFIT_FORM_TARGET_PLACEHOLDER : self.redirectTarget,
 						   'request':req,
 						   'session':req.session,
 						   'lcdb':self.lcdb,
-						   LARRY_TITLE_PLACEHOLDER:self.title}]
+						   LCFIT_TITLE_PLACEHOLDER:self.title}]
 			searchList.append(LcConfig.__dict__)
 			
 			formTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
 											 compilerSettings={'prioritizeSearchListOverSelf' : True})
-			searchList.append({LARRY_NAV_MAIN_PLACEHOLDER : str(formTemplate)})
+			searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(formTemplate)})
 			pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
 											 compilerSettings={'prioritizeSearchListOverSelf' : True})
 
@@ -427,7 +429,7 @@ class LcProcess(LcPage):
 			for k in (req.form.keys()): 
 				if type(req.form[k]) == types.ListType:
 					# with a list of result, parse out selected value
-					tmpList = filter(lambda x: x != LARRY_UNSELECTED_VALUE, req.form[k])
+					tmpList = filter(lambda x: x != LCFIT_UNSELECTED_VALUE, req.form[k])
 					if len(tmpList) > 1:
 						raise LcInputException, \
 							  "Must only select a single value. Selected: %s" % tmpList
@@ -446,8 +448,8 @@ class LcProcess(LcPage):
 			# Stuff into the database, grabbing ownership info from
 			# the session, and adjusting the internal id of the object
 			# from the DB serial number.
-			owner = self.lcdb.retrieveUsername(req.session[LARRY_SESSION_KEY])
-			comments = req.form[LARRY_OBJECT_COMMENTS_KEY].value 
+			owner = self.lcdb.retrieveUsername(req.session[LCFIT_SESSION_KEY])
+			comments = req.form[LCFIT_OBJECT_COMMENTS_KEY].value 
 			
 			inserter = self.lcdb.makeInserter(owner=owner, comments=comments)
 			objSerialNumber = inserter.getSerialNumber()
@@ -461,7 +463,7 @@ class LcProcess(LcPage):
 			# Grab all the images from the new object and stuff them
 			# in the database appropriately
 			for name, data in obj.imagesDict.iteritems():
-				self.lcdb.insertImage(objSerialNumber, name, data, LARRY_IMAGE_FORMAT)
+				self.lcdb.insertImage(objSerialNumber, name, data, LCFIT_IMAGE_FORMAT)
 			
 			# Check postconditions, then create a valid display URL
 			# and throw a redirect
@@ -476,20 +478,20 @@ class LcProcess(LcPage):
 			if LcHardErrors:
 				raise 
 			else:
-				redirectString = LARRY_WWW_INDEX + '?' + LARRY_ERROR_MESSAGE_KEY + '=' + str(mess)
+				redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + str(mess)
 				util.redirect(req, redirectString)
 		except LcDataException, mess:
 			if LcHardErrors:
 				raise 
 			else:
-				redirectString = LARRY_WWW_INDEX + '?' + LARRY_ERROR_MESSAGE_KEY + '=' + str(mess)
+				redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + str(mess)
 				util.redirect(req, redirectString)
 		except LcException, mess:
 			# otherwise, do the same 
 			if LcHardErrors:
 				raise
 			else:
-				redirectString = LARRY_WWW_INDEX + '?' + LARRY_ERROR_MESSAGE_KEY + '=' + "<pre>" + str(mess) + "</pre>"
+				redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + "<pre>" + str(mess) + "</pre>"
 				util.redirect(req, redirectString)
 		pass
 	
@@ -508,7 +510,7 @@ class LcDisplay(LcPage):
 			# Retrieve and unpickle an object based on the targetClass
 			# name and the instance serial number ...
 			try:
-				objId= int(req.form[LARRY_OBJECT_ID_KEY].value)
+				objId= int(req.form[LCFIT_OBJECT_ID_KEY].value)
 			except:
 				raise LcInputException 
 			instance = self.lcdb.retrieveObject(objId)
@@ -516,12 +518,12 @@ class LcDisplay(LcPage):
 			# ... have said instance draw itself inside the main application
 			# template ...
 			searchList = []
-			searchList.append({LARRY_NAV_MAIN_PLACEHOLDER : str(instance)})
+			searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(instance)})
 			searchList.append(LcConfig)
 			try:
-				searchList.append({LARRY_TITLE_PLACEHOLDER:self.title})
+				searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
 			except AttributeError:
-				searchList.append({LARRY_TITLE_PLACEHOLDER:'LCFIT Object ID: %i' % objId})
+				searchList.append({LCFIT_TITLE_PLACEHOLDER:'LCFIT Object ID: %i' % objId})
 			pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
 											 compilerSettings={'prioritizeSearchListOverSelf' : True})
 
@@ -553,20 +555,20 @@ class LcList(LcPage):
 			self._preCondition(req)
 
 			# Get current user from cookie or however
-			currentUser = self.lcdb.retrieveUsername(req.session[LARRY_SESSION_KEY])
+			currentUser = self.lcdb.retrieveUsername(req.session[LCFIT_SESSION_KEY])
 			
 			# Get a list of forecast/ data objects for that person
 			(colNames, objectInfoList) = self.lcdb.listObjectInfo(currentUser)
 
 			# Feed that list into the appropriate template, then in turn into the main navigation template
 			searchList = []
-			searchList.append({LARRY_OBJECTLIST_PLACEHOLDER : objectInfoList})
-			searchList.append({LARRY_OBJECTCOLNAMES_PLACEHOLDER : colNames})
-			searchList.append({LARRY_TITLE_PLACEHOLDER:self.title})
+			searchList.append({LCFIT_OBJECTLIST_PLACEHOLDER : objectInfoList})
+			searchList.append({LCFIT_OBJECTCOLNAMES_PLACEHOLDER : colNames})
+			searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
 			searchList.append(LcConfig)
 			objectListTemplate = Template.Template(file=self.objectListTemplate, searchList = searchList,
 												   compilerSettings={'prioritizeSearchListOverSelf' : True})
-			searchList.append({LARRY_NAV_MAIN_PLACEHOLDER : str(objectListTemplate)})
+			searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(objectListTemplate)})
 			pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
 											 compilerSettings={'prioritizeSearchListOverSelf' : True})
 
@@ -589,7 +591,7 @@ class LcList(LcPage):
 
 
 class LcDelete(LcPage):
-	def __init__(self, lcdb, redirectTarget=LARRY_WWW_LIST_OBJECTS):
+	def __init__(self, lcdb, redirectTarget=LCFIT_WWW_LIST_OBJECTS):
 		self.lcdb = lcdb
 		self.redirectTarget = redirectTarget
 
@@ -598,13 +600,13 @@ class LcDelete(LcPage):
 			self._preCondition(req)
 
 			# Make sure appropriate user, then delete
-			currentUser = self.lcdb.retrieveUsername(req.session[LARRY_SESSION_KEY])
-			objectOwner = self.lcdb.retrieveObjectOwner(int(req.form[LARRY_OBJECT_ID_KEY].value))
+			currentUser = self.lcdb.retrieveUsername(req.session[LCFIT_SESSION_KEY])
+			objectOwner = self.lcdb.retrieveObjectOwner(int(req.form[LCFIT_OBJECT_ID_KEY].value))
 			if currentUser != objectOwner:
 				raise LcAuthException
 			else:
 				self._postCondition(req)
-				objId = int(req.form[LARRY_OBJECT_ID_KEY].value)
+				objId = int(req.form[LCFIT_OBJECT_ID_KEY].value)
 				self.lcdb.deleteObject(objId)
 				lcfitlogger.debug( "LcDelete: __call__.  Deleted object ID: %s." % objId)
 				util.redirect(req, self.redirectTarget)
@@ -628,8 +630,8 @@ class LcDisplayImage(LcPage):
 	def __call__(self, req):
 		try:
 			self._preCondition(req)
-			objId = req.form[LARRY_OBJECT_ID_KEY].value
-			imgName = req.form[LARRY_IMAGE_NAME_KEY].value
+			objId = req.form[LCFIT_OBJECT_ID_KEY].value
+			imgName = req.form[LCFIT_IMAGE_NAME_KEY].value
 			data = self.lcdb.retrieveImage(objId, imgName)
 			self._postCondition(req)
 			req.content_type = "image/png"
@@ -653,7 +655,7 @@ class LcDumpText(LcPage):
 	def __call__(self, req):
 		try:
 			self._preCondition(req)
-			objectId = int(req.form[LARRY_OBJECT_ID_KEY].value)
+			objectId = int(req.form[LCFIT_OBJECT_ID_KEY].value)
 			data = self.lcdb.retrieveTextDump(objectSerialNumber=objectId)
 			self._postCondition(req)
 			lcfitlogger.debug( "LcDumpText: __call__.  ObjectId: %s."  % objectId)
@@ -681,8 +683,8 @@ class LcError:
 		# Feed that list into the appropriate template, then in turn into the main navigation template
 		searchList = []
 		searchList.append(kwargs)
-		searchList.append({LARRY_TITLE_PLACEHOLDER:self.title})
-		searchList.append({LARRY_ERROR_MESSAGE_KEY:self.message})
+		searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
+		searchList.append({LCFIT_ERROR_MESSAGE_KEY:self.message})
 		searchList.append(LcConfig)
 
 		pageTemplate = Template.Template(file=self.template, searchList = searchList,
@@ -695,4 +697,3 @@ class LcError:
 		req.send_http_header()
 		req.write(str(pageTemplate)) 
 		return
-

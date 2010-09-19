@@ -166,10 +166,10 @@ def LT1YrTo5Yr(mx, multiplier=0.008):
 
 def checkExtData(mx, ageCutoff, ageClose, closeRate, closeAddend, closeAddAge):
 
-	cutoffIndex = LARRY_AGE_INDICES[ageCutoff] 
+	cutoffIndex = LCFIT_AGE_INDICES[ageCutoff] 
 
 	assert ((len(mx) >= cutoffIndex)), \
-		   LcException("mx vector too small. Age cutoff: %s, mx: %s." % (ageCutoff, zip(LARRY_AGES,mx)))
+		   LcException("mx vector too small. Age cutoff: %s, mx: %s." % (ageCutoff, zip(LCFIT_AGES,mx)))
 
 	assert N.isfinite(mx[0:cutoffIndex]).all(), \
 		   LcException("mx vector need defined data before cutoff.  cutoff: %s. mx: %s." % (ageCutoff, mx[0:cutoffIndex]))
@@ -184,9 +184,9 @@ def checkExtData(mx, ageCutoff, ageClose, closeRate, closeAddend, closeAddAge):
 
 def checkExtResult(mx, mx_extended, ageCutoff, ageClose, closeRate, closeAddend, closeAddAge):
 
-	cutoffIndex = LARRY_AGE_INDICES[ageCutoff] + 1
+	cutoffIndex = LCFIT_AGE_INDICES[ageCutoff] + 1
 
-	assert len(mx_extended) == LARRY_AGE_INDICES[ageClose]+1, \
+	assert len(mx_extended) == LCFIT_AGE_INDICES[ageClose]+1, \
 		   LcException("Weird mx length: %s\n%s\n" % (len(mx_extended), mx_extended))
 
 	return True
@@ -202,12 +202,12 @@ def mxExtend_Null(mx, *args, **kwargs):
 
 
 ##
-def mxExtend_Boe(mx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate=None, closeAddend=.66, closeAddAge=75):
+def mxExtend_Boe(mx, ageCutoff=LCFIT_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate=None, closeAddend=.66, closeAddAge=75):
 	""" From Carl's matlab code"""
 
 	try:
 		checkExtData(mx, ageCutoff, ageClose, closeRate, closeAddend, closeAddAge)
-		cutoffIndex = LARRY_AGE_INDICES[ageCutoff]
+		cutoffIndex = LCFIT_AGE_INDICES[ageCutoff]
 
 		mFinish = mStart = -1.0
 	
@@ -215,7 +215,7 @@ def mxExtend_Boe(mx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate
 		mFinish = mx[cutoffIndex]			# Throws an error but I can't figure out why if cutoffindex > 
 		mStart = mx[cutoffIndex-1]
 		K = N.log(mFinish/mStart)
-		starterInd = LARRY_AGE_INDICES[closeAddAge]
+		starterInd = LCFIT_AGE_INDICES[closeAddAge]
 	
 		if (closeRate == None):
 			closeRate = closeAddend + mx[starterInd]	# CG closeout assumption, typically m_75 + .66.
@@ -240,7 +240,7 @@ def mxExtend_Boe(mx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate
 		tmp = mFinish * N.exp(K - s)
 		assert N.isfinite(tmp), \
 			   AssertionError("non-finite tmp: \ntmp:%s\n mFinish: %s\n K: %s\n s: %s\n mx: %s" % \
-							  (tmp, mFinish, K, s, zip(LARRY_AGES, mx)))
+							  (tmp, mFinish, K, s, zip(LCFIT_AGES, mx)))
 		addedmx[0] = tmp					# age 85 ?
 		tmpdiff = 0
 
@@ -273,21 +273,21 @@ def mxExtend_Boe(mx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate
 	return (mx_extended)
 
 
-def mxExtend_CGNan(mx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate=-999.0, closeAddend=0.66, closeAddAge=75):
+def mxExtend_CGNan(mx, ageCutoff=LCFIT_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate=-999.0, closeAddend=0.66, closeAddAge=75):
 	""" From Li Nan's matlab code in Coherent package.  2006-11-20."""
 
 	# Check OK data
 	checkExtData(mx, ageCutoff, ageClose, closeRate, closeAddend, closeAddAge)
-	closeIndex = LARRY_AGE_INDICES[ageClose]
+	closeIndex = LCFIT_AGE_INDICES[ageClose]
 	
-	cutoffIndex = LARRY_AGE_INDICES[ageCutoff]
+	cutoffIndex = LCFIT_AGE_INDICES[ageCutoff]
 	mFinish = mx[cutoffIndex]			   
 	mFirst = mx[cutoffIndex-1]
 	K = 0.2 * N.log(mFinish/mFirst)	# * 0.2 because we are going to do single ages
 	mStart = mx[cutoffIndex] * N.exp(3*K) # the mx we will start interpolating with 
 
 	if (closeRate == -999.0):
-		starterInd = LARRY_AGE_INDICES[closeAddAge]
+		starterInd = LCFIT_AGE_INDICES[closeAddAge]
 		x=0.0
 		foo=0.0
 		closeRate=0.0
@@ -319,7 +319,7 @@ def mxExtend_CGNan(mx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF, ageClose=110, closeRa
 		pass
 	assert N.isfinite(mxInterp).all() and (mxInterp>10e-8).all() and (mxInterp<10.0).all() , \
 		   "f'ed up mxInterp: %s. \n\tmFirst, mFinish, mStart: (%s, %s, %s). \n\tmx: %s." % \
-		   (mxInterp, mFirst, mFinish, mStart, zip(LARRY_AGES,mx))
+		   (mxInterp, mFirst, mFinish, mStart, zip(LCFIT_AGES,mx))
 
 	# ... re-convert mx to 5 years....
 	
@@ -332,7 +332,7 @@ def mxExtend_CGNan(mx, ageCutoff=LARRY_DEFAULT_AGE_CUTOFF, ageClose=110, closeRa
 	assert mxOut[:-len(mx5interp)].shape == mx[:-len(mx5interp)].shape, \
 		   AssertionError("%s %s %s %s %s %s" % \
 						  ( mxOut[:-len(mx5interp)].shape,  mx[:-len(mx5interp)].shape,
-							mx5interp.shape, ageClose, LARRY_AGE_INDICES[ageClose], closeIndex+1))
+							mx5interp.shape, ageClose, LCFIT_AGE_INDICES[ageClose], closeIndex+1))
 	"""
 	keepMxIndex = closeIndex - len(mx5interp) + 1
 	#D(keepMxIndex, mxOut.shape, mx5interp.shape)

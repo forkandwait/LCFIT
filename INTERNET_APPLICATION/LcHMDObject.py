@@ -96,7 +96,7 @@ def hmd2lare (hmd_text, HW=24, HC=5, LW=24):
 
 	try:
 		# Create a lis.t to hold all the data text rows from HMD.
-		rows = filter(LARRY_HMD_ROW_RE.match, hmd_text.split('\n'))
+		rows = filter(LCFIT_HMD_ROW_RE.match, hmd_text.split('\n'))
 		assert len(rows) >= 1, \
 			   LcException("Empty rows.  \nhmd_text: %s.  \nrows: %s\n." % (hmd_text, rows))
 
@@ -166,7 +166,7 @@ class HMD(object):
 		elif notes == 'XXX':
 			self.notes = notes
 
-		self.datapath =	os.path.join(LARRYDATADIR, str(random.randint(0, 10**10)))
+		self.datapath =	os.path.join(LCFIT_DATADIR, str(random.randint(0, 10**10)))
 		
 		self.tableString = ''
 		self.imagesDict = {}

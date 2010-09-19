@@ -12,7 +12,7 @@ this.
 from LcConfig import * 					# Imports numpy and friends
 from LcAnnotation import *
 import LcExtension
-LcExtension.setExtensionName(LARRY_DEFAULT_EXTENSION_METHOD)
+LcExtension.setExtensionName(LCFIT_DEFAULT_EXTENSION_METHOD)
 import LcUtil
 from LcUtil import Diagnose as D
 from LcUtil import listTypes as LT
@@ -104,7 +104,7 @@ def fitMultiKt(ax, bx, kt, nmx, lifeTableParams):
 
 
 def sim_kt(SEC, SEE, drift, numRuns, stepsForward, ktStart=0,
-		   projectionWidth=LARRY_PROJECTION_WIDTH, sortflag=True):
+		   projectionWidth=LCFIT_PROJECTION_WIDTH, sortflag=True):
 	'''
 	Make a number of stochastic projections for kt as a random walk
 	with drift and and standard deviation (sdktnd) from parameters.
@@ -143,7 +143,7 @@ def sim_kt(SEC, SEE, drift, numRuns, stepsForward, ktStart=0,
 
 
 def sim_kt_ar1(stdckt, c0, sda0, c1, sda1, numRuns, stepsForward, ktStart=0,
-			   projectionWidth=LARRY_PROJECTION_WIDTH, sortflag='end-result'):
+			   projectionWidth=LCFIT_PROJECTION_WIDTH, sortflag='end-result'):
 	'''
 	If sortflag is True, sorts this array along the columns, putting
 	the highest kt for a given step forward in the top.	 This facilitates 
@@ -180,7 +180,7 @@ def sim_kt_ar1(stdckt, c0, sda0, c1, sda1, numRuns, stepsForward, ktStart=0,
 
 	return ktMatrix
 
-def project_nmx(kt, ax, bx, ageCutoff, kt_resid=None, bx_resid=None, numAgeWidths=LARRY_DEFAULT_NO_AGEWIDTHS):
+def project_nmx(kt, ax, bx, ageCutoff, kt_resid=None, bx_resid=None, numAgeWidths=LCFIT_DEFAULT_NO_AGEWIDTHS):
 	"""
 	Convert 2-d array of kt forward innovations into 3-d array of nmxs
 
@@ -300,7 +300,7 @@ def lcInfer(nmx,  lifeTableParams, ageCutoff=None, doFit=True, returnDict=False,
 	if ageCutoff is None:
 		ageCutoffIndex = len(nmx)		# Use all of nmx
 	else:
-		ageCutoffIndex = LARRY_AGE_INDICES[ageCutoff] + 1
+		ageCutoffIndex = LCFIT_AGE_INDICES[ageCutoff] + 1
 	lnmx = N.log(nmx[:,0:ageCutoffIndex])					# logs of nmx
 	infsLmx = N.isinf(lnmx)
 	nansLmx = N.isnan(lnmx)
@@ -433,7 +433,7 @@ def lcInfer(nmx,  lifeTableParams, ageCutoff=None, doFit=True, returnDict=False,
 class LcSinglePop(object):
 
 	def __init__(self, start_year='XXX', notes='XXX', numberRuns='XXX', stepsForward='XXX',
-				 ageCutoff=str(LARRY_DEFAULT_AGE_CUTOFF), ltFuncType='ex',
+				 ageCutoff=str(LCFIT_DEFAULT_AGE_CUTOFF), ltFuncType='ex',
 				 beginFuncParam='0', endFuncParam='0', projConfidenceInterval='.95',
 				 gender='combined',
 				  **kwargs):
@@ -447,7 +447,7 @@ class LcSinglePop(object):
 
 		## Parse basic paramenters
 		self.ageCutoff = int(ageCutoff)
-		self.ageCutoffIndex = LARRY_AGE_INDICES[self.ageCutoff] + 1
+		self.ageCutoffIndex = LCFIT_AGE_INDICES[self.ageCutoff] + 1
 		self.numRuns = int(numberRuns)
 		self.stepsForward = int(stepsForward)
 		self.gender = gender
@@ -455,7 +455,7 @@ class LcSinglePop(object):
 
 		# Bx flattening.  Weird because if checkbox isn't checked, it
 		# doesn't get passed at all
-		if kwargs.get(LARRY_FLATTEN_BX_KEY) == 'on':
+		if kwargs.get(LCFIT_FLATTEN_BX_KEY) == 'on':
 			self.flattenBx = True
 		else:
 			self.flattenBx = False
@@ -471,11 +471,11 @@ class LcSinglePop(object):
 		## Parameters for LT functional
 		""" DELETE ME XXX """
 		self.ltFuncType = ltFuncType 
-		if beginFuncParam == LARRY_UNSELECTED_VALUE:
+		if beginFuncParam == LCFIT_UNSELECTED_VALUE:
 			self.beginFuncParam = 0
 		else:
 			self.beginFuncParam = float(beginFuncParam)
-		if endFuncParam== LARRY_UNSELECTED_VALUE:
+		if endFuncParam== LCFIT_UNSELECTED_VALUE:
 			self.endFuncParam = 0
 		else:
 			self.endFuncParam = float(endFuncParam)
@@ -487,7 +487,7 @@ class LcSinglePop(object):
 			'gender':self.gender,
 			'ageCutoff':self.ageCutoff, 'ltFuncType':self.ltFuncType,
 			'beginFuncParam':self.beginFuncParam, 'endFuncParam':self.endFuncParam, 
-			'extensionMethod':LARRY_DEFAULT_EXTENSION_METHOD} 
+			'extensionMethod':LCFIT_DEFAULT_EXTENSION_METHOD} 
 				
 		# Start year
 		if start_year == '':
@@ -506,8 +506,9 @@ class LcSinglePop(object):
 		# Setup directory to store results and images. Uses md5 of
 		# data and other stuff for directory identifier.  Overwrite
 		# duplicate directory.
-		self.LcID = md5.new(str(start_year) + str(notes) + self.timestamp).hexdigest()
-		self.datapath =	os.path.join(LARRYDATADIR, self.LcID)
+		self.LcID = hashlib.sha224(str(start_year) + str(notes) + self.timestamp).hexdigest()
+		
+		self.datapath =	os.path.join(LCFIT_DATADIR, self.LcID)
 		try:
 			os.mkdir(self.datapath)
 		except OSError, (errno, strerr): #
@@ -666,7 +667,7 @@ class LcSinglePop(object):
 		self.nmx_projectedMedianFinal = self.nmx_projectedMedian[-1,:]
 		return							# Don't return anything useful
 
-	def _do_graphics(self, numAgeWidths=LARRY_DEFAULT_NO_AGEWIDTHS,
+	def _do_graphics(self, numAgeWidths=LCFIT_DEFAULT_NO_AGEWIDTHS,
 					 lcImageName=LC_IMAGE_NAME,
 					 fcImageName=FC_IMAGE_NAME,
 					 lnmxImageName=LNMX_IMAGE_NAME,
@@ -681,7 +682,7 @@ class LcSinglePop(object):
 		fp = MPL.font_manager.FontProperties(size=FONTSIZE)
 		
 		##### Set up overall graphics stuff ################
-		ages = LARRY_AGES
+		ages = LCFIT_AGES
 		years_end = self.start_year + self.nmx.shape[0]
 		self.years = N.array(range(self.start_year, years_end)) 
 		years_fcst = N.array(range(years_end-1, years_end + self.stepsForward)) 
@@ -839,17 +840,17 @@ class LcSinglePop(object):
 		nmx_kt_tmp = copy.copy(self.nmxsFromKtCurrent)
 		colors = 'bgrcmrcm'
 		clen = len(colors)
-		for i, age in enumerate(LARRY_LOGNMX_GRAPHIC_AGES): 
+		for i, age in enumerate(LCFIT_LOGNMX_GRAPHIC_AGES): 
 			try:
-				pl, = PL.semilogy(self.years, nmx_tmp[:, LARRY_AGE_INDICES[age]],
+				pl, = PL.semilogy(self.years, nmx_tmp[:, LCFIT_AGE_INDICES[age]],
 								  color=colors[i%clen], ls='steps', linewidth=1.5, label='Age: %i' % age)
-				pl, = PL.semilogy(self.years, nmx_kt_tmp[:, LARRY_AGE_INDICES[age]],
+				pl, = PL.semilogy(self.years, nmx_kt_tmp[:, LCFIT_AGE_INDICES[age]],
 								  'k:', linewidth=.5, label='_nolegend_')
-				PL.text(self.years[-1],  nmx_tmp[:, LARRY_AGE_INDICES[age]][-1], ' %s ' % age,  fontsize=8)
+				PL.text(self.years[-1],  nmx_tmp[:, LCFIT_AGE_INDICES[age]][-1], ' %s ' % age,  fontsize=8)
 				pl.set_dashes([4,2])
 			except IndexError, e:
 				raise IndexError, "error: %s. size self.lnmx: %s.  age: %s, age index: %s." % \
-					  (e, self.nmx.shape, age, LARRY_AGE_INDICES[age])
+					  (e, self.nmx.shape, age, LCFIT_AGE_INDICES[age])
 			pass
 		PL.title('Within sample log nmx,\n(dashed=LC, full=empirical)')
 		PL.legend(prop=fp, loc='best')
@@ -874,13 +875,13 @@ class LcSinglePop(object):
 		PL.grid(True)
 		PL.title('Log Mortality Profiles: begin, end, projected.')
 		
-		pl, = PL.semilogy(LARRY_AGES, self.nmxExtended[0,:], 'b-', linewidth=.5, label='Yr: %i Emp. CG' % self.start_year)
-		pl, = PL.semilogy(LARRY_AGES, self.nmx[0,:], 'b--', linewidth=.5, label='_nolegend_')
+		pl, = PL.semilogy(LCFIT_AGES, self.nmxExtended[0,:], 'b-', linewidth=.5, label='Yr: %i Emp. CG' % self.start_year)
+		pl, = PL.semilogy(LCFIT_AGES, self.nmx[0,:], 'b--', linewidth=.5, label='_nolegend_')
 		pl.set_dashes([4,2])
-		pl, = PL.semilogy(LARRY_AGES, self.nmxExtended[-1,:], 'r-', linewidth=.5, label='Yr: %i Emp. CG' % (years_end-1)) 
-		pl, = PL.semilogy(LARRY_AGES, self.nmx[-1,:], 'r--', linewidth=.5, label='_nolegend_') 
+		pl, = PL.semilogy(LCFIT_AGES, self.nmxExtended[-1,:], 'r-', linewidth=.5, label='Yr: %i Emp. CG' % (years_end-1)) 
+		pl, = PL.semilogy(LCFIT_AGES, self.nmx[-1,:], 'r--', linewidth=.5, label='_nolegend_') 
 		pl.set_dashes([4,2])
-		pl, = PL.semilogy(LARRY_AGES, self.nmx_projectedMedian[-1,:], 'g', linewidth=.5,
+		pl, = PL.semilogy(LCFIT_AGES, self.nmx_projectedMedian[-1,:], 'g', linewidth=.5,
 						  label='Yr: %i Proj' % (years_end + len(self.nmx_projectedMedian[:,0])-2)) 
 		PL.legend(prop=fp, loc='best')
 		PL.xlabel('age')
@@ -930,14 +931,14 @@ class LcSinglePop(object):
 		run_info += 'Standard error of innovations:\t %s\n'  % self.stdErrorEq 
 		run_info += 'Number of projection runs:\t %s\n' % self.numRuns
 		run_info += 'Number of years projected forward:\t %s\n' % self.stepsForward
-		run_info += 'Width of projection step:\t %s year(s)\n' % LARRY_PROJECTION_WIDTH
-		run_info += 'Width of projection step:\t %s year(s)\n' % LARRY_PROJECTION_WIDTH
+		run_info += 'Width of projection step:\t %s year(s)\n' % LCFIT_PROJECTION_WIDTH
+		run_info += 'Width of projection step:\t %s year(s)\n' % LCFIT_PROJECTION_WIDTH
 
 		# ... close <pre>...
 		run_info += '</pre>'
 
 		# ... include a link to the text dump of the object...
-		dumpLink = LARRY_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
+		dumpLink = LCFIT_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
 		run_info += "<p><form action='%s'> <button name='LC_OBJECT_ID' value='%s'> Object Dump </button></form></p>" % \
 					(dumpLink,str(self.LcID))
 
@@ -953,7 +954,7 @@ class LcSinglePop(object):
 		yearlyResultsTable = LcUtil.tablefy(dataList = yearlyDataList, headings=yearlyHeadings)
 
 		# Empirical data by age
-		ageDataList = [LARRY_AGES[:self.ageCutoffIndex], self.ax, self.bx]
+		ageDataList = [LCFIT_AGES[:self.ageCutoffIndex], self.ax, self.bx]
 		ageHeadings = ['age', 'ax', 'bx']
 		ageResultsTable = LcUtil.tablefy(dataList = ageDataList, headings=ageHeadings)
 
@@ -970,26 +971,26 @@ class LcSinglePop(object):
 		projResultsTable =  LcUtil.tablefy(dataList = projDataList, headings=projHeadings)
 
 		# image summarizing inference
-		lc_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + LC_IMAGE_NAME
+		lc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LC_IMAGE_NAME
 		lc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (lc_img_path, lc_img_path, IMGH, IMGW, self.LcID)
 
 		# image tracing log rates 
-		lnmx_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + LNMX_IMAGE_NAME
+		lnmx_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LNMX_IMAGE_NAME
 		lnmx_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of selected LNMXes %s"></a>\n' \
 				   % (lnmx_img_path, lnmx_img_path, IMGH, IMGW, self.LcID)
 
 		# image summarizing forecast
-		fc_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
+		fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
 		fc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (fc_img_path, fc_img_path, IMGH, IMGW, self.LcID)
 
 		# image w/ three mortality profiles
-		mortp_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + MORTP_IMAGE_NAME
+		mortp_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + MORTP_IMAGE_NAME
 		mortp_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of Mort Profiles %s"></a>\n' \
 				   % (mortp_img_path, mortp_img_path, IMGH, IMGW, self.LcID)
 
@@ -1008,12 +1009,12 @@ class LcSinglePop(object):
 
 	def _dumpText(self):
 		self.dumpString = LcUtil.dumpObject(self,
-											helpParagraph=LARRY_DUMP_HELP,
-											dontDump=LARRY_NOTWANTED_ATTRIBUTE_DUMPS,
-											annoStructure=LARRY_VAR_ANNOTATION_SINGLESEX,
-											fieldsep=LARRY_FIELDSEP,
-											rowsep=LARRY_ROWSEP,
-											stanzasep=LARRY_STANZASEP)
+											helpParagraph=LCFIT_DUMP_HELP,
+											dontDump=LCFIT_NOTWANTED_ATTRIBUTE_DUMPS,
+											annoStructure=LCFIT_VAR_ANNOTATION_SINGLESEX,
+											fieldsep=LCFIT_FIELDSEP,
+											rowsep=LCFIT_ROWSEP,
+											stanzasep=LCFIT_STANZASEP)
 
 	def __getattr__(self, name):
 		''' Unspecified attributes get a string return

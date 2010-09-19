@@ -178,7 +178,7 @@ class LcMFPop(LcSinglePop):
 		return							# Don't return anything useful
 
 
-	def _do_graphics(self, numAgeWidths=LARRY_DEFAULT_NO_AGEWIDTHS,
+	def _do_graphics(self, numAgeWidths=LCFIT_DEFAULT_NO_AGEWIDTHS,
 					 lcImageName=LC_IMAGE_NAME, fcImageName=FC_IMAGE_NAME,
 					 lnmxImageName=LNMX_IMAGE_NAME):
 
@@ -191,7 +191,7 @@ class LcMFPop(LcSinglePop):
 		fp = MPL.font_manager.FontProperties(size=FONTSIZE)
 		
 		##### Set up overall graphics stuff ################
-		ages = LARRY_AGES
+		ages = LCFIT_AGES
 		years_end = self.start_year + self.nmxComb.shape[0]
 		years = N.array(range(self.start_year, years_end)) 
 		assert len(years) >= 1, AssertionError("years: %s" % years)
@@ -341,16 +341,16 @@ class LcMFPop(LcSinglePop):
 		nmx_tmp = (self.nmxComb)
 		nmx_kt_tmp= (self.nmxsFromKtCurrentComb) 
 		colors = 'bgrcm'
-		for i, age in enumerate(LARRY_LOGNMX_GRAPHIC_AGES): 
+		for i, age in enumerate(LCFIT_LOGNMX_GRAPHIC_AGES): 
 			try:
-				pl, = PL.semilogy(years, nmx_tmp[:, LARRY_AGE_INDICES[age]],
+				pl, = PL.semilogy(years, nmx_tmp[:, LCFIT_AGE_INDICES[age]],
 						colors[i%len(colors)]+'-', label='Age: %i' % age)
-				pl, = PL.semilogy(years, nmx_kt_tmp[:, LARRY_AGE_INDICES[age]],
+				pl, = PL.semilogy(years, nmx_kt_tmp[:, LCFIT_AGE_INDICES[age]],
 						colors[i%len(colors)]+'--', label='_nolegend_')
 				pl.set_dashes([4,2])
 			except IndexError, e:
 				raise IndexError, "error: %s. size self.lnmx: %s.  age: %s, age index: %s." % \
-					  (e, self.nmx.shape, age, LARRY_AGE_INDICES[age])
+					  (e, self.nmx.shape, age, LCFIT_AGE_INDICES[age])
 			pass
 		del nmx_tmp
 		del nmx_kt_tmp
@@ -402,14 +402,14 @@ class LcMFPop(LcSinglePop):
 		run_info += 'Standard error of innovations:\t %s\n'  % self.stdErrorEq 
 		run_info += 'Number of projection runs:\t %s\n' % self.numRuns
 		run_info += 'Number of years projected forward:\t %s\n' % self.stepsForward
-		run_info += 'Width of projection step:\t %s year(s)\n' % LARRY_PROJECTION_WIDTH
-		run_info += 'Width of projection step:\t %s year(s)\n' % LARRY_PROJECTION_WIDTH
+		run_info += 'Width of projection step:\t %s year(s)\n' % LCFIT_PROJECTION_WIDTH
+		run_info += 'Width of projection step:\t %s year(s)\n' % LCFIT_PROJECTION_WIDTH
 
 		# ... close <pre>...
 		run_info += '</pre>'
 
 		# ... include a link to the text dump of the object...
-		dumpLink = LARRY_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
+		dumpLink = LCFIT_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
 		run_info += "<p><form action='%s'> <button name='LC_OBJECT_ID' value='%s'> Object Dump </button></form></p>" % \
 					(dumpLink,str(self.LcID))
 
@@ -418,20 +418,20 @@ class LcMFPop(LcSinglePop):
 
 		# Empirical data by year
 		# image summarizing inference
-		lc_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + LC_IMAGE_NAME
+		lc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LC_IMAGE_NAME
 		lc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (lc_img_path, lc_img_path, IMGH, IMGW, self.LcID)
 
 		# image tracing log rates 
-		lnmx_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + LNMX_IMAGE_NAME
+		lnmx_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LNMX_IMAGE_NAME
 		lnmx_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of selected LNMXes %s"></a>\n' \
 				   % (lnmx_img_path, lnmx_img_path, IMGH, IMGW, self.LcID)
 
 		# image summarizing forecast
-		fc_img_path = LARRY_WWW_DISPLAY_IMAGE + '?' + LARRY_OBJECT_ID_KEY + '=' \
-					  + str(self.LcID) + '&' + LARRY_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
+		fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
 		fc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (fc_img_path, fc_img_path, IMGH, IMGW, self.LcID)
 
@@ -446,10 +446,10 @@ class LcMFPop(LcSinglePop):
 
 	def _dumpText(self):
 		self.dumpString = LcUtil.dumpObject(self,
-											helpParagraph=LARRY_DUMP_HELP,
-											dontDump=LARRY_NOTWANTED_ATTRIBUTE_DUMPS,
-											annoStructure=LARRY_VAR_ANNOTATION_MF,
-											fieldsep=LARRY_FIELDSEP,
-											rowsep=LARRY_ROWSEP,
-											stanzasep=LARRY_STANZASEP)
+											helpParagraph=LCFIT_DUMP_HELP,
+											dontDump=LCFIT_NOTWANTED_ATTRIBUTE_DUMPS,
+											annoStructure=LCFIT_VAR_ANNOTATION_MF,
+											fieldsep=LCFIT_FIELDSEP,
+											rowsep=LCFIT_ROWSEP,
+											stanzasep=LCFIT_STANZASEP)
 
