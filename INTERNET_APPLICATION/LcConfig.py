@@ -53,18 +53,6 @@ lcfitlogger.addHandler(ch)
 lcfitlogger.debug("LcConfig.py executing.")
 
 
-################################################################
-## Signal handlers for debugging -- USR1 pauses() the process, USR2 does 
-import signal
-def usr1(sig, stack):
-	lcfitlogger.info( 'Received usr1: %s' % sig)
-	signal.pause()
-	return True
-def usr2(sig, stack):
-	lcfitlogger.info( 'Received usr2: %s' % sig)
-	return True
-signal.signal(signal.SIGUSR1, usr1)
-signal.signal(signal.SIGUSR2, usr2)
 
 ################################################################
 ## numpy, scipy, matplotlib, pylab config stuff

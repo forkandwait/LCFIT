@@ -21,6 +21,18 @@ how you know you are inheriting.
 
 from LcConfig import *
 import LcConfig 						# So that the LcConfig can be passed to the template searchlist
+
+import LcExtension
+import LcAnnotation.py
+import LcCoherentPopObject.py
+import LcConfig.py
+import LcDB.py
+import LcExtension.py
+import LcHMDObject.py
+import LcMFPopObject.py
+import LcPageObjects.py
+import LcSinglePopObject.py
+
 import Cheetah.Template as Template
 sys.path.append(os.getcwd())
 from LcUtil import Diagnose as D
