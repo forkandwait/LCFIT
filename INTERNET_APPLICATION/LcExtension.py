@@ -15,6 +15,7 @@ THis includes all of the Coale Guo versions, etc.  The module's architecture is:
 So if you want to add a new extension algorithm, write it and store it in here.
 
 """
+from LcLog import lcfitlogger
 from LcConfig import *
 sys.path.append('.')
 sys.path.append('..')

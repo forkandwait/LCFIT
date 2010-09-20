@@ -3,6 +3,7 @@ Converts, stores, and formats data converted from HMD format into a
 more standard set of tab delimited files (year by age, one for female,
 male, combined).
 """
+from LcLog import lcfitlogger
 from LcConfig import * 
 import LcUtil
 from LcUtil import Diagnose as D

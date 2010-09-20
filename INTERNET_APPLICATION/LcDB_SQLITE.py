@@ -9,6 +9,7 @@ definition.
 '''
 ## import all the classes that we use here.
 from LcConfig import *
+from LcLog import lcfitlogger
 import LcSinglePopObject
 import LcMFPopObject
 import LcCoherentPopObject

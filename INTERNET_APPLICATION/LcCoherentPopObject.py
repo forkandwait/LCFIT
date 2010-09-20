@@ -10,6 +10,8 @@ kt against the combined kt.
 
 
 ## Imports ###############################################
+from LcLog import lcfitlogger
+
 from LcConfig import * 					# This imports numpy and friends
 from LcAnnotation import *
 from LcSinglePopObject import *

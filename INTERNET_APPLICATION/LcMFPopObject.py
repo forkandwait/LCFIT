@@ -15,6 +15,7 @@ module functions from LcSinglePopObject as well.
 
 
 ## Imports ################################################
+from LcLog import lcfitlogger
 from LcConfig import * 					# THis imports numpy and friends
 from LcSinglePopObject import *
 import LcUtil

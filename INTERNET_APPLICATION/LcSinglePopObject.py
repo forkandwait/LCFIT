@@ -10,6 +10,7 @@ this.
 
 ## Imports ################################################
 from LcConfig import * 					# Imports numpy and friends
+from LcLog import lcfitlogger
 from LcAnnotation import *
 import LcExtension
 LcExtension.setExtensionName(LCFIT_DEFAULT_EXTENSION_METHOD)

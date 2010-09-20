@@ -34,44 +34,11 @@ import types
 import hashlib
 md5 = hashlib.md5()
 
-'''
-########################
-## LCFIT libraries -- do not import or face the wrath of Circular Dependency!!!
-import LcAnnotation
-import LcDB
-import LcExtension
-import LcPageObjects
-import LcUtil
-
-import LcSinglePopObject
-import LcCoherentPopObject
-import LcHMDObject
-import LcMFPopObject
-'''
-
+from LcLog import lcfitlogger
 
 ########################
-## Set up logging using the overly complicated python module
-
-## initialize lcfitlogger
-LCFIT_LOGFILENAME='/home/webbs/lcfitlog'
-lcfitlogger = logging.getLogger('LCFIT')
-lcfitlogger.setLevel(logging.DEBUG)
-
-## set up handler and formatter, add to lcfitlogger
-ch = logging.FileHandler(filename=LCFIT_LOGFILENAME)
-ch.setLevel(logging.INFO)
-_fstr = "%(name)s:%(levelname)s:%(asctime)s:\"%(message)s\":%(pathname)s(%(lineno)d)"
-formatter = logging.Formatter(_fstr)
-ch.setFormatter(formatter)
-lcfitlogger.addHandler(ch)
-
-## Tell the world we are operational
-lcfitlogger.info("LcConfig.py:  just instantiated logging.")
-
-
-################################################################
 ## numpy, scipy, matplotlib, pylab config stuff
+########################
 import numpy as N
 import scipy as S 
 import scipy.stats as ST
@@ -89,8 +56,9 @@ except RuntimeError, e:
 import pylab as PL 
 
 
-################################################################
-## Constants:
+########################
+## Constants
+########################
 
 # For emailing registration alerts
 LCFIT_ADMIN_EMAIL = 'lcfit@demog.berkeley.edu'
