@@ -1,4 +1,5 @@
 from LcConfig import *
+from LcLog import lcfitlogger
 
 ageList = ', '.join([str(x) for x in LCFIT_AGES])
 

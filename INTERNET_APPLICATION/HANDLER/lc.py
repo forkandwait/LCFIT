@@ -27,22 +27,33 @@ tricky - but better comments should make it easier to understand.
 This file is simlinked from the apache tree. 
 '''
 
+#### standard imports
+import sys
+import logging
+import os
+import os.path
 
 #############################################
 ## Infrastructure imports
 #############################################
 
-import sys
-sys.stderr.write("WHOAMI: \"%s\"\n" % sys.argv[0])
-LCFIT_LIBRARY_PATH='/home/webbs/lcfit-devel.git/INTERNET_APPLICATION'	# where all the executable files live
+## Import libraries relative to hard location of lc.py -- have to
+## recreate it based
+#LCFIT_LIBRARY_PATH='/home/webbs/lcfit-devel.git/INTERNET_APPLICATION'	# where all the executable files live
+mypath = os.path.realpath(__file__.rstrip("c"))
+mypathL = mypath.split(os.sep)[1:-2]
+LCFIT_LIBRARY_PATH = os.path.normpath(os.path.join(os.sep, *mypathL))
 sys.path.append(LCFIT_LIBRARY_PATH)		# This tells us how to find these executables
 
-
-# Constants, system modules, etc
+## Import LcConfig
 from LcConfig import *
-lcfitlogger.debug('lc.py executing.')
 
+## Tell the world we are operational
+lcfitlogger.info("lc.py: at the top. file=%s" % mypath)
+
+########################
 ## Import mod_python infrastructure
+########################
 from mod_python import apache
 from mod_python.Session import Session
 from mod_python import util

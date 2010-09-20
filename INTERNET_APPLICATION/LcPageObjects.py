@@ -18,7 +18,7 @@ from LcPage which does the validation of login session stuff.  That
 might be confusing.  In Python the ()"s in the class definition are
 how you know you are inheriting.
 '''
-
+from LcLog import lcfitlogger
 from LcConfig import *
 import LcConfig 						# So that the LcConfig can be passed to the template searchlist
 import Cheetah.Template as Template

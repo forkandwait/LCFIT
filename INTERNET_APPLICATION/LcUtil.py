@@ -2,15 +2,11 @@
 algorithm per se"""
 
 from LcConfig import * 
+import LcExtension
+from LcLog import lcfitlogger
 
 import scipy.optimize
 import scipy.interpolate
-
-#import LcAnnotation
-#import LcDB
-import LcExtension
-#import LcPageObjects
-#import LcUtil
 
 
 def Diagnose(*printVars):
