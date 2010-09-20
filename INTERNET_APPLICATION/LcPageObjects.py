@@ -23,15 +23,15 @@ from LcConfig import *
 import LcConfig 						# So that the LcConfig can be passed to the template searchlist
 
 import LcExtension
-import LcAnnotation.py
-import LcCoherentPopObject.py
-import LcConfig.py
-import LcDB.py
-import LcExtension.py
-import LcHMDObject.py
-import LcMFPopObject.py
-import LcPageObjects.py
-import LcSinglePopObject.py
+import LcAnnotation
+import LcCoherentPopObject
+import LcConfig
+import LcDB
+import LcExtension
+import LcHMDObject
+import LcMFPopObject
+import LcPageObjects
+import LcSinglePopObject
 
 import Cheetah.Template as Template
 sys.path.append(os.getcwd())
