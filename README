@@ -16,3 +16,10 @@ matplotlib to make graphics.
 
 This code repository also contains some code written in R and Matlab
 to perform LCFIT in other contexts.
+
+Many of the papers that were used to develop this code can be found on
+Professor Ronald D. Lee's website:
+
+http://www.ceda.berkeley.edu/peoplenew/rlee.html
+
+This work was funded by CEDA as well.
