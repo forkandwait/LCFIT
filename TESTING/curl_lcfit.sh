@@ -1,6 +1,6 @@
 set -e 
 
-ID="$$$RANDOM"
+ID="$(date +'%Y%m%d%H%M%s')-$RANDOM-$$"
 COOKIEF="lcfit_cookies.$ID"
 LCFITURL="http://lcfit.demog.berkeley.edu/lcfit/lc"
 OUTF="lcfit_output.$ID"
@@ -13,3 +13,4 @@ echo "Getting index" >> $OUTF
 curl --silent -S --fail -b "$COOKIEF" -c "$COOKIEF"  \
 	"$LCFITURL/index" 1>>$OUTF
 
+rm *.$ID
