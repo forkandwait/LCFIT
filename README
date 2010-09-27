@@ -1,0 +1,18 @@
+LCFIT -- Lee Carter FITter
+
+LCFIT is a python program that implements the Lee-Carter mortality
+model and forecasting algorithm.  Basically, the Lee-Carter model uses
+the Singular Value Decomposition to decompose a matrix of mortality
+rates into a single time series ("k_t") showing the overall mortality
+trend, a base set of age specific mortality rates ("a_x"), and a vector
+("b_x") that describes the amount of mortality change at a give age for
+a unit of overall mortality change.  (The input data is usually
+structured with each different age interval as a column and each year
+as a row.)
+
+This project uses mod_python + apache to serve the pages, postgresql
+to store the data, scipy + numpy to do the calculations, and
+matplotlib to make graphics.
+
+This code repository also contains some code written in R and Matlab
+to perform LCFIT in other contexts.
