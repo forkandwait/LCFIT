@@ -74,7 +74,7 @@ class LcRegistrationForm:
 
 
 class LcRegistrationProcess:
-	"""Puts the results in the database and redirects to a page describing the fact that registrat."""
+	"""Puts the results in the database and redirects to a page describing the fact that registrated."""
 	def __init__(self, lcdb, redirectTarget=None, title=None, errorTemplate=None):
 		self.redirectTarget=redirectTarget
 		self.title=title
