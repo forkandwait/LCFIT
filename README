@@ -16,8 +16,12 @@ This code repository also contains some code written in R and Matlab
 to perform LCFIT in other contexts.
 
 Many of the papers that were used to develop this code can be found on
-Professor Ronald D. Lee's website:
+Professor Ronald D. Lee's CEDA website:
 
 http://www.ceda.berkeley.edu/peoplenew/rlee.html
 
 This work was funded by CEDA as well.
+
+An example of this code in action can be found at
+
+http://lcfit.demog.berkeley.edu
