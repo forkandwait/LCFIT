@@ -12,8 +12,8 @@ ID="$(date +'%Y%m%d%H%M%s')-$RANDOM-$$"
 COOKIEF="lcfit_cookies.$ID"
 LCFITURL="http://lcfit.demog.berkeley.edu/lcfit/lc"
 OUTF="lcfit_output.$ID"
-MAXTIME=1			# How many seconds over which we
-				# return non-zero
+MAXTIME=7			# How many seconds over which we  return non-zero
+
 ## start time
 STARTT=$(date +%s)
 
