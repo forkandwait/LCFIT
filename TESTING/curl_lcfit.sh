@@ -30,6 +30,7 @@ curl --silent -S --fail -b "$COOKIEF" -c "$COOKIEF"  \
 STOPT=$(date +%s)
 ELAPSET=$(expr $STOPT - $STARTT ) 
 echo "Timing: $ELAPSET seconds." >> "lcfit_stats.$ID"
+echo "curl_lcfit timing ($(date)): $ELAPSET seconds." > "$HOME/curl_lcfit.dat.txt"
 
 if [[ $ELAPSET > $MAXTIME ]]; then
     echo "curl_lcfit: taking a long time: $ELAPSET seconds. $(date -Im)"
