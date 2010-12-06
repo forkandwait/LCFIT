@@ -12,7 +12,7 @@ ID="$(date +'%Y%m%d%H%M%s')-$RANDOM-$$"
 COOKIEF="lcfit_cookies.$ID"
 LCFITURL="http://lcfit.demog.berkeley.edu/lcfit/lc"
 OUTF="lcfit_output.$ID"
-MAXTIME=7			# How many seconds over which we  return non-zero
+MAXTIME=4			# How many seconds over which we  return non-zero
 
 ## start time
 STARTT=$(date +%s)
@@ -32,7 +32,7 @@ ELAPSET=$(expr $STOPT - $STARTT )
 echo "Timing: $ELAPSET seconds." >> "lcfit_stats.$ID"
 
 if [[ $ELAPSET > $MAXTIME ]]; then
-    echo "curl_lcfit: taking a long time: $ELAPSET seconds."
+    echo "curl_lcfit: taking a long time: $ELAPSET seconds. $(date -Im)"
     exit 1
 fi
 
