@@ -196,14 +196,14 @@ class HMD(object):
 		outStr += '<colgroup width="10%">\n'
 		outStr += '<colgroup width="0*">\n' 
 		outStr += '<tr>' + \
-				  '<td valign="top">' + format_grid(years) + '</td></col>' + \
-				  '<td><a name="female" valign="top">' + format_grid(self.femaleRates) + '</a></td>' +\
+				  '<td> <a name="female">' + format_grid(years) + '</td></col>' + \
+				  '<td>' + format_grid(self.femaleRates) + '</a></td>' +\
 				  '</tr>'
 		outStr += '<tr> ' + \
-				  '<td>' + format_grid(years) + '</td></col>' + \
-				  '<td><a name="male">' + format_grid(self.maleRates) + '</a></td></tr>'
+				  '<td><a name="male">' + format_grid(years) + '</td></col>' + \
+				  '<td>' + format_grid(self.maleRates) + '</a></td></tr>'
 		outStr += '<tr> ' + \
-				  '<td>' + format_grid(years) + '</td></col>' + \
-				  '<td><a name="combined">' + format_grid(self.totalRates) + '</a></td></tr>'
+				  '<td><a name="combined">' + format_grid(years) + '</td></col>' + \
+				  '<td>' + format_grid(self.totalRates) + '</a></td></tr>'
 		outStr += '</table>'
 		return outStr
