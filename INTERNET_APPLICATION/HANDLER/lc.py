@@ -196,18 +196,9 @@ InputRatesCoherent=LcPageObjects.LcForm(redirectTarget='ProcessRatesCoherent',
 #####################################################
 ## Process single populaton rates, store big object result,  and redirect to ListObjects
 #####################################################
-ProcessRates_ = LcPageObjects.LcProcess(targetClass=LcSinglePopObject.LcSinglePop,
+ProcessRates = LcPageObjects.LcProcess(targetClass=LcSinglePopObject.LcSinglePop,
 									   redirectTarget=LCFIT_WWW_LIST_OBJECTS,
 									   lcdb=lcdb)
-# Profiling hack
-def ProcessRates(req):					
-	if LCFIT_DO_PROFILE:
-		ret = cProfile.runctx('ProcessRates_(req)',
-							  globals(), locals(), filename='/tmp/ProcessRatesSingleProf')
-		return ret
-	else:
-		return ProcessRates_(req)
-	return
 
 #####################################################
 ## Process male/female rates
@@ -219,19 +210,9 @@ ProcessRatesMF = LcPageObjects.LcProcess(targetClass=LcMFPopObject.LcMFPop,
 #####################################################
 ## Process coherent sets of rates
 #####################################################
-ProcessRatesCoherent_ = LcPageObjects.LcProcess(targetClass=LcCoherentPopObject.LcCoherentPop,
+ProcessRatesCoherent = LcPageObjects.LcProcess(targetClass=LcCoherentPopObject.LcCoherentPop,
 												redirectTarget=LCFIT_WWW_LIST_OBJECTS,
 												lcdb=lcdb)
-# Profiling hack
-def ProcessRatesCoherent(req):					
-	if LCFIT_DO_PROFILE:
-		ret = cProfile.runctx('ProcessRatesCoherent_(req)',
-							  globals(), locals(), filename='/tmp/ProcessRatesCoherentProf')
-		return ret
-	else:
-		return ProcessRatesCoherent_(req)
-	return
-
 
 ############################### HMD converter #########################
 ## Get the rates
