@@ -1,0 +1,224 @@
+
+ <style type="text/css">
+	img.scrnsht {
+	height:185px;
+	width:300px;
+	}
+ </style>
+
+ <title>LCFIT Tutorial</title>
+
+<html>
+  <h1>LCFIT Tutorial</h1>
+  
+  <p>This tutorial will guide the user through an entire mortality forecasting process using LCFIT.
+    We will cover the combined sex ("simple") forecasting method, in which only a single population
+    is forecasted; the way the other forecast interactions are organized is similar.</p>
+
+  <p> The tutorial goes as follows:</p>
+
+  <ol>
+
+    <li> <a name="toc_registering"> <a href="#registering"> Registering and logging in.</a></a>
+
+    <li> <a name="toc_format"><a href="#format">Formatting data.</a></a>
+
+    <li> <a name="toc_lcfit"><a href="#lcfit">Entering mortality rates into LCFIT, finding and
+    interpreting the results.</a></a>
+
+    <li> <a name="toc_hmd"><a href="#hmd">Using the Human Mortality Database as a data
+    source.</a></a>
+
+  </ol>
+
+  <p> Each of these high-level steps will be broken down into smaller steps below, with screen shots
+    and examples.  To zoom in on image, click it.  To jump forward to a section, click on one of the
+    section descriptions above.  To jump back, click on the heading below.</p>
+
+
+  <hr>
+  <h2><a name="registering"><a href="#toc_registering">Registering and Logging In to LCFIT</a></a></h2>
+  
+  <p> The landing for LCFIT is a simple text-based webpage, with a description of the
+    software, some notes, links to papers and Prof. Ron Lee's website.  Perhaps most
+    importantly, though, it has a link for <b>registration</b> and a link for <b>logging
+      in</b>.  See the links pointed by arrows in the image below.</p>
+
+  <a href="./JPGS/homepage.jpg">  <img class="scrnsht" src="./JPGS/homepage.jpg" alt="LCFIT Home" /> </a> 
+
+  <p> If you are not a registered user, click on the registration link, and you will see the screen
+    below.  Fill it out and submit.  Note that it will take a few days to register you as we review
+    registrations by hand; we will send a registration confirmation by email.  If you don't receive
+    any notice in a few days, <b>PLEASE CHECK YOUR SPAM FOLDER</b> and email
+    lcfit@demog.berkeley.edu.</p>
+
+  <a href="./JPGS/register.jpg"> <img class="scrnsht" src="./JPGS/register.jpg" alt="LCFIT Registration"/> </a>
+
+  <p> If you fill out some fields incorrectly or leave them blank, you will get an error message like the
+    following. Just press press your browser's back button and fill them out correctly, after reading the error
+    message to make sure you see what needs to be fixed.</p>
+
+  <a href="./JPGS/registration_error.jpg"> <img class="scrnsht" src="./JPGS/registration_error.jpg" alt="LCFIT Registration" /> </a>
+
+  <p> If you try to register with a name that is already in use, you will get an error like the screen below.
+    Use your back button and change the "Preferred Username" field with a different username.</p>
+
+  <a href="./JPGS/registration_username_err.jpg"> <img class="scrnsht" src="./JPGS/registration_username_err.jpg" alt="LCFIT Registration" /> </a>
+
+
+  <hr>
+  
+  <h2> <a name="format"><a href="#toc_format">Preparing mortality data formats for LCFIT</a></a></h2>
+
+  <p><b>File format:</b> LCFIT uses data stored in "year by age" format.  Each new year corresponds
+    to a new row, and each age category corresponds to a new column.   </p>
+
+  <p><b>Age widths:</b> LCFIT assumes that age specific mortality rates are stored in "abridged
+    format", with the first age width corresponding to newborns through their first year, then one
+    year olds through their fourth year, then five year age widths after that.  Finally, the "open
+    interval" is the last age for which rates are specified, and begins at the given age but extends
+    indefinitely; the open interval must always be more than the value in "select age for
+    extension".</p>
+
+  <p><b>Comment syntax:</b> Any text which follows a hash mark ("#") is ignored by the application
+    until the end of the line.  If a hash mark begins the line, the entire row is ignored.  Comments
+    can be put anywhere in the data and serve to remind the analyst information about the
+    dataset.</p>
+
+  <p><b>Reformatting Data from Excel?</b>  Using Excel, click "Save As", then "Tab delimited text"
+    to store your data in LCFIT format.  We would recommend opening the resulting file in a text
+    editor like Notepad or Emacs to confirm that the resulting file is correctly formatted. </p>
+
+  <p><b>Other formats?</b> LCFIT will not accept data stored in formats other than tab delimited
+    text, abridged ages, year by age.  Sorry.</p>
+  
+  <p><b>Example data:</b> Take a look at example Swedish
+  data <a href="http://lcfit.demog.berkeley.edu/SwedenF.txt">here</a>.  The third row holds the
+  first year's worth of data, the fourth row is the second year's worth of data, etc.  The first
+  column holds the mortality rates for age 0-1 (0.017949 in the file), the second column is for age
+  1-4 (0.001095), etc. In data files, rows which are set off by hash marks are not mortality rates,
+  but comments and are ignored by LCFIT.</p>
+
+    <p><b>Transferring data:</b> Data is transferred into LCFIT via pasting. Once you have formatted
+    your data correctly, copy it to the clipboard.  Then open an LCFIT session and paste it in
+    following the directions below.</p>
+
+  <hr>
+  <h2> <a name="lcfit"> <a href="#toc_lcfit">Running an LCFIT model</a></a></h2>
+
+  <p> First, login by clicking at the "login" link ... </p>
+
+  <a href="./JPGS/homepage.jpg"> <img class="scrnsht" src="./JPGS/homepage.jpg"
+  alt="Initial with LCFIT, login arrow" /> </a>
+
+  <p> ... and typing your username and password in the obvious places. </p>
+
+  <a href="./JPGS/login.jpg"> <img class="scrnsht" src="./JPGS/login.jpg"
+  alt="Initial with LCFIT, login arrow" /> </a>
+
+  <p> You will land at the LCFIT base page.  On left sidebar you see a bunch of options.  Click on
+  "Create a new single-sex LC forecast" (see arrow).</p>
+
+  <a href="./JPGS/baselcfit_singlesex_arrow.jpg"> <img class="scrnsht" src="./JPGS/baselcfit_singlesex_arrow.jpg"
+  alt="Initial with LCFIT, login arrow" /> </a>
+
+  <p> Then you will get an entry form, like the following (shown with data already entered).  The
+  three boxes circled or squared in red need to be filled in.  The big square box ("#1") will take
+  the rates you have copied to the clipboard, the small box ("#2") takes the starting year of the
+  data, and the other small box ("#3") takes a comment used to identify the forecast
+  later. You <b>must</b> fill out all these boxes or the forecast won't be processed.</p>
+
+  <a href="./JPGS/simple_entry.jpg"> <img class="scrnsht" src="./JPGS/simple_entry.jpg" alt="simple
+  entry 1" /> </a>
+
+  <p> Once everything is filled out, press "Submit", and you will get a listing of LCFIT objects
+    with the latest forecast run at the top (circled).  The ID of that entry is clickable, and with
+    the arrow in the following screenshot.</p>
+  
+  <a href="./JPGS/list_afterentry_austria.jpg"> <img class="scrnsht"
+  src="./JPGS/list_afterentry_austria.jpg" alt="List after LCFIT forecast" /> </a>
+
+  <p> Click on the ID (circled in red), and you will see the screen that has the results of the
+    forecast run.  The following three screenshots are pieces of the result (imagine you are
+    scrolling down).</p>
+
+  <p> The first screenshot has basic information about the forecast like the time executed (arrow
+    #1).  It also has graphs of the results of the LC decomposition (#2), the traces of the
+    stochastic simulation (#3), the log of select sample mortality rates over time (#4), and a
+    profile of age-specific mortality at the first sample point, the last sample point, and the end
+    of the forecast period (#5).  Finally, the "object dump" (#6) button allows one to download a
+    spreadsheet readable text file of ALL the input parameters, export values, and intermediate
+    calculations of the forecast.</p>
+
+    <a href="./JPGS/simple_res_1.jpg"> <img class="scrnsht" src="./JPGS/simple_res_1.jpg" alt="LCFIT
+    forecast, part 1" /> </a> <br>
+
+  <p> The next section of the output has modeled data from the empirical LCFIT data.</p>
+
+  <a href="./JPGS/simple_res_2.jpg">  <img class="scrnsht" src="./JPGS/simple_res_2.jpg" alt="LCFIT forecast, part 2" /> </a> <br>
+
+  <p> The third and final screenshot has more modeled components from LCFIT. </p>
+
+  <a href="./JPGS/simple_res_3.jpg">  <img class="scrnsht" src="./JPGS/simple_res_3.jpg" alt="LCFIT forecast, part 3" /> </a> <br>
+
+  <p> If something goes really wrong, you might get the following screen.  If so, please email the
+  LCFIT administrator.</p>
+
+  <a href="./JPGS/stacktrace.jpg"> <img class="scrnsht" src="./JPGS/stacktrace.jpg" alt="LCFIT
+  forecast, part 3" /> </a> <br>
+
+  <hr>
+  <h2> <a name="hmd"> <a href="#toc_hmd">Using HMD Data -- Tutorial</a></a></h2> 
+  
+  <p>It is convenient to use the <a href="http://www.mortality.org"> Human Mortality Database</a>
+    for examples of mortality rates, but these datasets are not formatted in the way they need to be
+    for LCFIT. Luckily, the authors of LCFIT have provided a tool for converting HMD data into "Year
+    by Age" format.</p>
+
+  <p>The home page of HMD looks like the following.  Click on Austria after logging in (circled in red). </p>
+
+  <a href="./JPGS/hmdhomepage.jpg">  <img class="scrnsht" src="./JPGS/hmdhomepage.jpg" alt="HMD Home" /> </a> 
+
+  <p> Then you get a page like the following.  Click on 5x1 mortality rates (circled in red). </p>
+
+  <a href="./JPGS/hmd_austria_data.jpg">  <img class="scrnsht" src="./JPGS/hmd_austria_data.jpg" alt="HMD Home" /> </a> 
+
+  <p> Then you get mortality rate data for Austria, which looks like the following.  Select the entire page (Ctrl-A in most browsers) and copy it to the clipboard. </p>
+
+  <a href="./JPGS/austria_hmd_data.jpg">  <img class="scrnsht" src="./JPGS/austria_hmd_data.jpg" alt="HMD Austria Data" /> </a> 
+
+  <p>Choose the tool to convert HMD data in the sidebar.</p>
+
+  <a href="./JPGS/choose_hmd_lcfit.jpg">  <img class="scrnsht" src="./JPGS/choose_hmd_lcfit.jpg" alt="LCFIT Choose HMD" /> </a> 
+
+  <p> You will get the following.</p>
+
+  <a href="./JPGS/hmd_entry.jpg">  <img class="scrnsht" src="./JPGS/hmd_entry.jpg" alt="HMD Entry 1" /> </a> 
+
+  <p> Put the HMD data you cut and pasted into the form so that it looks like the following.  Fill
+    in the appropriate start year and a description in the available text boxes. Press submit. </p>
+
+  <a href="./JPGS/hmd_entry_full.jpg">  <img class="scrnsht" src="./JPGS/hmd_entry_full.jpg" alt="HMD Entry 2" /> </a> 
+
+  <p> You will see a list of new LCFIT objects, most recently created at the top (like a stack of
+    plates in a cafeteria).  Chose (by clicking) the HMD Object on top (circled in red). </p>
+
+  <a href="./JPGS/lcfit_list_after_hmd_munge.jpg"> <img class="scrnsht"
+  src="./JPGS/lcfit_list_after_hmd_munge.jpg" alt="HMD Result" /> </a>
+
+  <p> You will then see a result with year-by-age data for Austria -- scroll around this page to get
+    an idea of what is here.  There are three sections to this table -- female mortality rates, male
+    mortality rates, and combined mortality rates; by clicking one of the circled links, one jumps
+    to section of the table with that sex.  One can cut and paste the results for later entry into
+    the LCFIT screen -- start in the upper left hand corner of a given sex and highlight to the
+    bottom left hand corner (the arrow points to where you would start if you wanted to highlight
+    female mortality rates). </p>
+
+  <a href="./JPGS/lcfit_austria_converted.jpg"> <img class="scrnsht"
+  src="./JPGS/lcfit_austria_converted.jpg" alt="HMD Result Austria" /> </a>
+
+  <hr><h2>Conclusion</h2>
+  <p>We hope this tutorial has been useful.  If you have questions or suggestions, please email the
+  LCFIT administrator.</p>
+
+</html>
