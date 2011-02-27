@@ -13,7 +13,7 @@
   
   <p>This tutorial will guide the user through an entire mortality forecasting process using LCFIT.
     We will cover the combined sex ("simple") forecasting method, in which only a single population
-    is forecasted; the way the other forecast interactions are organized is similar.</p>
+    is forecasted; the other forecast interactions are organized similarly.</p>
 
   <p> The tutorial goes as follows:</p>
 
@@ -33,7 +33,7 @@
 
   <p> Each of these high-level steps will be broken down into smaller steps below, with screen shots
     and examples.  To zoom in on image, click it.  To jump forward to a section, click on one of the
-    section descriptions above.  To jump back, click on the heading below.</p>
+    section descriptions listed above.  To jump back to the list of sections, click on the heading.</p>
 
 
   <hr>
@@ -111,7 +111,7 @@
   <a href="./JPGS/homepage.jpg"> <img class="scrnsht" src="./JPGS/homepage.jpg"
   alt="Initial with LCFIT, login arrow" /> </a>
 
-  <p> ... and typing your username and password in the obvious places. </p>
+  <p> ... and typing your username and password in the obvious places, and then pressing submit. </p>
 
   <a href="./JPGS/login.jpg"> <img class="scrnsht" src="./JPGS/login.jpg"
   alt="Initial with LCFIT, login arrow" /> </a>
@@ -122,29 +122,41 @@
   <a href="./JPGS/baselcfit_singlesex_arrow.jpg"> <img class="scrnsht" src="./JPGS/baselcfit_singlesex_arrow.jpg"
   alt="Initial with LCFIT, login arrow" /> </a>
 
-  <p> Then you will get an entry form, like the following (shown with data already entered).  The
-  three boxes circled or squared in red need to be filled in.  The big square box ("#1") will take
-  the rates you have copied to the clipboard, the small box ("#2") takes the starting year of the
-  data, and the other small box ("#3") takes a comment used to identify the forecast
-  later. You <b>must</b> fill out all these boxes or the forecast won't be processed.</p>
+  <p> Then you will get an entry form, like the following (shown with
+  data already entered).  The three boxes circled or squared in red
+  need to be filled in.  The big square box ("#1") will take the rates
+  you have copied to the clipboard, the small box ("#2") takes the
+  starting year of the data, and the other small box ("#3") takes a
+  comment used to identify the forecast later. You <b>must</b> fill
+  out all these boxes or the forecast won't be processed.  </p>
+
+  <p>If you have problems running a model, it might be due to your
+  data format -- read the section on data formats above and make sure
+  your data is correctly structured, and email the LCFIT team if you
+  continue to have problems. Note also that correctly formatted data
+  may look funny because your browser "wraps" the lines when they are
+  too long; don't worry, as long as your browser doesn't insert
+  carriage returns (they rarely do), your model will be OK.</p>
 
   <a href="./JPGS/simple_entry.jpg"> <img class="scrnsht" src="./JPGS/simple_entry.jpg" alt="simple
   entry 1" /> </a>
 
-  <p> Once everything is filled out, press "Submit", and you will get a listing of LCFIT objects
-    with the latest forecast run at the top (circled).  The ID of that entry is clickable, and with
-    the arrow in the following screenshot.</p>
+  <p> Once everything is filled out, press "Submit", and you will get
+    a listing of LCFIT objects with the latest forecast run at the top
+    (circled).  The ID of that entry is clickable, pointed to by the
+    arrow in the following screenshot.</p>
   
   <a href="./JPGS/list_afterentry_austria.jpg"> <img class="scrnsht"
   src="./JPGS/list_afterentry_austria.jpg" alt="List after LCFIT forecast" /> </a>
 
-  <p> Click on the ID (circled in red), and you will see the screen that has the results of the
-    forecast run.  The following three screenshots are pieces of the result (imagine you are
-    scrolling down).</p>
+  <p> Click on the ID, and you will see the screen that has the
+    results of the forecast run.  The following three screenshots are
+    pieces of the result (imagine you are scrolling down, viewing each
+    piece at a time).</p>
 
   <p> The first screenshot has basic information about the forecast like the time executed (arrow
     #1).  It also has graphs of the results of the LC decomposition (#2), the traces of the
-    stochastic simulation (#3), the log of select sample mortality rates over time (#4), and a
+    stochastic simulation (#3), the logarithm of select sample mortality rates over time (#4), and a
     profile of age-specific mortality at the first sample point, the last sample point, and the end
     of the forecast period (#5).  Finally, the "object dump" (#6) button allows one to download a
     spreadsheet readable text file of ALL the input parameters, export values, and intermediate

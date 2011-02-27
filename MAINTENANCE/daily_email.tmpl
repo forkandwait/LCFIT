@@ -73,13 +73,14 @@ Number of testing objects deleted: $TEST_OBJECTS_DELETE_COUNT
 #for $row in $LC_PENDING_REG
 
 ----
-#echo "psql -U webbs -d larrydb -c \"select new_lc_user(\'%-.30s\', \'%-.30s\', \'%-.30s\');\" && \n" % ($row[1], $row[2], $row[0])
-
 #echo "/usr/sbin/htpasswd -b /etc/apache2/lcfit.htpasswd \"%-.30s\" \"%-.30s\"  && \n" % ($row[1], $row[2])
+
+#echo "psql -U webbs -d larrydb -c \"select new_lc_user(\'%-.30s\', \'%-.30s\', \'%-.30s\');\" && \n" % ($row[1], $row[2], $row[0])
 
 #echo "echo Dear %s, you have been registered with the LCFIT program, \\\n" % ($row[4])
 #echo "     with username / password = \"%s\" / \"%s\".  \\\n" % ($row[1], $row[2])
-#echo '    | mail \"%s\" -a \"Reply-To:webbs@demog.berkeley.edu\" \\\n' % (row[0],)
+#echo "     If you have any questions or need help getting started, email lcfit@demog.berkeley.edu.\\\n"
+#echo '    | mail \"%s\" -a \"Reply-To:lcfit@demog.berkeley.edu\" \\\n' % (row[0],)
 #echo '    -s \"LCFIT Registration\" \n\n'
 ----
 

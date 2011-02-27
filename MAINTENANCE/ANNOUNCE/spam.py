@@ -5,12 +5,14 @@ import smtplib
 import sys
 import time
 import types
-import syslog  							# Add some syslog stuff
 
 import Cheetah.Template as Template
 import psycopg2
 import psycopg2.extensions
 
+if len(sys.argv) != 3:
+	print "Usage: spam.py <subject> <template>"
+	exit(1)
 
 # config ish stuff
 DB_NAME = 'larrydb'
@@ -22,7 +24,7 @@ EMAILTB = 'authorizedusers'
 # from db, grab a list of email addresses to send
 conn = psycopg2.connect(dsn='host=%s dbname=%s user=%s' % ('localhost', DB_NAME, USER_NAME))
 curs = conn.cursor()
-SQL='select email from %s where email is not null order by email' % EMAILTB
+SQL='select distinct email from %s where email is not null order by email' % EMAILTB
 curs.execute(SQL)
 emails = []
 for row in curs.fetchall():
@@ -39,12 +41,15 @@ messt = open(sys.argv[2]).read()
 
 # loop: convert template, send to particular email
 for email in emails:
-	searchList = {'EMAIL':email, 'TIMESTAMP':time.strftime('%Y-%m-%d %H:%M:%S'), 'LCFITEMAIL':LCFITEMAIL}
+	searchList = {'EMAIL':email, 'TIMESTAMP':time.strftime('%Y-%m-%d %H:%M:%S'),
+		      'LCFITEMAIL':LCFITEMAIL}
 	mess = str(Template.Template(messt, searchList=searchList))
 
 	mserver = smtplib.SMTP('smtp.demog.berkeley.edu')
 	mserver.set_debuglevel(0)
 	headers = "Subject: %s\r\n\r\n" % subj
+	time.sleep(1)
+	print "Emailing %s\n" % email
 	mserver.sendmail(from_addr='lcfit@demog.berkeley.edu', to_addrs=email, msg=headers+mess)
 	mserver.quit()
 
