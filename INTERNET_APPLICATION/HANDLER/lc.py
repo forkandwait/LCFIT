@@ -49,7 +49,7 @@ sys.path.append(LCFIT_LIBRARY_PATH)		# This tells us how to find these executabl
 from LcConfig import *
 
 ## Tell the world we are operational
-lcfitlogger.info("lc.py: at the top. file=%s" % mypath)
+lcfitlogger.debug("lc.py: at the top. file=%s" % mypath)
 
 ########################
 ## Import mod_python infrastructure

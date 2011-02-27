@@ -192,18 +192,24 @@ class HMD(object):
 
 		# Data in cells
 		outStr += '<table border=1 style="font-family:courier; font-size:10; white-space:nowrap">'
-		outStr += "<tr><td colspan=2>Below are the converted female, male, and combined death rates</td></td>\n"
+		outStr += "<tr><td colspan=3>Below are the converted female, male, and combined death rates</td></td>\n"
 		outStr += '<colgroup width="10%">\n'
-		outStr += '<colgroup width="0*">\n' 
+		outStr += '<colgroup width="0*">\n'
+		outStr += '<tr><td style="text-align:center; color: gold; background-color: blue; font-size:16;" colspan=3><a name="female">FEMALE</a></td></tr>'
 		outStr += '<tr>' + \
-				  '<td> <a name="female">' + format_grid(years) + '</td></col>' + \
-				  '<td>' + format_grid(self.femaleRates) + '</a></td>' +\
+				  '<td>' + format_grid(years) + '</td></col>' + \
+				  '<td bgcolor=gray>&nbsp;</td>' + \
+				  '<td>' + format_grid(self.femaleRates) + '</td>' +\
 				  '</tr>'
+		outStr += '<tr><td style="text-align:center; color: gold; background-color: blue; font-size:16;" colspan=3><a name="male">MALE</a></td></tr>'
 		outStr += '<tr> ' + \
-				  '<td><a name="male">' + format_grid(years) + '</td></col>' + \
-				  '<td>' + format_grid(self.maleRates) + '</a></td></tr>'
+				  '<td>' + format_grid(years) + '</td></col>' + \
+				  '<td bgcolor=gray></td>' + \
+				  '<td>' + format_grid(self.maleRates) + '</td></tr>'
+		outStr += '<tr><td style="text-align:center; color: gold; background-color: blue; font-size:16;" colspan=3><a name="combined">COMBINED</a></td></tr>' 
 		outStr += '<tr> ' + \
-				  '<td><a name="combined">' + format_grid(years) + '</td></col>' + \
-				  '<td>' + format_grid(self.totalRates) + '</a></td></tr>'
+				  '<td>' + format_grid(years) + '</td></col>' + \
+				  '<td bgcolor=gray></td>' + \
+				  '<td>' + format_grid(self.totalRates) + '</td></tr>'
 		outStr += '</table>'
 		return outStr

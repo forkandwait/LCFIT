@@ -9,7 +9,7 @@ LCFIT_LOGFILENAME='/home/webbs/lcfitlog'
 
 ## initialize lcfitlogger
 lcfitlogger = logging.getLogger('LCFIT')
-lcfitlogger.setLevel(logging.DEBUG)
+lcfitlogger.setLevel(logging.INFO)
 
 ## set up handler and formatter, add to lcfitlogger
 ch = logging.FileHandler(filename=LCFIT_LOGFILENAME)
