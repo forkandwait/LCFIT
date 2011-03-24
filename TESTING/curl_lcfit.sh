@@ -52,11 +52,4 @@ if [[ $ELAPSET > $MAXTIME ]]; then
     exit 1
 fi
 
-case $INTER in
-    *inter*)
-        echo "See output in $OUTF..." 
-        ;;
-    *)
-    rm *.$ID    
-    ;;
-esac
+rm *.$ID    
