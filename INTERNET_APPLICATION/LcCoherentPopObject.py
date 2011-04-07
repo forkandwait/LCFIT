@@ -75,7 +75,7 @@ class LcCoherentPop(LcSinglePop):
 		self.mortRatesTextList = re.split('\n\n+', self.mortRatesText) # 
 		self.mortRatesList = [LcUtil.parseRates(rates) for rates in self.mortRatesTextList]
 
-		#raise str((len(self.populationTextList), len(self.populationList), len(self.mortRatesTextList), len(self.mortRatesList)))
+		# raise str((len(self.populationTextList), len(self.populationList), len(self.mortRatesTextList), len(self.mortRatesList)))
 							 
 		# Go over each data matrix, check input:  no weird numbers, same size.
 		shapeList = []
