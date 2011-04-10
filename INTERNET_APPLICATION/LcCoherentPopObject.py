@@ -529,8 +529,11 @@ class LcCoherentPop(LcSinglePop):
         # forecast e0 for each input (think I switch indexing
         # conventions between inference and simulation ... not
         # good... [1]['kt_unfit'] vs ['kt_unfit'][1]
+        raise Exception(str((self.Simulation['e0_indiv'][-1][0][0])))
         tmp_list = [L for L in self.Simulation['e0_indiv']]
+
         tmp_array = N.array(tmp_list)
+
         tmp_str = LcUtil.tablefy(dataList=tmp_array,
                                  sideLabels=self.years,
                                  headings=self.labels,
