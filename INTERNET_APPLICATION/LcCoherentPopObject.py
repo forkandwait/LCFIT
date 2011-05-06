@@ -319,11 +319,18 @@ class LcCoherentPop(LcSinglePop):
                                                                stepsForward=self.stepsForward,
                                                                sortflag=False)
             
-            ## calculate new kt_comb + resid + offset
+            ## calculate offset
             kt_comb_offset = self.individualLc[popIndex]['ktFit'][-1] - self.combinedLc['ktFit'][-1]
-            lcfitlogger.warning ("kt_comb_offset %f" % kt_comb_offset)
-            self.Simulation['kt_comb_plus_resid'][popIndex] = \
-                self.Simulation['kt_resid'][popIndex] + self.Simulation['kt_comb'] + kt_comb_offset 
+            # if self.combined['ktFit'][-1] > self.individualLc[popIndex]['ktFit'][-1]:
+            #     kt_comb_offset = -1.0 * kt_comb_offset
+            #    pass
+
+            ## Man, logging the popIndex is bizarrely difficult...
+            lcfitlogger.warning ("kt_comb_offset, kt_resid[0], kt_comb[0], %f, %f" % (popIndex, kt_comb_offset))
+
+            ## Derive forecast kt from forecast comb + forecast resid + offset
+            self.Simulation['kt_comb_plus_resid'][popIndex] = self.Simulation['kt_comb'] + kt_comb_offset 
+            lcfitlogger.warning ("foo %s" % str(self.Simulation['kt_comb_plus_resid'][popIndex].shape))
 
             ## mx of above 
             self.Simulation['mx_indiv'][popIndex] = project_nmx(ax=self.individualLc[popIndex]['ax'],
@@ -385,7 +392,7 @@ class LcCoherentPop(LcSinglePop):
             pl.set_dashes([1,1])
             pass
 
-        ## Fix some other things on the graph
+        ## Fix some other things on the graph...
         
         # Pad axis at right 
         axis = list(PL.axis()) 
@@ -418,21 +425,23 @@ class LcCoherentPop(LcSinglePop):
         # combined kt, empirical (fitted) and simulated (median) ...
         pl, = PL.plot(years, self.combinedLc['ktFit'], '-k', label='combined', lw=.75)
         pl, = PL.plot(years_fcst, self.Simulation['kt_comb'][self.percentileIndices[2]], '-k', lw=.75)
-        pl.set_dashes([4,2])
+        pl.set_dashes([1,1])
 
         # ... stuff for each population ...
         for i, stats in enumerate(self.individualResidualLc):
             # ... empirical and simulated residuals (median) ...
-            pl, = PL.plot(years, stats['ktUnfit'], colors[i%len(colors)]+'-', lw=.4)
-            pl, = PL.plot(years_fcst, self.Simulation['kt_resid'][i][self.percentileIndices[2]], colors[i%len(colors)]+'-', lw=.4)
+            pl, = PL.plot(years, stats['ktUnfit'], colors[i%len(colors)]+'-', lw=1.25)
+            pl, = PL.plot(years_fcst, self.Simulation['kt_resid'][i][self.percentileIndices[2]], colors[i%len(colors)]+'-', lw=0.75)
             pl.set_dashes([1,1])
 
             # ... empirical and simulated combined kt (simulated comb + simulated resid)
-            pl, = PL.plot(years, self.individualLc[i]['ktFit'], colors[i%len(colors)]+'-', lw=.75, label=self.labels[i])
-            pl, = PL.plot(years_fcst, self.Simulation['kt_resid'][i][self.percentileIndices[2]] +
-                          self.Simulation['kt_comb'][self.percentileIndices[2]],
+            pl, = PL.plot(years, 
+                          self.individualLc[i]['ktFit'], 
+                          colors[i%len(colors)]+'-', lw=.75, label=self.labels[i])
+            pl, = PL.plot(years_fcst, 
+                          self.Simulation['kt_comb_plus_resid'][i][self.percentileIndices[2]],
                           colors[i%len(colors)]+'-', lw=.75)
-            pl.set_dashes([1,2])
+            pl.set_dashes([1,1])
             pass
         PL.legend(loc='lower left', **LEGEND_KW)
         PL.title('Kt: combined, residuals, combined + residual.\nSolid is empirical, dashed is forecast (median).')
