@@ -270,8 +270,6 @@ def lots_e0s(percentileIndices=None, lots_nmx=None, lifeTableParams=None, sortfl
 		sorti = N.argsort(e0s[:,-1])	# sort on e0 of end of run/ forecast
 		e0s = e0s[sorti,:]
 		pass
-	else:
-		pass
 
 	if percentileIndices is None:
 		return(e0s)

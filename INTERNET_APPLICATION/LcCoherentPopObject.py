@@ -75,8 +75,6 @@ class LcCoherentPop(LcSinglePop):
 		self.mortRatesTextList = re.split('\n\n+', self.mortRatesText) # 
 		self.mortRatesList = [LcUtil.parseRates(rates) for rates in self.mortRatesTextList]
 
-		# raise str((len(self.populationTextList), len(self.populationList), len(self.mortRatesTextList), len(self.mortRatesList)))
-							 
 		# Go over each data matrix, check input:  no weird numbers, same size.
 		shapeList = []
 		shapeShape = self.mortRatesList[0].shape
@@ -295,7 +293,7 @@ class LcCoherentPop(LcSinglePop):
 											ktStart=self.combinedLc['ktFit'][-1],
 											numRuns=self.numRuns,
 											stepsForward=self.stepsForward,
-											sortflag='end-result')
+											sortflag=False)
 		# sort kt_comb based on end value of projection
 		self.Simulation['mx_comb'] = project_nmx(ax=self.combinedLc['ax'],
 												 bx=self.combinedLc['bx'],
@@ -313,7 +311,7 @@ class LcCoherentPop(LcSinglePop):
 															   ktStart=self.individualResidualLc[popIndex]['ktUnfit'][-1],
 															   numRuns=self.numRuns,
 															   stepsForward=self.stepsForward,
-															   sortflag='end-result')
+															   sortflag=False)
 
 			self.Simulation['kt_comb_plus_resid'][popIndex] = self.Simulation['kt_resid'][popIndex] + self.Simulation['kt_comb']
 			self.Simulation['mx_indiv'][popIndex] = project_nmx(ax=self.individualLc[popIndex]['ax'],
