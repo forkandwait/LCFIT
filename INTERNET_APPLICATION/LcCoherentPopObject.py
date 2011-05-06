@@ -308,31 +308,29 @@ class LcCoherentPop(LcSinglePop):
 
         # For each sub pop, simulate kt of resid, add them to common thingy to get mx, then get e0
         for popIndex in range(0, len(self.individualResidualLc)):
-            ## Calculate offset of average kt to population jumpoff kt 
-            ## self.Simulation['kt_offset'][popIndex] = self.individualLc[popIndex]['ktFit'][-1] - self.combinedLc['ktFit'][-1]
-            kt_offset = self.individualLc[popIndex]['ktFit'][-1] - self.combinedLc['ktFit'][-1]
-            lcfitlogger.warning ("grr %f" % kt_offset)
-
             ## Simulate residual time series  XXX -- don't understand how to get this to start 
             self.Simulation['kt_resid'][popIndex] = sim_kt_ar1(stdckt=self.individualResidualLc[popIndex]['ktunfit_ar1']['stdckt'], 
                                                                c0=self.individualResidualLc[popIndex]['ktunfit_ar1']['c0'],
                                                                sda0=self.individualResidualLc[popIndex]['ktunfit_ar1']['sda0'],
                                                                c1=self.individualResidualLc[popIndex]['ktunfit_ar1']['c1'], 
-                                                               sda1=self.individualResidualLc[popIndex]['ktunfit_ar1']['sda1'],
-
+                                                               sda1=self.individualResidualLc[popIndex]['ktunfit_ar1']['sda1'], 
                                                                ktStart=self.individualResidualLc[popIndex]['ktUnfit'][-1], 
                                                                numRuns=self.numRuns,
                                                                stepsForward=self.stepsForward,
                                                                sortflag=False)
+            
             ## calculate new kt_comb + resid + offset
-            self.Simulation['kt_comb_plus_resid'][popIndex] = self.Simulation['kt_resid'][popIndex] + \
-                self.Simulation['kt_comb'] + \
-                kt_offset
+            kt_comb_offset = self.individualLc[popIndex]['ktFit'][-1] - self.combinedLc['ktFit'][-1]
+            lcfitlogger.warning ("kt_comb_offset %f" % kt_comb_offset)
+            self.Simulation['kt_comb_plus_resid'][popIndex] = \
+                self.Simulation['kt_resid'][popIndex] + self.Simulation['kt_comb'] + kt_comb_offset 
 
+            ## mx of above 
             self.Simulation['mx_indiv'][popIndex] = project_nmx(ax=self.individualLc[popIndex]['ax'],
                                                                 bx=self.combinedLc['bx'],
                                                                 kt=self.Simulation['kt_comb_plus_resid'][popIndex],
                                                                 ageCutoff=self.ageCutoff) 
+            ## e0
             self.Simulation['e0_indiv'][popIndex] = lots_e0s(lots_nmx=self.Simulation['mx_indiv'][popIndex],
                                                              lifeTableParams=self.lifeTableParams,
                                                              percentileIndices=self.percentileIndices,

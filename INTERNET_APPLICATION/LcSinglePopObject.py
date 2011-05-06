@@ -151,8 +151,7 @@ def sim_kt_ar1(stdckt, c0, sda0, c1, sda1, numRuns, stepsForward, ktStart=0,
 	finding percentiles for kt for a given year
 	'''
 	ktMatrix = N.zeros((numRuns, stepsForward+1), N.float64) # Empty matrix to hold everything
-	ktMatrix[:,0] = 0
-	#ktMatrix[:,0] = ktStart
+	ktMatrix[:,0] = ktStart
 	for rowIndex in range (0, numRuns):
 		"""
 		The following two lines do a single run of simulation in
