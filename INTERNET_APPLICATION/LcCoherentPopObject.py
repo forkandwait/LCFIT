@@ -321,16 +321,12 @@ class LcCoherentPop(LcSinglePop):
             
             ## calculate offset
             kt_comb_offset = self.individualLc[popIndex]['ktFit'][-1] - self.combinedLc['ktFit'][-1]
-            # if self.combined['ktFit'][-1] > self.individualLc[popIndex]['ktFit'][-1]:
-            #     kt_comb_offset = -1.0 * kt_comb_offset
-            #    pass
 
             ## Man, logging the popIndex is bizarrely difficult...
-            lcfitlogger.warning ("kt_comb_offset, kt_resid[0], kt_comb[0], %f, %f" % (popIndex, kt_comb_offset))
+            lcfitlogger.warning ("popindex, kt_comb_offset: %f, %f" % (popIndex, kt_comb_offset))
 
             ## Derive forecast kt from forecast comb + forecast resid + offset
             self.Simulation['kt_comb_plus_resid'][popIndex] = self.Simulation['kt_comb'] + kt_comb_offset 
-            lcfitlogger.warning ("foo %s" % str(self.Simulation['kt_comb_plus_resid'][popIndex].shape))
 
             ## mx of above 
             self.Simulation['mx_indiv'][popIndex] = project_nmx(ax=self.individualLc[popIndex]['ax'],
