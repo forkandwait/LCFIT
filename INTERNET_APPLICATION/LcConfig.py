@@ -140,7 +140,9 @@ LCFIT_PREV_REG_ERROR_PAGE='/RegistrationError-RegisteredUsername.html'
 
 ## Important filespace stuff
 APACHEFILEROOT = '/var/www/localhost/htdocs'
-LCFIT_BASE = '/home/webbs/lcfit-devel.git/INTERNET_APPLICATION' # Where the executable libraries (not lc.py) live
+mypath = os.path.realpath(__file__.rstrip("c"))
+mypathL = mypath.split(os.sep)[1:-2]
+LCFIT_BASE = os.path.normpath(os.path.join(os.sep, *mypathL)) + '/INTERNET_APPLICATION'
 LCFIT_TEMPLATEDIR = LCFIT_BASE + '/TEMPLATES'	# Where the templates for the webpages live
 LCFIT_DATADIR = APACHEFILEROOT + '/larry-data' # Where the temporary 
 
