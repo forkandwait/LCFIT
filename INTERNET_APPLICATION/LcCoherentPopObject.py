@@ -489,75 +489,74 @@ class LcCoherentPop(LcSinglePop):
         # ... close <pre>...
         run_info += '</pre>'
 
-
         # Explanation coefficients
         run_info += "<p>EPRs:</p>\n" + "<p>\n" + \
                     LcUtil.tablefy(dataList=N.array([self.R_S, self.R_C, self.R_AC,  self.R_RW, self.R_AR1, self.R_Foo]),
                                    sideLabels=self.labels,
                                    headings=['R_S', 'R_C', 'R_AC', 'R_RW', 'R_AR1', 'R_Foo']) + "</p>\n"
         run_info += "<p>EPCR: %s</p>\n" % self.proportion_first_eigenvalue_from_combined
-        
-        # ax for each input
-        tmp_list =[L['ax'] for L in self.individualLc] + [self.combinedLc['ax']]
-        tmp_str = LcUtil.tablefy(dataList=N.array(tmp_list),
-                                    sideLabels=LCFIT_AGES,
-                                    headings=self.labels + ['comb'],
-                                    itemName='Age') 
-        run_info += "<p>ax's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
-        del tmp_list, tmp_str
-        
-        # bx for each input
-        tmp_list =[L['bx'] for L in self.individualLc]  + [self.combinedLc['bx']]
-        tmp_str = LcUtil.tablefy(dataList=N.array(tmp_list),
-                                    sideLabels=LCFIT_AGES,
-                                    headings=self.labels + ['comb'],
-                                    itemName='Age') 
-        run_info += "<p>bx's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
-        del tmp_list, tmp_str
 
-        # kt for each input
-        tmp_list = [L['ktUnfit'] for L in self.individualResidualLc] \
-                   + [self.combinedLc['ktFit'], self.combinedLc['e0emp']]
-        tmp_array = N.array(tmp_list)
-        tmp_str = LcUtil.tablefy(dataList=tmp_array,
-                                 sideLabels=self.years,
-                                 headings=self.labels + ['combination kt', 'e0-empirical'] ,
-                                 itemName='Year') 
-        run_info += "<p>Yearly Kt's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
-        del  tmp_array, tmp_list, tmp_str
-        
-        # forecast e0 for each input (think I switch indexing
-        # conventions between inference and simulation ... not
-        # good... [1]['kt_unfit'] vs ['kt_unfit'][1]
-        raise Exception(str((self.Simulation['e0_indiv'][-1][0][0])))
-        tmp_list = [L for L in self.Simulation['e0_indiv']]
+        if False:
+            # Ax for each input
+            tmp_list =[L['ax'] for L in self.individualLc] + [self.combinedLc['ax']]
+            tmp_str = LcUtil.tablefy(dataList=N.array(tmp_list),
+                                        sideLabels=LCFIT_AGES,
+                                        headings=self.labels + ['comb'],
+                                        itemName='Age') 
+            run_info += "<p>ax's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
+            del tmp_list, tmp_str
 
-        tmp_array = N.array(tmp_list)
+            # bx for each input
+            tmp_list =[L['bx'] for L in self.individualLc]  + [self.combinedLc['bx']]
+            tmp_str = LcUtil.tablefy(dataList=N.array(tmp_list),
+                                        sideLabels=LCFIT_AGES,
+                                        headings=self.labels + ['comb'],
+                                        itemName='Age') 
+            run_info += "<p>bx's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
+            del tmp_list, tmp_str
 
-        tmp_str = LcUtil.tablefy(dataList=tmp_array,
-                                 sideLabels=self.years,
-                                 headings=self.labels,
-                                 itemName='Year') 
-        run_info += "<p>Yearly Forecast e0's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
-        del  tmp_array, tmp_list, tmp_str
-        
+            # kt for each input
+            tmp_list = [L['ktUnfit'] for L in self.individualResidualLc] \
+                       + [self.combinedLc['ktFit'], self.combinedLc['e0emp']]
+            tmp_array = N.array(tmp_list)
+            tmp_str = LcUtil.tablefy(dataList=tmp_array,
+                                     sideLabels=self.years,
+                                     headings=self.labels + ['combination kt', 'e0-empirical'] ,
+                                     itemName='Year') 
+            run_info += "<p>Yearly Kt's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
+            del  tmp_array, tmp_list, tmp_str
 
-        # AR(1) model for all residuals
-        #self.individualResidualLc[i]['ktunfit_ar1']['c0, sda0, c1, sda1, Rsq, stderr_est']
-        AR1_stuff = N.zeros((len(self.individualResidualLc),6))
-        tmp_list = []
-        tmp_headings = ['c0', 'sda0', 'c1', 'sda1', 'Rsq', 'stderr_est']
-        for i, pop in enumerate(self.individualResidualLc):
-            tmp_list.append([pop['ktunfit_ar1'][k] for k in tmp_headings])
-        tmp_array = N.array(tmp_list, N.float_)
-        run_info += "<p>AR(1) models for residuals:</p>\n" + "<p>\n" + \
-                    LcUtil.tablefy(dataList=tmp_array.transpose(),
-                                   sideLabels=self.labels+[],
-                                   headings=tmp_headings,
-                                   itemName='AR1 Model') + \
-                                   "</p>\n"
-        del(tmp_array, pop)
-                      
+            # forecast e0 for each input (think I switch indexing
+            # conventions between inference and simulation ... not
+            # good... [1]['kt_unfit'] vs ['kt_unfit'][1]
+            tmp_list = [L for L in self.Simulation['e0_indiv']]
+
+            tmp_array = N.array(tmp_list)
+
+            tmp_str = LcUtil.tablefy(dataList=tmp_array,
+                                     sideLabels=self.years,
+                                     headings=self.labels,
+                                     itemName='Year') 
+            run_info += "<p>Yearly Forecast e0's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
+            del  tmp_array, tmp_list, tmp_str
+
+            # AR(1) model for all residuals
+            #self.individualResidualLc[i]['ktunfit_ar1']['c0, sda0, c1, sda1, Rsq, stderr_est']
+            AR1_stuff = N.zeros((len(self.individualResidualLc),6))
+            tmp_list = []
+            tmp_headings = ['c0', 'sda0', 'c1', 'sda1', 'Rsq', 'stderr_est']
+            for i, pop in enumerate(self.individualResidualLc):
+                tmp_list.append([pop['ktunfit_ar1'][k] for k in tmp_headings])
+            tmp_array = N.array(tmp_list, N.float_)
+            run_info += "<p>AR(1) models for residuals:</p>\n" + "<p>\n" + \
+                        LcUtil.tablefy(dataList=tmp_array.transpose(),
+                                       sideLabels=self.labels+[],
+                                       headings=tmp_headings,
+                                       itemName='AR1 Model') + \
+                                       "</p>\n"
+            del(tmp_array, pop)
+            ## end if False
+
         # image summarizing forecast
         fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
                       + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
