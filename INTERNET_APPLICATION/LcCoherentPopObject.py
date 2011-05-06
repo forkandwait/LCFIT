@@ -299,7 +299,7 @@ class LcCoherentPop(LcSinglePop):
                                             ktStart=self.combinedLc['ktFit'][-1],
                                             numRuns=self.numRuns,
                                             stepsForward=self.stepsForward,
-                                            sortflag='end-result')
+                                            sortflag=False)
         # create e0s and mxs, sort kt_comb based on end value of projection
         self.Simulation['mx_comb'] = project_nmx(ax=self.combinedLc['ax'],
                                                  bx=self.combinedLc['bx'],
@@ -323,7 +323,7 @@ class LcCoherentPop(LcSinglePop):
                                                                ktStart=self.individualResidualLc[popIndex]['ktUnfit'][-1], 
                                                                numRuns=self.numRuns,
                                                                stepsForward=self.stepsForward,
-                                                               sortflag='end-result')
+                                                               sortflag=False)
             ## calculate new kt_comb + resid + offset
             self.Simulation['kt_comb_plus_resid'][popIndex] = self.Simulation['kt_resid'][popIndex] + \
                 self.Simulation['kt_comb'] + \
