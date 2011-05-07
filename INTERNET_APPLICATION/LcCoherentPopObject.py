@@ -274,10 +274,6 @@ class LcCoherentPop(LcSinglePop):
         
         ## Simulate
         #
-        # XXX -- need separate kt's for each population, where these
-        # are each the single average kt, but offset by where the
-        # population jumps off before simulation
-        #
         # Special simulation data structure hanging off of "self":
         # simulation matrix of kt comb, simulation matrix of kt resid
         # for each sub-pop, mx's for kt comb, mx's for comb+resid of
@@ -308,14 +304,13 @@ class LcCoherentPop(LcSinglePop):
 
         # For each sub pop, simulate kt of resid, add them to common thingy to get mx, then get e0
         for popIndex in range(0, len(self.individualResidualLc)):
-            ## Simulate residual time series . Note that we start the sim of the residual as if it had no deviations
+            ## Simulate residual time series . Note that we start the sim of the residual at zero
             self.Simulation['kt_resid'][popIndex] = sim_kt_ar1(stdckt=self.individualResidualLc[popIndex]['ktunfit_ar1']['stdckt'], 
                                                                c0=self.individualResidualLc[popIndex]['ktunfit_ar1']['c0'],
                                                                sda0=self.individualResidualLc[popIndex]['ktunfit_ar1']['sda0'],
                                                                c1=self.individualResidualLc[popIndex]['ktunfit_ar1']['c1'], 
                                                                sda1=self.individualResidualLc[popIndex]['ktunfit_ar1']['sda1'], 
                                                                ktStart=0,
-                                                               #ktStart=self.individualResidualLc[popIndex]['ktUnfit'][-1], 
                                                                numRuns=self.numRuns,
                                                                stepsForward=self.stepsForward,
                                                                sortflag=False)
