@@ -115,7 +115,7 @@ class LcCoherentPop(LcSinglePop):
         self.years_fcst = N.array(range(years_end-1, years_end + self.stepsForward)) 
 
         # Create an average mx matrix.  If populations empty, no
-        # weights; if data for populations (1) check for
+        # weights; if there is data for populations (1) check for
         # reasonableness in size and number and (2) use population as
         # weights and do the averaging.
         if  self.useWeightedMx:
@@ -308,25 +308,21 @@ class LcCoherentPop(LcSinglePop):
 
         # For each sub pop, simulate kt of resid, add them to common thingy to get mx, then get e0
         for popIndex in range(0, len(self.individualResidualLc)):
-            ## Simulate residual time series  XXX -- don't understand how to get this to start 
+            ## Simulate residual time series . Note that we start the sim of the residual as if it had no deviations
             self.Simulation['kt_resid'][popIndex] = sim_kt_ar1(stdckt=self.individualResidualLc[popIndex]['ktunfit_ar1']['stdckt'], 
                                                                c0=self.individualResidualLc[popIndex]['ktunfit_ar1']['c0'],
                                                                sda0=self.individualResidualLc[popIndex]['ktunfit_ar1']['sda0'],
                                                                c1=self.individualResidualLc[popIndex]['ktunfit_ar1']['c1'], 
                                                                sda1=self.individualResidualLc[popIndex]['ktunfit_ar1']['sda1'], 
-                                                               ktStart=self.individualResidualLc[popIndex]['ktUnfit'][-1], 
+                                                               ktStart=0,
+                                                               #ktStart=self.individualResidualLc[popIndex]['ktUnfit'][-1], 
                                                                numRuns=self.numRuns,
                                                                stepsForward=self.stepsForward,
                                                                sortflag=False)
             
-            ## calculate offset
-            kt_comb_offset = self.individualLc[popIndex]['ktFit'][-1] - self.combinedLc['ktFit'][-1]
-
-            ## Man, logging the popIndex is bizarrely difficult...
-            lcfitlogger.warning ("popindex, kt_comb_offset: %f, %f" % (popIndex, kt_comb_offset))
-
             ## Derive forecast kt from forecast comb + forecast resid + offset
-            self.Simulation['kt_comb_plus_resid'][popIndex] = self.Simulation['kt_comb'] + kt_comb_offset 
+            kt_comb_offset = self.individualLc[popIndex]['ktFit'][-1] - self.combinedLc['ktFit'][-1]
+            self.Simulation['kt_comb_plus_resid'][popIndex] = self.Simulation['kt_comb'] + self.Simulation['kt_resid'][popIndex] + kt_comb_offset 
 
             ## mx of above 
             self.Simulation['mx_indiv'][popIndex] = project_nmx(ax=self.individualLc[popIndex]['ax'],
