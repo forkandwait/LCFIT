@@ -122,22 +122,21 @@ LCFIT_WWW_HMD_PROCESS = '/lcfit/lc/ProcessHMD'
 LCFIT_WWW_INPUT_RATES = '/lcfit/lc/InputRates'
 LCFIT_WWW_INPUT_RATES_COHERENT = '/lcfit/lc/InputRatesCoherent'
 LCFIT_WWW_INPUT_RATES_MF = '/lcfit/lc/InputRatesMF'
-LCFIT_WWW_LIST_OBJECTS = '/lcfit/lc/ListObjects'
-LCFIT_WWW_LOGIN = '/lcfit/lc/Login'
-LCFIT_WWW_LOGIN_ERROR= '/lcfit/lc/LoginError'
-LCFIT_WWW_LOGIN_FORM = '/lcfit/lc/LoginForm'
-LCFIT_WWW_LOGIN_PROCESS = '/lcfit/lc/LoginProcess'
+LCFIT_WWW_LIST_OBJECTS = 'lc-cgi.py?task=ListObjects'
+LCFIT_WWW_LOGIN = 'lc-cgi.py?task=Login'
+LCFIT_WWW_LOGIN_PROCESS = 'lc-cgi.py?task=LoginProcess'
+LCFIT_WWW_LOGIN_ERROR= 'lc-cgi.py?task=LoginError'
 LCFIT_WWW_LOGOUT = '/lcfit/lc/Logout'
 LCFIT_WWW_OBJECT_DUMP = '/lcfit/lc/ObjectDump'
 LCFIT_WWW_RATES_COHERENT_PROCESS = '/lcfit/lc/ProcessRatesCoherent'
 LCFIT_WWW_RATES_MF_PROCESS = '/lcfit/lc/ProcessRatesMF'
 LCFIT_WWW_RATES_PROCESS = '/lcfit/lc/ProcessRates'
-LCFIT_WWW_REG_FORM = '/lcfit/lc/RegistrationForm'
-LCFIT_WWW_REG_PROCESS = '/lcfit/lc/RegistrationProcess'
+LCFIT_WWW_REG_FORM = 'lc-cgi.py?task=Registration'
+LCFIT_WWW_REG_PROCESS = 'lc-cgi.py?task=RegistrationProcess'
 
-LCFIT_PREV_PEND_ERROR_PAGE='/RegistrationError-PendingUsername.html'
-LCFIT_PREV_REG_ERROR_PAGE='/RegistrationError-RegisteredUsername.html'
-
+LCFIT_PREV_PEND_ERROR_PAGE='http://lcfit.demog.berkeley.edu/RegistrationError-PendingUsername.html'
+LCFIT_PREV_REG_ERROR_PAGE='http://lcfit.demog.berkeley.edu/RegistrationError-RegisteredUsername.html'
+LCFIT_REG_THX_PAGE='http://lcfit.demog.berkeley.edu/Registration-ThankYou.html'
 ## Important filespace stuff
 APACHEFILEROOT = '/var/www/localhost/htdocs'
 mypath = os.path.realpath(__file__.rstrip("c"))
@@ -254,13 +253,6 @@ class LcOsException(LcException):
 # * Code problem
 class LcCodeException(LcException):
 	pass
-
-# Stuff to display a session error nicely
-LcSessionExceptionMessage = 'Bad Session. Use the back button or try logging in again <a href=%s>here</a>.' % \
-							LCFIT_WWW_LOGIN_FORM
-LcSessionExceptionRedirect = LCFIT_WWW_LOGIN_ERROR + \
-							 '?' + LCFIT_ERROR_MESSAGE_KEY + \
-							 '=' + LcSessionExceptionMessage
 
 # Stuff to display a database error nicely
 LcDataExceptionRedirect = LCFIT_WWW_INDEX + \
