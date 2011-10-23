@@ -24,12 +24,11 @@ import cgi
 
 from LcLog import lcfitlogger
 from LcConfig import *
-import LcConfig                         # So that the LcConfig can be passed to the template searchlist
+import LcConfig                 # redundant with above
 
 import LcExtension
 import LcAnnotation
 import LcCoherentPopObject
-import LcConfig
 import LcDB
 import LcExtension
 import LcHMDObject
@@ -43,7 +42,8 @@ from LcUtil import Diagnose as D
 from LcUtil import Warn as W
 
 
-## simple thing for writing
+## simple thing for writing -- DONT USE FOR IMAGES!!
+## XXX -- doesnt work consistently...
 def httpwrite(content=None, headers=None, cookies=None):
     # check something worthwhile to output
     if headers is None and content is None:                # 0-0/1-0
@@ -51,26 +51,25 @@ def httpwrite(content=None, headers=None, cookies=None):
 
     # set up empty cookie and header for logic simplification
     if cookies is None:
-        cookies = Cookie.SimpleCookie()
+        _cookies = ''
+    else:
+        _cookies = cookies.output()
     if headers is None:
         headers = ''
         
     if headers is not None and content is None:            # 1-0/1-0
         # headers only -- keep cookies and headers
-        sys.stdout.write(cookies.output())
+        sys.stdout.write(_cookies)
         sys.stdout.write(headers)
         sys.stdout.flush()        
     
     elif content is not None:          # 0/1-0/1-1
         # content present -- do everything
-        sys.stdout.write(cookies.output())
-        sys.stdout.write("Content-type:text/html\n\n")
+        sys.stdout.write(_cookies)    
+        sys.stdout.write(headers)
+        sys.stdout.write("Content-type:text/html\n")
         sys.stdout.write(content)
         sys.stdout.flush()
-
-## Import mod_python infrastructure
-if __name__ != '__main__':
-    pass
 
 def f2d(form):
     """Convert a mod_python form to a simple hash"""
@@ -111,7 +110,8 @@ class LcRegistrationForm:
         return(0)
 
 class LcRegistrationProcess:
-    """Puts the results in the database and redirects to a page describing the fact that registrated."""
+    """Puts the results in the database and redirects to a page
+    describing the fact that registrated."""
     def __init__(self, lcdb, redirectTarget=None, title=None, errorTemplate=None):
         self.redirectTarget=redirectTarget
         self.title=title
@@ -145,7 +145,7 @@ class LcRegistrationProcess:
         ## Insert info into db (email will be sent by daily sweeper)
         try:
             self.lcdb.insertRegRequest(data)
-        except LcDataException, e:
+        except LcException, e:
             lcfitlogger.error( 'Bad Registration request: %s.' % pprint.pformat(e))
             if re.match('.*pending.*', str(e)):
                 sys.stdout.write("Status: 303\nLocation: %s\n\n" %  LCFIT_PREV_PEND_ERROR_PAGE)
@@ -234,11 +234,6 @@ class LcLoginProcess:
         else:
             return True
 
-        formData = {}
-        for k in keyList:
-            formData[k] = form[k].value 
-        W('Login: ', formData)
-        
 
     def _hasValidAuth(self, session, form):
         """ Ask the database to set up a session for a valid user,
@@ -262,7 +257,9 @@ class LcLoginProcess:
                     session = Cookie.SimpleCookie()
                 session[LCFIT_SESSION_KEY] = authId
                 headers = "Status: 303\nLocation: %s\n\n" % self.redirectTarget
-                httpwrite(headers=headers, cookies=session, content=None)
+                sys.stdout.write(session.output() + "\n")
+                sys.stdout.write(headers)
+                sys.stdout.flush()
                 lcfitlogger.info( 'LcLoginProcess:  __call__.  Good auth.  Auth id: %s, username: %s.' \
                                       % (authId, form.get(LCFIT_USERNAME_KEY, 'XX')))
                 return
@@ -301,80 +298,165 @@ class LcPage(object):
         * handle jumps on errors.
     """ 
 
-    def _preCondition(self, req):
+    def _preCondition(self, session=None, form=None):
         """ Do a bunch of stuff that we always want before sending a
         page as if it is OK."""
 
         # Confirm session, raising appropriate errors
         # I think you can hijack a session easily ...
-        req.session = Session(req)
-        if req.session.is_new():
-            req.session.invalidate()
-            raise LcSessionException, "new session--expected initialized"
-        if not req.session.has_key(LCFIT_SESSION_KEY):
-            req.session.invalidate()
-            raise LcSessionException, "no session id stored in cookie"
-        if not self.lcdb.checkSession(req.session[LCFIT_SESSION_KEY]):
-            req.session.invalidate()
-            raise LcSessionException, "unable to validate session id with database"
+        if session is None or not session.has_key(LCFIT_SESSION_KEY):
+            raise LcException, "no session id stored in cookie"
+        if not self.lcdb.checkSession(session[LCFIT_SESSION_KEY].value):
+            raise LcException, "unable to validate session id with database"
 
         # .. made it!
-        self.lcdb.insertPageView(req.session[LCFIT_SESSION_KEY], req.unparsed_uri, pprint.pformat(f2d(req.form)))
-        return True
-        
-    def _postCondition(self, req, saveDict = {}):
-        for key, val in saveDict.iteritems():
-            req.session[key] = val
-        req.session.save()
+        self.lcdb.insertPageView(session[LCFIT_SESSION_KEY].value, 
+                                 os.environ["REMOTE_ADDR"], 
+                                 pprint.pformat(f2d(form)))
         return True
 
-class LcIndex(LcPage):
-    """The neutral, boring page with nothing on it. Probably a good
-    place for announcements, whether sitewide or user specific."""
-    
-    def __init__(self, formTemplate, navTemplate, lcdb, title=None):
-        self.formTemplate = formTemplate
-        self.navTemplate = navTemplate
+
+class LcDisplay(LcPage):
+    """Grab an object and display it, using serial number"""
+    def __init__(self, lcdb, navTemplate):
         self.lcdb = lcdb
-        self.title = title
+        self.navTemplate = navTemplate
         
-    def __call__(self, req):
-        lcfitlogger.debug( 'LcIndex:  __call__.')
+    def __call__(self, session=None, form=None):
 
+        self._preCondition(session, form)
+
+        # Retrieve and unpickle an object based on the targetClass
+        # name and the instance serial number ...
         try:
-            self._preCondition(req) 
+            objId= int(form[LCFIT_OBJECT_ID_KEY].value)
+        except:
+            raise LcException ("can't fine image id") 
+        instance = self.lcdb.retrieveObject(objId)
 
-            # Deal with possible error messages
-            if req.form.has_key(LCFIT_ERROR_MESSAGE_KEY):
-                errorMessage = req.form[LCFIT_ERROR_MESSAGE_KEY].value
-            else:
-                errorMessage = None
-            searchList = [{LCFIT_ERROR_MESSAGE_PLACHOLDER : errorMessage,
-                          'request':req, 'session':req.session, 'lcdb':self.lcdb,
-                           LCFIT_TITLE_PLACEHOLDER:self.title}]         
-            innerTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
-                                              compilerSettings={'prioritizeSearchListOverSelf' : True})
-            searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(innerTemplate)})
-            searchList.append(LcConfig)
-            pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
-                                             compilerSettings={'prioritizeSearchListOverSelf' : True}) 
-            self._postCondition(req)
+        # ... have said instance draw itself inside the main application
+        # template ...
+        searchList = []
+        searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(instance)})
+        searchList.append(LcConfig)
+        try:
+            searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
+        except AttributeError:
+            searchList.append({LCFIT_TITLE_PLACEHOLDER:'LCFIT Object ID: %i' % objId})
+        pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
+                                         compilerSettings={'prioritizeSearchListOverSelf' : True})
+
+        lcfitlogger.debug( "LcDisplay: __call__.  Object ID:  %s" % objId)
+
+        # test postconditions and return the data 
+        sys.stdout.write(session.output() + "\n")
+        sys.stdout.write("Content-Type: text/html\n\n")
+        sys.stdout.write(str(pageTemplate).strip())
+        sys.stdout.flush()
+
+class LcList(LcPage):
+    """Display a list of the objects such that one can pick a single one to display."""
+    def __init__(self, lcdb, navTemplate, objectListTemplate, title=None):
+        self.lcdb = lcdb
+        self.navTemplate = navTemplate
+        self.objectListTemplate = objectListTemplate
+        self.title = title
+
+    def __call__(self, session=None, form=None):
+        self._preCondition(session, form)
+        
+        # Get current user
+        currentUser = self.lcdb.retrieveUsername(session[LCFIT_SESSION_KEY].value)
             
-            # write and return
-            req.content_type = "text/html"
-            req.send_http_header()
-            req.write(str(pageTemplate))
+        # Get a list of forecast/ data objects for that person
+        (colNames, objectInfoList) = self.lcdb.listObjectInfo(currentUser)
 
-        except (LcSessionException, LcAuthException): 
-            util.redirect(req, LcSessionExceptionRedirect)
-        except LcDataException, mess:
-            if LcHardErrors:
-                raise 
-            else:
-                redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + str(mess)
-                util.redirect(req, redirectString)
+            # Feed that list into the appropriate template, then in turn into the main navigation template
+        searchList = []
+        searchList.append({LCFIT_OBJECTLIST_PLACEHOLDER : objectInfoList})
+        searchList.append({LCFIT_OBJECTCOLNAMES_PLACEHOLDER : colNames})
+        searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
+        searchList.append(LcConfig)
+        objectListTemplate = Template.Template(file=self.objectListTemplate, searchList = searchList,
+                                               compilerSettings={'prioritizeSearchListOverSelf' : True})
+        searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(objectListTemplate)})
+        pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
+                                         compilerSettings={'prioritizeSearchListOverSelf' : True})
+        
+        lcfitlogger.debug( "LcList: __call__.  User: %s." % currentUser)
+        
+        # Write the result
+        sys.stdout.write(session.output()+"\n")
+        sys.stdout.write('Content-Type: text/html\n\n')
+        sys.stdout.write((str(pageTemplate)).strip())
+        sys.stdout.flush()
+
+
+class LcDelete(LcPage):
+    def __init__(self, lcdb, redirectTarget=LCFIT_WWW_LIST_OBJECTS):
+        self.lcdb = lcdb
+        self.redirectTarget = redirectTarget
+
+    def __call__(self, session=None, form=None):
+        self._preCondition(session, form)
+
+        # Make sure appropriate user, then delete
+        currentUser = self.lcdb.retrieveUsername(session[LCFIT_SESSION_KEY].value)
+        objectOwner = self.lcdb.retrieveObjectOwner(int(form[LCFIT_OBJECT_ID_KEY].value))
+        if currentUser != objectOwner:
+            raise LcException("LcDelete: Current user <> object owner")
+        else:
+            objId = int(form[LCFIT_OBJECT_ID_KEY].value)
+            self.lcdb.deleteObject(objId)
+            lcfitlogger.debug( "LcDelete: __call__.  Deleted object ID: %s." % objId)
+            headers = "Status: 303\nLocation: %s\n\n" % self.redirectTarget
+            sys.stdout.write(session.output() + "\n")
+            sys.stdout.write(headers)
+            sys.stdout.flush()
+
+
+class LcDisplayImage(LcPage):
+    """map a URL to an image in the database and display it"""
+
+    def __init__(self, lcdb):
+        self.lcdb = lcdb
+
+    def __call__(self, session=None, form=None):
+        self._preCondition(session, form)
+        objId = form[LCFIT_OBJECT_ID_KEY].value
+        imgName = form[LCFIT_IMAGE_NAME_KEY].value
+        data = self.lcdb.retrieveImage(objId, imgName)
+
+        sys.stdout.write(session.output().strip()+"\n")
+        sys.stdout.write('Content-disposition: inline; filename=lcobject-%s-%s\n' % (objId, imgName))
+        sys.stdout.write('Content-length: %i\n' % len(data) )
+        sys.stdout.write('Content-type:image/png\n\n')
+        sys.stdout.write(bytes(data));
+        sys.stdout.flush()
+
     
+''' XXX not converted to cgi yet '''
+class LcDumpText(LcPage):
+    """Grab the text version of an LC object"""
 
+    def __init__(self, lcdb):
+        self.lcdb = lcdb
+
+    def __call__(self, req):
+        raise LcException("Object dump not supported currently")
+        self._preCondition(req)
+        objectId = int(req.form[LCFIT_OBJECT_ID_KEY].value)
+        data = self.lcdb.retrieveTextDump(objectSerialNumber=objectId)
+        self._postCondition(req)
+        lcfitlogger.debug( "LcDumpText: __call__.  ObjectId: %s."  % objectId)
+
+        req.content_type = "text/tab-separated-values"
+        req.headers_out['Content-Disposition'] = 'attachment; filename=forecast-object-%i.txt' % objectId
+        req.set_content_length(len(data))
+        req.send_http_header() 
+        req.write(data)
+        
+        
 class LcForm(LcPage):
     '''Display a form with embedded stuff to make it work.  Works for
     arbitrary forms (mf, coherent, etc), as long as one calls it with
@@ -387,325 +469,87 @@ class LcForm(LcPage):
         self.title = title
 
         
-    def __call__(self, req):
+    def __call__(self, session, form):
         lcfitlogger.debug( 'LcForm:  __call__')
-        try:
-            self._preCondition(req)
-            
-            # set up the templates.  First create the form (inside)
-            # template, then pass an expanded str()'ed version of it
-            # to navigation (outsided) template in the searchList.  A
-            # little bit funky - my apologies.
-            searchList = [{LCFIT_FORM_TARGET_PLACEHOLDER : self.redirectTarget,
-                           'request':req,
-                           'session':req.session,
-                           'lcdb':self.lcdb,
-                           LCFIT_TITLE_PLACEHOLDER:self.title}]
-            searchList.append(LcConfig.__dict__)
-            
-            formTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
-                                             compilerSettings={'prioritizeSearchListOverSelf' : True})
-            searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(formTemplate)})
-            pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
-                                             compilerSettings={'prioritizeSearchListOverSelf' : True})
-
-            self._postCondition(req)
-            
-            # write and return
-            req.content_type = "text/html"
-            req.send_http_header()
-            req.write(str(pageTemplate))
-            return apache.OK
-
-        except (LcSessionException, LcAuthException): 
-            util.redirect(req, LcSessionExceptionRedirect)
-
-
+        self._preCondition(session, form)
+        
+        # set up the templates.  First create the form (inside)
+        # template, then pass an expanded str()'ed version of it
+        # to navigation (outsided) template in the searchList.  A
+        # little bit funky - my apologies.
+        searchList = [{LCFIT_FORM_TARGET_PLACEHOLDER : self.redirectTarget,
+                       LCFIT_TITLE_PLACEHOLDER:self.title}]
+        searchList.append(LcConfig.__dict__)
+        
+        formTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
+                                         compilerSettings={'prioritizeSearchListOverSelf' : True})
+        searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(formTemplate)})
+        pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
+                                         compilerSettings={'prioritizeSearchListOverSelf' : True})
+        
+        # write and return
+        sys.stdout.write(session.output() + "\n")
+        sys.stdout.write("Content-Type: text/html\n\n")
+        sys.stdout.write(str(pageTemplate).strip())
+        sys.stdout.flush()
+        
+        
 class LcProcess(LcPage):
     """Process a form, save it, and redirect to display; all of these
     specified in the parameters when it is instantiated."""
     def __init__(self, targetClass, redirectTarget,  lcdb):
         if type(targetClass) not in (types.ClassType, types.TypeType):
-            raise "Bad type for targetClass: %s" % str(type(targetClass))
+            raise LcException("Bad type for targetClass: %s" % str(type(targetClass)))
         self.targetClass = targetClass
         self.redirectTarget = redirectTarget
         self.lcdb = lcdb
         
-    def __call__(self, req):
+    def __call__(self, session, form):
         """ this is a docstring """
-        try:
-            self._preCondition(req)
-
-            # Convert fields that matter from req.form into dict
-            formData = {}
-            for k in (req.form.keys()): 
-                if type(req.form[k]) == types.ListType:
-                    # with a list of result, parse out selected value
-                    tmpList = filter(lambda x: x != LCFIT_UNSELECTED_VALUE, req.form[k])
-                    if len(tmpList) > 1:
-                        raise LcInputException, \
-                              "Must only select a single value. Selected: %s" % tmpList
-                    elif len(tmpList) == 0:
-                        pass
-                    else:
-                        formData[k] = tmpList[0].value
-                else:
-                    formData[k] = req.form[k].value
-                                        
-            # Create an object, passing the dict to the target class,
-            # converting to regular named paramters with ** magic.
-            #raise str(self.targetClass)
-            obj = self.targetClass(**formData)
-            
-            # Stuff into the database, grabbing ownership info from
-            # the session, and adjusting the internal id of the object
-            # from the DB serial number.
-            owner = self.lcdb.retrieveUsername(req.session[LCFIT_SESSION_KEY])
-            comments = req.form[LCFIT_OBJECT_COMMENTS_KEY].value 
-            
-            inserter = self.lcdb.makeInserter(owner=owner, comments=comments)
-            objSerialNumber = inserter.getSerialNumber()
-            obj.LcID = objSerialNumber
-            inserter.insertObject(obj)
-            del(inserter)
-
-            lcfitlogger.debug( 'LcProcess:  __call__.  Object ID: %s.  Datapath: %s. Class: %s' % \
-                          (obj.LcID, obj.datapath, str(obj.__class__)))
-            
-            # Grab all the images from the new object and stuff them
-            # in the database appropriately
-            for name, data in obj.imagesDict.iteritems():
-                self.lcdb.insertImage(objSerialNumber, name, data, LCFIT_IMAGE_FORMAT)
-            
-            # Check postconditions, then create a valid display URL
-            # and throw a redirect
-            self._postCondition(req)
-            util.redirect(req, self.redirectTarget)
-            
-        except LcSessionException, mess:
-            # if the session is expired  throw an error
-            util.redirect(req, LcSessionExceptionRedirect)
-        except LcInputException, mess:
-            # if there is bad data, either throw a stacktrace or a useless but pretty error
-            if LcHardErrors:
-                raise 
-            else:
-                redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + str(mess)
-                util.redirect(req, redirectString)
-        except LcDataException, mess:
-            if LcHardErrors:
-                raise 
-            else:
-                redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + str(mess)
-                util.redirect(req, redirectString)
-        except LcException, mess:
-            # otherwise, do the same 
-            if LcHardErrors:
-                raise
-            else:
-                redirectString = LCFIT_WWW_INDEX + '?' + LCFIT_ERROR_MESSAGE_KEY + '=' + "<pre>" + str(mess) + "</pre>"
-                util.redirect(req, redirectString)
-        pass
-    
-
-class LcDisplay(LcPage):
-    """Grab an object and display it, using serial number"""
-    def __init__(self, lcdb, navTemplate):
-        self.lcdb = lcdb
-        self.navTemplate = navTemplate
-
+        self._preCondition(session, form)
         
-    def __call__(self, req):
-        try:
-            self._preCondition(req)
-
-            # Retrieve and unpickle an object based on the targetClass
-            # name and the instance serial number ...
-            try:
-                objId= int(req.form[LCFIT_OBJECT_ID_KEY].value)
-            except:
-                raise LcInputException 
-            instance = self.lcdb.retrieveObject(objId)
-
-            # ... have said instance draw itself inside the main application
-            # template ...
-            searchList = []
-            searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(instance)})
-            searchList.append(LcConfig)
-            try:
-                searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
-            except AttributeError:
-                searchList.append({LCFIT_TITLE_PLACEHOLDER:'LCFIT Object ID: %i' % objId})
-            pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
-                                             compilerSettings={'prioritizeSearchListOverSelf' : True})
-
-            lcfitlogger.debug( "LcDisplay: __call__.  Object ID:  %s" % objId)
-
-            # test postconditions and return the data 
-            self._postCondition(req)
-            req.content_type = "text/html"
-            req.send_http_header()
-            req.write(str(pageTemplate))
-        except (LcSessionException,):
-            lcfitlogger.error( "LcDisplay: __call__.  Error.")
-            util.redirect(req, LcSessionExceptionRedirect)
-        except LcDataException:
-            lcfitlogger.error( "LcDisplay: __call__.  Error.  Object ID: %s" % objId)
-            util.redirect(req, make_LcDataExceptionRedirect(objId))
-        return True
-
-class LcList(LcPage):
-    """Display a list of the objects such that one can pick a single one to display."""
-    def __init__(self, lcdb, navTemplate, objectListTemplate, title=None):
-        self.lcdb = lcdb
-        self.navTemplate = navTemplate
-        self.objectListTemplate = objectListTemplate
-        self.title = title
-
-    def __call__(self, req):
-        try:
-            self._preCondition(req)
-
-            # Get current user from cookie or however
-            currentUser = self.lcdb.retrieveUsername(req.session[LCFIT_SESSION_KEY])
-            
-            # Get a list of forecast/ data objects for that person
-            (colNames, objectInfoList) = self.lcdb.listObjectInfo(currentUser)
-
-            # Feed that list into the appropriate template, then in turn into the main navigation template
-            searchList = []
-            searchList.append({LCFIT_OBJECTLIST_PLACEHOLDER : objectInfoList})
-            searchList.append({LCFIT_OBJECTCOLNAMES_PLACEHOLDER : colNames})
-            searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
-            searchList.append(LcConfig)
-            objectListTemplate = Template.Template(file=self.objectListTemplate, searchList = searchList,
-                                                   compilerSettings={'prioritizeSearchListOverSelf' : True})
-            searchList.append({LCFIT_NAV_MAIN_PLACEHOLDER : str(objectListTemplate)})
-            pageTemplate = Template.Template(file=self.navTemplate, searchList = searchList,
-                                             compilerSettings={'prioritizeSearchListOverSelf' : True})
-
-            # Check post conditions
-            self._postCondition(req)
-
-            lcfitlogger.debug( "LcList: __call__.  User: %s." % currentUser)
-
-            # Write the result
-            req.content_type = "text/html"
-            req.send_http_header()
-            req.write(str(pageTemplate)) 
-
-        except (LcSessionException), e:
-            lcfitlogger.error( "LcList: __call__.  Error.")
-            util.redirect(req, LcSessionExceptionRedirect)
-        except (LcDataException), e:
-            lcfitlogger.error("LcList: __call__.  Error.")
-            util.redirect(req, make_LcSessionExceptionRedirect_disconnect(str(e)))
-
-
-class LcDelete(LcPage):
-    def __init__(self, lcdb, redirectTarget=LCFIT_WWW_LIST_OBJECTS):
-        self.lcdb = lcdb
-        self.redirectTarget = redirectTarget
-
-    def __call__(self, req):
-        try:
-            self._preCondition(req)
-
-            # Make sure appropriate user, then delete
-            currentUser = self.lcdb.retrieveUsername(req.session[LCFIT_SESSION_KEY])
-            objectOwner = self.lcdb.retrieveObjectOwner(int(req.form[LCFIT_OBJECT_ID_KEY].value))
-            if currentUser != objectOwner:
-                raise LcAuthException
+        # Convert fields that matter from req.form into dict
+        formData = {}
+        for k in (form.keys()): 
+            if type(form[k]) == types.ListType:
+                # with a list of result, parse out selected value
+                tmpList = filter(lambda x: x != LCFIT_UNSELECTED_VALUE, form[k])
+                if len(tmpList) > 1:
+                    raise Exception("Must only select a single value. Selected: %s" % tmpList)
+                elif len(tmpList) == 0:
+                    pass
+                else:
+                    formData[k] = tmpList[0].value
             else:
-                self._postCondition(req)
-                objId = int(req.form[LCFIT_OBJECT_ID_KEY].value)
-                self.lcdb.deleteObject(objId)
-                lcfitlogger.debug( "LcDelete: __call__.  Deleted object ID: %s." % objId)
-                util.redirect(req, self.redirectTarget)
+                formData[k] = form[k].value
+                                        
+        # Create an object, passing the dict to the target class,
+        # converting to regular named paramters with ** magic.
+        obj = self.targetClass(**formData)
+            
+        # Stuff into the database, grabbing ownership info from
+        # the session, and adjusting the internal id of the object
+        # from the DB serial number.
+        owner = self.lcdb.retrieveUsername(int(session[LCFIT_SESSION_KEY].value))
+        if LCFIT_OBJECT_COMMENTS_KEY not in form or  form[LCFIT_OBJECT_COMMENTS_KEY].value == '':
+            raise LcException, "Must include notes in submission"
+        comments = form[LCFIT_OBJECT_COMMENTS_KEY].value 
+            
+        inserter = self.lcdb.makeInserter(owner=owner, comments=comments)
+        objSerialNumber = inserter.getSerialNumber()
+        obj.LcID = objSerialNumber
+        inserter.insertObject(obj)
+        del(inserter)
 
-        except (LcSessionException,):
-            lcfitlogger.warning("LcDelete: __call__.  Error.")
-            util.redirect(req, LcSessionExceptionRedirect)
+        lcfitlogger.debug( 'LcProcess:  __call__.  Object ID: %s.  Datapath: %s. Class: %s' % \
+                               (obj.LcID, obj.datapath, str(obj.__class__)))
+            
+        # Grab all the images from the new object and stuff them
+        # in the database appropriately
+        for name, data in obj.imagesDict.iteritems():
+            self.lcdb.insertImage(objSerialNumber, name, data, LCFIT_IMAGE_FORMAT)
 
-        # if get LcDataException, assume clicked too many times and
-        # just redirect to wherever
-        except (LcDataException), mess: 
-            util.redirect(req, self.redirectTarget)
-
-
-class LcDisplayImage(LcPage):
-    """map a URL to an image in the database and display it"""
-
-    def __init__(self, lcdb):
-        self.lcdb = lcdb
-
-    def __call__(self, req):
-        try:
-            self._preCondition(req)
-            objId = req.form[LCFIT_OBJECT_ID_KEY].value
-            imgName = req.form[LCFIT_IMAGE_NAME_KEY].value
-            data = self.lcdb.retrieveImage(objId, imgName)
-            self._postCondition(req)
-            req.content_type = "image/png"
-            req.headers_out['Content-Disposition'] = 'inline; filename=lcobject-%s-%s' %\
-                                                     (objId, imgName)
-            req.set_content_length(len(data)) 
-            req.send_http_header()
-            req.write(data)
-            return apache.OK
-        except LcSessionException:
-            util.redirect(req, LcSessionExceptionRedirect)
-        return
-
-
-class LcDumpText(LcPage):
-    """Grab the text version of an LC object"""
-
-    def __init__(self, lcdb):
-        self.lcdb = lcdb
-
-    def __call__(self, req):
-        try:
-            self._preCondition(req)
-            objectId = int(req.form[LCFIT_OBJECT_ID_KEY].value)
-            data = self.lcdb.retrieveTextDump(objectSerialNumber=objectId)
-            self._postCondition(req)
-            lcfitlogger.debug( "LcDumpText: __call__.  ObjectId: %s."  % objectId)
-
-            req.content_type = "text/tab-separated-values"
-            req.headers_out['Content-Disposition'] = 'attachment; filename=forecast-object-%i.txt' % objectId
-            req.set_content_length(len(data))
-            req.send_http_header() 
-            req.write(data)
-            return apache.OK
-        except LcSessionException:
-            util.redirect(req, LcSessionExceptionRedirect)
-        return
-    
-class LcError:
-    """Displays an error."""
-    def __init__(self, template, title=None, message=''):
-        self.template = template
-        self.message = message
-        self.title = title
-        return
-
-    def __call__(self, req, **kwargs):
-
-        # Feed that list into the appropriate template, then in turn into the main navigation template
-        searchList = []
-        searchList.append(kwargs)
-        searchList.append({LCFIT_TITLE_PLACEHOLDER:self.title})
-        searchList.append({LCFIT_ERROR_MESSAGE_KEY:self.message})
-        searchList.append(LcConfig)
-
-        pageTemplate = Template.Template(file=self.template, searchList = searchList,
-                                         compilerSettings={'prioritizeSearchListOverSelf' : True})
-
-        lcfitlogger.debug( "LcError: __call__.")
-
-        # Write the result
-        req.content_type = "text/html"
-        req.send_http_header()
-        req.write(str(pageTemplate)) 
-        return
+        ## Redirect to the main list 
+        sys.stdout.write(session.output()+"\n")
+        sys.stdout.write("Status: 303\nLocation: %s\n\n" % LCFIT_WWW_LIST_OBJECTS)
+        sys.stdout.flush()

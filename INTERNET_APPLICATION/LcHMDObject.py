@@ -156,14 +156,14 @@ class HMD(object):
 
 		lcfitlogger.debug( 'HMD start')
 		if start_year == '':
-			raise LcInputException, "Must enter a start year for HMD Object"
+			raise LcException, "Must enter a start year for HMD Object"
 		elif start_year == 'XXX':
 			self.start_year = 0
 		else:
 			self.start_year = LcUtil.parseDate(start_year)
 		
 		if notes == '':
-			raise LcInputException, "Must enter notes for HMD Object--country at least"
+			raise LcException, "Must enter notes for HMD Object--country at least"
 		elif notes == 'XXX':
 			self.notes = notes
 
