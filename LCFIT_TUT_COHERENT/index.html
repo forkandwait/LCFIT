@@ -1,0 +1,105 @@
+
+<style type="text/css">
+  img.scrnsht {
+  height:185px;
+  width:300px;
+  }
+</style>
+
+<title>LCFIT Coherent Tutorial</title>
+
+<html>
+  <h1><a name="top">LCFIT Coherent Tutorial</a></h1>
+
+  <p>If you have never used LCFIT for mortality forecasting, you should first
+	get familiar with the single population LCFIT interface using 
+	<a href="../LCFIT_TUT/index.html">this tutorial</a>.</p>
+
+  <hr>
+
+  <h2>Tutorial sections (click to navigate):</h2>
+  
+  <ol>
+	
+    <li> <a name="toc_overview"> <a href="#overview"> Data Entry for Coherent</a></a>
+
+    <li> <a name="toc_datamgmt"><a href="#datamgmt">Data Management</a></a>
+
+    <li> <a name="toc_results"><a href="#results">Examining the results</a></a>
+
+  </ol>
+
+  <hr>
+
+  <h2><a name="overview"><a href="#top">Overview of LCFIT data entry</a></a></h2>
+
+  <p>We have the same basic input style as with single population, except for a
+	few new things:
+	<ol>
+	  <li>One, there is a box for population counts in addition to the box for mortality rates (two boxes!).
+
+	  <li>Two, there is a field for labels for each subpopulation.
+
+      <li>Three, you have to format all of these inputs in order to distinguish
+	between the different subpopulations.  With population and mortality rates,
+	you put a blank line between different subpopulations.  With the labels, you
+	put a space between the short strings used for each subpopulation.  In the
+	example, I use "FIN", "JAP", and "USA" for Finland, Japan, and the USA.
+
+	</ol>
+  <p>Here is what a screen looks like before entering any data:</p>
+
+  <a href="./JPGS/overview.jpg">  <img class="scrnsht" src="./JPGS/overview.jpg" alt="LCFIT Coherent Overview" /> </a> 
+
+  <p>Here is what a screen looks like AFTER entering any data. It is OK that the
+  data seems to wrap around (the newline structure of the data is fine).</p>
+
+  <a href="./JPGS/loaded_data.jpg">  <img class="scrnsht" src="./JPGS/loaded_data.jpg" alt="LCFIT Coherent with loaded data" /> </a> 
+
+  <h2><a name="datamgmt"><a href="#top">Data management</a></a></h2>
+
+  <p>There are sometimes data management issues with coherent datasets.  I keep
+  mine in plain text files in my working directory, then load them into the
+  clipboard with the Mac OS X command "pbcopy".  See below for an example of
+  calling pbcopy on the command line.</p>
+
+  <a href="./JPGS/copy_from_terminal.jpg"> <img class="scrnsht"
+  src="./JPGS/copy_from_terminal.jpg" alt="LCFIT Coherent -- Unix file
+  mgmt"/> </a>
+
+  <h2><a name="results"><a href="#top">Examining the results</a></a></h2>
+
+	<p> Find the most recent forecast in the stack of forecasts. Click on
+	it. Here is a listing page example:</p>
+
+	<a href="./JPGS/list_w_forecast.jpg">  
+	<img class="scrnsht" src="./JPGS/list_w_forecast.jpg" alt="LCFIT List of forecasts" /> </a> 
+
+	<p> You will be presented with something that looks the image below.  There
+	are fewer graphs than in the single population LCFIT application, because
+	they become much harder to interpret with multiple populations. </p>
+	
+	<p>The plot on the left is the life expectancy at age zero (e_0) for each
+	population (colored), and the average of the populations (black).  The faint
+	lines are modeled values; both solid and strong indicates empirical, while
+	solid and faint indicates modeled.  The dashed lines are forecasted
+	e_0's.</p>
+
+	<p>The plot on the right describes the kt values.  The slightly fainter
+	lines are the kt's for the residual values, the strong lines are the kt's
+	for the hte main trend.  Dashed indicates forecast values.</p>
+
+	<p>The table contains the main parameters for the time series forecasts (see
+	the articles for more information).</p>
+
+	<p>As always, use the Object Dump link to get all the data, including
+	intermediate values.</p>
+
+  <a href="./JPGS/fcst_result_screen.jpg">  
+	<img class="scrnsht" src="./JPGS/fcst_result_screen.jpg" alt="LCFIT Coherent forecast example" /> </a> 
+
+  <hr><h2>Conclusion</h2>
+  <p>We hope this tutorial has been useful.  If you have questions or suggestions, please email the
+  LCFIT administrator.</p>
+
+</html>

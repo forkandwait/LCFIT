@@ -226,6 +226,8 @@ EMAIL			= LCFIT_ADMIN_EMAIL
 ################################################################
 ## Exceptions
 class LcException(Exception):
-		def __init__(self):
-				x = 1
+		def __init__(self, value):
+				self.value = value
+		def __repr__(self):
+				return repr(self.value)
 				

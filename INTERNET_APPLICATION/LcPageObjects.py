@@ -42,35 +42,6 @@ from LcUtil import Diagnose as D
 from LcUtil import Warn as W
 
 
-## simple thing for writing -- DONT USE FOR IMAGES!!
-## XXX -- doesnt work consistently...
-def httpwrite(content=None, headers=None, cookies=None):
-    # check something worthwhile to output
-    if headers is None and content is None:                # 0-0/1-0
-        raise Exception("neither content nor headers?")
-
-    # set up empty cookie and header for logic simplification
-    if cookies is None:
-        _cookies = ''
-    else:
-        _cookies = cookies.output()
-    if headers is None:
-        headers = ''
-        
-    if headers is not None and content is None:            # 1-0/1-0
-        # headers only -- keep cookies and headers
-        sys.stdout.write(_cookies)
-        sys.stdout.write(headers)
-        sys.stdout.flush()        
-    
-    elif content is not None:          # 0/1-0/1-1
-        # content present -- do everything
-        sys.stdout.write(_cookies)    
-        sys.stdout.write(headers)
-        sys.stdout.write("Content-type:text/html\n")
-        sys.stdout.write(content)
-        sys.stdout.flush()
-
 def f2d(form):
     """Convert a mod_python form to a simple hash"""
     formData = {}
@@ -198,9 +169,8 @@ class LcLoginForm:
 
         formTemplate = Template.Template(file=self.formTemplate, searchList = searchList,
                                          compilerSettings={'prioritizeSearchListOverSelf' : True})
-        
         # ... write and return.
-        httpwrite(content=str(formTemplate))
+        sys.stdout.write("Content-type: text/html\n\n" + str(formTemplate))
         return(0)
 
 
@@ -261,15 +231,15 @@ class LcLoginProcess:
                 sys.stdout.write(headers)
                 sys.stdout.flush()
                 lcfitlogger.info( 'LcLoginProcess:  __call__.  Good auth.  Auth id: %s, username: %s.' \
-                                      % (authId, form.get(LCFIT_USERNAME_KEY, 'XX')))
+                                      % (authId, form.getvalue(LCFIT_USERNAME_KEY, 'XX')))
                 return
             else:
-                httpwrite(content="Could not authorize.  Go \"back\" and try again.")
                 lcfitlogger.warning( 'LcLoginProcess:  __call__. Bad auth.')
+                raise LcException, "Could not authorize.  Go \"back\" and try again."
                 return(0)
         else:
-            httpwrite(content="Incomplete Login Information.  Go \"back\" and try again.")
             lcfitlogger.warning( 'LcLoginProcess:  __call__. Incomplete data.')
+            raise LcException, "Incomplete Login Information.  Go \"back\" and try again."
             return(0)
 
 
@@ -442,20 +412,17 @@ class LcDumpText(LcPage):
     def __init__(self, lcdb):
         self.lcdb = lcdb
 
-    def __call__(self, req):
-        raise LcException("Object dump not supported currently")
-        self._preCondition(req)
-        objectId = int(req.form[LCFIT_OBJECT_ID_KEY].value)
+    def __call__(self, session, form):
+        #self._preCondition(form, session)
+        #raise Exception(str(form.keys()))
+        objectId = form[LCFIT_OBJECT_ID_KEY].value
         data = self.lcdb.retrieveTextDump(objectSerialNumber=objectId)
-        self._postCondition(req)
         lcfitlogger.debug( "LcDumpText: __call__.  ObjectId: %s."  % objectId)
-
-        req.content_type = "text/tab-separated-values"
-        req.headers_out['Content-Disposition'] = 'attachment; filename=forecast-object-%i.txt' % objectId
-        req.set_content_length(len(data))
-        req.send_http_header() 
-        req.write(data)
-        
+        sys.stdout.write("Content-type: text/tab-separated-values\n")
+        sys.stdout.write("Content-disposition: attachment; filename=forecast-object-%s.txt\n" % objectId)
+        sys.stdout.write("Content-length: %i\n\n" % len(data))
+        sys.stdout.write(data)
+        sys.stdout.flush()
         
 class LcForm(LcPage):
     '''Display a form with embedded stuff to make it work.  Works for

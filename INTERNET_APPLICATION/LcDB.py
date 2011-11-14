@@ -63,6 +63,7 @@ def try_execute(dbcon, sql, data=None, fetch_N='all', tries_N=3):
 	while tries_N >= 0:
 		try:
 			curs = dbcon.cursor()
+			#raise Exception(sql + ' xxx ' + repr(data))
 			curs.execute(sql, data)
 			if fetch_N == 'all':
 				res = curs.fetchall()
@@ -108,8 +109,9 @@ class LcObjDB(object):
 			raise LcException, "Exception connecting to DB: \"%s\"." % (e)
 
 	def _try_execute(self, sql, data=None, fetch_N='all'):
-		(ret, self._dbcon) = try_execute(dbcon=self._dbcon, sql=sql, data=data, fetch_N=fetch_N)
-		return (ret, self._dbcon)
+			#raise Exception (sql + 'XXX' + repr(data))
+			(ret, self._dbcon) = try_execute(dbcon=self._dbcon, sql=sql, data=data, fetch_N=fetch_N)
+			return (ret, self._dbcon)
 
 	class Inserter:
 		"""Special little class to do a single object insert, while
@@ -329,12 +331,10 @@ class LcObjDB(object):
 		if res[0] >= 1:
 			raise LcException("USERNAME IN-USE")		
 
-		SQL = "INSERT into pending_registrations " + \
+		sql = "INSERT into pending_registrations " + \
 			  " (fullname, username, password, email, affiliation, reasons, howfind) " + \
 			  "VALUES (%s, %s, %s, %s, %s, %s, %s);"
-		(res, self._dbcon) = self._try_execute(sql,
-											   data= (data['FULLNAME'], data['USERNAME'], data['PASSWORD'],
-													  data['EMAIL'], data['AFFILIATION'], data['REASONS'], data['HOWFIND']),
-											   fetch_N='none')
+		_data = (data['FULLNAME'], data['USERNAME'], data['PASSWORD'], 
+				 data['EMAIL'], data['AFFILIATION'], data['REASONS'], data['HOWFIND'])
+		(res, self._dbcon) = self._try_execute(sql, _data, fetch_N='none')
 		return
-		

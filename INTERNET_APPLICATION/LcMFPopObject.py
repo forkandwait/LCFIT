@@ -411,8 +411,7 @@ class LcMFPop(LcSinglePop):
 
 		# ... include a link to the text dump of the object...
 		dumpLink = LCFIT_WWW_OBJECT_DUMP + '&LC_OBJECT_ID=' + str(self.LcID)
-		run_info += "<p><form action='%s'> <button name='LC_OBJECT_ID' value='%s'> Object Dump </button></form></p>" % \
-					(dumpLink,str(self.LcID))
+		run_info += "<p><a href='%s'> OBJECT DUMP </button></a></p>" % (dumpLink,) 
 
 		# ... close run info.
 		run_info += ''

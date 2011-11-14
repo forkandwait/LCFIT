@@ -129,7 +129,6 @@ def adjustAx(mx, gender='combined'):
 	nqx[0] = nmx[0] / (1 + (qx0_intercept - qx0_slope * nmx[0]) * nmx[0]) # 0-1 age .93, 1.7. based on lfexpt.m
 	nqx[1] = 4*nmx[1]/(1+(LCFIT_DEFAULT_AGEWIDTH/2)*nmx[1])	# 1-4
 	"""
-	raise Exception
 	lcfitlogger.warning("\n\nFailure!\nax iteration (%s): \n%s\n" % (iter_repeats, pprint.pformat((ax_new, qx, mx, lx), width=10)))
 	raise LcException('ax not settling down. <br>ax_distance: %s, iter_repeats: %s<br>ax_dif: %s<br>new: %s<br>old: %s <br>lx: %s <br>qx: %s<br>mx: %s<br>' % \
 					  (ax_distance, iter_repeats, ax_diff, ax_new, ax_old, lx, qx, mx))

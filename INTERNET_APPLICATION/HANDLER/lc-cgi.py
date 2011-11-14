@@ -30,7 +30,7 @@ cgitb.enable()
 import Cookie
 
 #### standard imports
-import sys, logging, os, os.path
+import sys, logging, os, os.path, traceback
 
 ## Set up library path to relative to current, moveable directory tree
 mypath = os.path.realpath(__file__.rstrip("c"))
@@ -149,13 +149,11 @@ TaskH['processratesmf'] = LcPageObjects.LcProcess(
     redirectTarget=LCFIT_WWW_LIST_OBJECTS,
     lcdb=lcdb)
 
-
 TaskH['deleteobject'] = LcPageObjects.LcDelete(
     lcdb=lcdb,
     redirectTarget=LCFIT_WWW_LIST_OBJECTS)
 
-
-
+TaskH['objectdump'] = LcPageObjects.LcDumpText(lcdb=lcdb)
 
 ## ***********************************************************************
 ## Run the cgi   
@@ -170,7 +168,7 @@ if __name__ == '__main__':
     else:
         session = None
 
-    ## dispatch based on task field in form
+    ## dispatch based on task field in form, catch exceptions
     try:
         if form.has_key("task"):
             task = form["task"].value.lower()
@@ -186,6 +184,20 @@ if __name__ == '__main__':
         if session is not None:
             sys.stdout.write(session.output().strip() + "\n") 
         sys.stdout.write("Content-type: text/html\n\n")
-        sys.stdout.write("<b>Error:</b> %s<br>" % str(e))
-
-    exit(0)
+        sys.stdout.write("<b>Error:</b> %s<br>" % repr(e))
+        sys.stdout.flush()
+        exit(0)
+    except Exception:
+        # catch exception, send email, re-raise
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        tblist = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        mserver = smtplib.SMTP(LCFIT_SMTP)
+        mserver.set_debuglevel(0)
+        headers = "From: %s\r\nSubject: %s\r\n\r\n" % \
+            ('LCFIT', 'LCFIT -- Bad Exception: %s' % time.asctime())
+        message = '\n'.join(tblist)
+        mserver.sendmail(from_addr='no-reply@localhost', 
+                         to_addrs=['lcfit@demog.berkeley.edu'],
+                         msg=headers+message)
+        mserver.quit()
+        raise
