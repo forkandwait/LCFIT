@@ -34,6 +34,7 @@ import types
 import hashlib
 md5 = hashlib.md5()
 
+
 from LcLog import lcfitlogger
 
 ########################
@@ -41,12 +42,34 @@ from LcLog import lcfitlogger
 ########################
 import numpy as N
 import scipy as S 
+
+import scipy.special as SP
+
+import scipy.optimize
+
+import scipy.interpolate
+
 import scipy.stats as ST
+
+def lcfitz(p):
+	return S.sqrt(2) * SP.erfinv(2*p-1)
+def _lstsq(x, y):
+	_x = x.reshape(x.size,1)
+	_x = N.hstack([_x, N.ones([_x.size, 1])])
+	_y = y.reshape(y.size,1)
+	_out = N.linalg.lstsq(_x, _y)
+	return(_out[0], _out[1]); 
+#x=N.random.rand(1,12)
+#(_c0_1, _c1_1) = _lstsq(x[0,:-1], x[0,1:])
+#(_c0_2, _c1_2, _xfjf, _xkfjh, _iwue) = ST.linregress(x[0,:-1], x[0,1:])
+#(c1, c0, r, two_tail_p, stderr_est) = ST.linregress(_kt[:-1],_kt[1:])
+
 N.set_printoptions(linewidth=1000000, threshold=1000000, precision=6) # Stupid interactive stuff
 PYLABHOME = '/tmp'						# For the font cache
 os.environ['HOME'] = PYLABHOME	  # Where we store font cache for pylab 
 MPLCONFIGDIR = '/tmp'					# For who knows what
 os.environ['MPLCONFIGDIR'] = MPLCONFIGDIR
+
 import matplotlib as MPL
 try:
 	MPL.use('Agg')	   # matplotlib will use the Agg backend for rendering
@@ -202,7 +225,8 @@ LCFIT_DEFAULT_CONFIDENCE_INTERVAL = .95
 LCFIT_CONFIDENCE_INTERVAL = .95
 LCFIT_P_VAL= 1 - LCFIT_CONFIDENCE_INTERVAL
 LCFIT_PERCENTILES = N.array([0.0, LCFIT_P_VAL/2 , .5, 1.0-(LCFIT_P_VAL/2), 1.0])
-LCFIT_ZSCORE = ST.norm.ppf(LCFIT_CONFIDENCE_INTERVAL + LCFIT_P_VAL/2)
+# XXXX LCFIT_ZSCORE = STD.norm.ppf(LCFIT_CONFIDENCE_INTERVAL + LCFIT_P_VAL/2)
+LCFIT_ZSCORE = lcfitz(LCFIT_CONFIDENCE_INTERVAL + LCFIT_P_VAL/2)
 
 ## Parameter for age after which use Kanisto/CG/whatever
 LCFIT_POSSIBLE_AGE_CUTOFFS = [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110]
@@ -286,3 +310,5 @@ class FooException(Exception):
 	def __str__(self):
 		return "FooException: %s" % self.mess
 	pass
+
+

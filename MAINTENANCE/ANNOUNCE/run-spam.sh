@@ -1,5 +1,5 @@
 #!/bin/sh
 set -e
-python spam.py "New tutorial for LCFIT (Lee-Carter mortality)" \
-    "lcfit-news.2011-02-14.tmpl"
+python spam.py "LCFIT: update on computer problems" \
+    "lcfit-news.2011-09-22.tmpl"
 

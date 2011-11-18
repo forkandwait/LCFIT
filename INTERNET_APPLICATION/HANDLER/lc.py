@@ -33,6 +33,7 @@ import logging
 import os
 import os.path
 
+
 #############################################
 ## Infrastructure imports
 #############################################
@@ -45,11 +46,16 @@ mypathL = mypath.split(os.sep)[1:-2]
 LCFIT_LIBRARY_PATH = os.path.normpath(os.path.join(os.sep, *mypathL))
 sys.path.append(LCFIT_LIBRARY_PATH)		# This tells us how to find these executables
 
-## Import LcConfig
+
+
+## Import LcConfig, which includes lots of stuff -- modules, logging thing, constants
 from LcConfig import *
 
+
+#raise Exception("wthat the?")
 ## Tell the world we are operational
 lcfitlogger.debug("lc.py: at the top. file=%s" % mypath)
+
 
 ########################
 ## Import mod_python infrastructure
@@ -59,11 +65,11 @@ from mod_python.Session import Session
 from mod_python import util
 
 import Cheetah.Template as Template
-import cProfile
 
 os.environ['HOME'] = LCFIT_DATADIR # Need to provide a directory for pylab to cache fonts
 
 import LcUtil		 # Utility functions, including lifetable
+
 import LcPageObjects # Module provides the objects which have __call__
                      # and display pages from URLs
 
@@ -71,6 +77,7 @@ import LcPageObjects # Module provides the objects which have __call__
 # data.  These are the "meat" of the application, holding everything,
 # doing all the SVDs and other analyses, and (as pickled binaries)
 # storing each the results for each forecast.
+
 import LcSinglePopObject
 import LcMFPopObject
 import LcCoherentPopObject
@@ -87,7 +94,7 @@ try:
 	lcdb = LcDB.LcObjDB(LCFIT_DBNAME)
 except Exception, e:
 	lcfitlogger.critical(str(e))
-	util.redirect(req, "http://www.yahoo.com")
+	util.redirect(req, "http://lcfit.demog.berkeley.edu")
 	raise
 	exit
 
@@ -146,10 +153,6 @@ ListObjects = LcPageObjects.LcList(lcdb=lcdb,
 								   navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
 								   objectListTemplate = LCFIT_TEMPLATEDIR + '/ObjectList.tmpl',
 								   title='LCFIT Object List')
-## Hack to enable profiling 
-def ListObjectsProfile(req):
-	ret = cProfile.runctx('ListObjects(req)', globals(), locals(), filename='/tmp/ListObjectProf')
-	return ret
 
 #####################################################
 ### Delete an object
@@ -175,6 +178,7 @@ InputRates=LcPageObjects.LcForm(redirectTarget='ProcessRates',
 								navTemplate=LCFIT_TEMPLATEDIR + '/Application.tmpl',
 								lcdb = lcdb,
 								title='LCFIT Death Rate Input (Single Sex)')
+
 #####################################################
 ## Input M & F rates
 #####################################################

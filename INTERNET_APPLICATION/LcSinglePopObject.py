@@ -20,6 +20,7 @@ from LcUtil import listTypes as LT
 
 sys.path.append('./TESTING')			# For test data
 
+
 ## Module Variables  ###### 
 LcObjectINFO ='Single Population object' # Project/misc information
 
@@ -30,7 +31,7 @@ LNMX_IMAGE_NAME = 'lc-lognmx.png'	# Emprical log nmx at various ages
 MORTP_IMAGE_NAME = 'lc-mortp.png'		# Mortality profiles at begin, end, end proj 
 IMGH = 150								# Height of all images
 IMGW = 200								# Width of all images
-978048623358978048623358
+#978048623358978048623358
 
 ## Module Functions ##################################################################
 
@@ -363,6 +364,7 @@ def lcInfer(nmx,  lifeTableParams, ageCutoff=None, doFit=True, returnDict=False,
 	def ar1(_kt):
 		""" Return AR(1) model parameters for _kt"""
 		(c1, c0, r, two_tail_p, stderr_est) = ST.linregress(_kt[:-1],_kt[1:])
+		#(c1, c0) = _lstsq
 
 		# stderr stuff from article
 		stdv_kt = N.sqrt(N.cov(_kt))	# numpy.var and numpy.std are biased, for some reason
@@ -461,7 +463,7 @@ class LcSinglePop(object):
 		## Figure out stuff for confidence interval with interval for graphing
 		self.projConfidenceInterval = float(projConfidenceInterval)
 		self.pval = 1 - self.projConfidenceInterval
-		self.zscore = ST.norm.ppf(self.projConfidenceInterval + (self.pval/2))
+		self.zscore = lcfitz(self.projConfidenceInterval + (self.pval/2))
 		self.tilesTemp = N.array([0.0, self.pval/2, .5, 1.0 - (self.pval/2), 1.0])
 		self.percentiles = (N.around(self.tilesTemp * 100, 2)).tolist()
 		self.percentileIndices = (N.around(self.tilesTemp * (self.numRuns-1))).astype(N.int16) 

@@ -1,13 +1,13 @@
-""" Lots of utility functions that are not specific to the LCFIT
-algorithm per se"""
+
 
 from LcConfig import * 
 import LcExtension
 from LcLog import lcfitlogger
 
-import scipy.optimize
-import scipy.interpolate
 
+
+""" Lots of utility functions that are not specific to the LCFIT
+algorithm per se"""
 def Diagnose(*printVars):
 	outvars = ["%s\n" % str(x).translate(string.maketrans('<>', '{}')) for x in printVars ]
 	raise Exception, "%s" % pprint.pformat(outvars, width=-1)
@@ -76,7 +76,7 @@ def adjustAx(mx, gender='combined'):
 	"""
 
 	iter_repeats = 1
-	while iter_repeats <= 7:
+	while iter_repeats <= 10:
 
 		# ** calculate qx from mx and ax
 		qx[0] = mx[0] / (1+(1-ax_old[0])*mx[0])
