@@ -34,7 +34,7 @@ def dict2object(classtype, instanceDictPickled):
 	elif classtype == 'LcCoherentPop':
 		instance = LcCoherentPopObject.LcCoherentPop()
 	else:
-		raise LcDataException, "Bad classtype: %s" % classtype
+		raise Exception, "Bad classtype: %s" % classtype
 	
 	instance_dict_str = str(instanceDictPickled)
 	instance_dict = cPickle.loads(instance_dict_str)
@@ -63,6 +63,7 @@ def try_execute(dbcon, sql, data=None, fetch_N='all', tries_N=3):
 	while tries_N >= 0:
 		try:
 			curs = dbcon.cursor()
+			#raise Exception(sql + ' xxx ' + repr(data))
 			curs.execute(sql, data)
 			if fetch_N == 'all':
 				res = curs.fetchall()
@@ -83,7 +84,7 @@ def try_execute(dbcon, sql, data=None, fetch_N='all', tries_N=3):
 			try:
 				dbcon = psycopg2.connect(dbcon.dsn)
 			except Exception, e:
-				raise LcDataException, "Exception trying to connect: \"%s\"." % str(e)
+				raise LcException, "Exception trying to connect: \"%s\"." % str(e)
 			lcfitlogger.warning( "Successfully reconnected, re-executed cursor.")
 		except:
 			raise
@@ -105,11 +106,12 @@ class LcObjDB(object):
 		try:
 			self._dbcon = psycopg2.connect(self._dbcon_conn_str)
 		except Exception, e:
-			raise LcDataException, "Exception connecting to DB: \"%s\"." % (e)
+			raise LcException, "Exception connecting to DB: \"%s\"." % (e)
 
 	def _try_execute(self, sql, data=None, fetch_N='all'):
-		(ret, self._dbcon) = try_execute(dbcon=self._dbcon, sql=sql, data=data, fetch_N=fetch_N)
-		return (ret, self._dbcon)
+			#raise Exception (sql + 'XXX' + repr(data))
+			(ret, self._dbcon) = try_execute(dbcon=self._dbcon, sql=sql, data=data, fetch_N=fetch_N)
+			return (ret, self._dbcon)
 
 	class Inserter:
 		"""Special little class to do a single object insert, while
@@ -137,7 +139,7 @@ class LcObjDB(object):
 			
 			classTypeStr = instance.__class__.__name__
 			if self.hasInsertedAlready:
-				raise LcDataException, 'Trying to insert same object more than once'
+				raise LcException, 'Trying to insert same object more than once'
 			sql = "INSERT INTO dataObjects " +\
 				  "(objectSerialNumber, owner, comments, classType, pickledData)" +\
 				  "VALUES(%s, %s, %s, %s, %s)" 
@@ -167,7 +169,7 @@ class LcObjDB(object):
 		sql = "SELECT classtype, pickleddata FROM dataobjects WHERE objectSerialNumber = %s"
 		(res, self._dbcon) = self._try_execute(sql=sql, data=(objectSerialNumber,), fetch_N='one')
 		if res is None:
-		    raise LcDataException, "No such data object: %s" % objectSerialNumber
+		    raise LcException, "No such data object: %s" % objectSerialNumber
 		else:
 			(classtype, instanceDictPickled,) = res
 
@@ -212,7 +214,7 @@ class LcObjDB(object):
 		sql = "SELECT owner FROM dataobjects WHERE objectSerialNumber = %s"
 		(res, self._dbcon) = self._try_execute(sql=sql, data=(objectSerialNumber,), fetch_N='one')
 		if res is None:
-			raise LcDataException, "retrieveObjectOwner: No rows returned for object id: %s" \
+			raise LcException, "retrieveObjectOwner: No rows returned for object id: %s" \
 				  % objectSerialNumber
 		else:
 			(owner,) = res
@@ -243,7 +245,7 @@ class LcObjDB(object):
 		sql = "SELECT imagedata FROM images where objectId = %s and imageName = %s"
 		(res, self._dbcon) = self._try_execute(sql, data=(objectId,imageName), fetch_N='one')
 		if res == None:
-			raise LcDataException, "No such image object: '(%s, %s)'" % (objectId, imageName)
+			raise LcException, "No such image object: '(%s, %s)'" % (objectId, imageName)
 		else:
 			(image,) = res
 		return image
@@ -258,7 +260,7 @@ class LcObjDB(object):
 		sql = "SELECT classtype, pickleddata FROM dataobjects WHERE objectSerialNumber = %s"
 		(res, self._dbcon) = self._try_execute(sql, data=(objectSerialNumber,), fetch_N='one')
 		if res is None:
-			raise LcDataException, "No such data object: %s" % objectSerialNumber
+			raise LcException, "No such data object: %s" % objectSerialNumber
 		(classtype, instanceDictPickled) = res
 		instance = dict2object(classtype, instanceDictPickled)
 		return instance.dumpString
@@ -293,14 +295,14 @@ class LcObjDB(object):
 		elif count == 0:
 			return 0
 		else:
-			raise LcDataException, "strange response to checkSession"
+			raise LcException, "strange response to checkSession"
 
 	def retrieveUsername(self, sessionId):
 		'''retrieve username from session id'''
 		sql = "SELECT username FROM currentsessions where sessionId = %s"
 		(res, self._dbcon) = self._try_execute(sql, data=(sessionId,), fetch_N='one')
 		if res == None:
-			raise LcSessionException, "Unable to find session number: %s" % sessionId
+			raise LcException, "Unable to find session number: %s" % sessionId
 		else:
 			(username,) = res
 		return username
@@ -321,20 +323,18 @@ class LcObjDB(object):
 		sql = "SELECT count(*) from pending_registrations where username = %s and finished = False"
 		(res, self._dbcon) =self._try_execute(sql, data=(data['USERNAME'],), fetch_N='one')
 		if res[0] >= 1:
-			raise LcDataException("Username pending")
+			raise LcException("Username pending")
 
 		# Check that username isn't already in use
 		sql = "Select count(*) from authorizedusers where username = %s"
 		(res, self._dbcon) =self._try_execute(sql, data=(data['USERNAME'],), fetch_N='one')
 		if res[0] >= 1:
-			raise LcDataException("Username in-use")		
+			raise LcException("USERNAME IN-USE")		
 
 		sql = "INSERT into pending_registrations " + \
 			  " (fullname, username, password, email, affiliation, reasons, howfind) " + \
 			  "VALUES (%s, %s, %s, %s, %s, %s, %s);"
-		(res, self._dbcon) = self._try_execute(sql,
-											   data= (data['FULLNAME'], data['USERNAME'], data['PASSWORD'],
-													  data['EMAIL'], data['AFFILIATION'], data['REASONS'], data['HOWFIND']),
-											   fetch_N='none')
+		_data = (data['FULLNAME'], data['USERNAME'], data['PASSWORD'], 
+				 data['EMAIL'], data['AFFILIATION'], data['REASONS'], data['HOWFIND'])
+		(res, self._dbcon) = self._try_execute(sql, _data, fetch_N='none')
 		return
-		

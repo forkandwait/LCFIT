@@ -410,28 +410,27 @@ class LcMFPop(LcSinglePop):
 		run_info += '</pre>'
 
 		# ... include a link to the text dump of the object...
-		dumpLink = LCFIT_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
-		run_info += "<p><form action='%s'> <button name='LC_OBJECT_ID' value='%s'> Object Dump </button></form></p>" % \
-					(dumpLink,str(self.LcID))
+		dumpLink = LCFIT_WWW_OBJECT_DUMP + '&LC_OBJECT_ID=' + str(self.LcID)
+		run_info += "<p><a href='%s'> OBJECT DUMP </button></a></p>" % (dumpLink,) 
 
 		# ... close run info.
 		run_info += ''
 
 		# Empirical data by year
 		# image summarizing inference
-		lc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+		lc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
 					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LC_IMAGE_NAME
 		lc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (lc_img_path, lc_img_path, IMGH, IMGW, self.LcID)
 
 		# image tracing log rates 
-		lnmx_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+		lnmx_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
 					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LNMX_IMAGE_NAME
 		lnmx_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of selected LNMXes %s"></a>\n' \
 				   % (lnmx_img_path, lnmx_img_path, IMGH, IMGW, self.LcID)
 
 		# image summarizing forecast
-		fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+		fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
 					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
 		fc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (fc_img_path, fc_img_path, IMGH, IMGW, self.LcID)

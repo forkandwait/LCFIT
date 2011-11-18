@@ -455,9 +455,8 @@ class LcCoherentPop(LcSinglePop):
         run_info = ''
         # Info about the run/software/user/etc ...
         # ... include a link to the text dump of the object...
-        dumpLink = LCFIT_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
-        run_info += "<p><form action='%s'> <button name='LC_OBJECT_ID' value='%s'> Object Dump </button></form></p>" % \
-                    (dumpLink,str(self.LcID))
+        dumpLink = LCFIT_WWW_OBJECT_DUMP + '&LC_OBJECT_ID=' + str(self.LcID)
+        run_info += "<p><a href='%s'> Object Dump </button></a></p>" % (dumpLink,)
 
         # Info about the run/software/user/etc ...
         run_info += '<pre>RUN INFORMATION:\t\n'
@@ -552,13 +551,13 @@ class LcCoherentPop(LcSinglePop):
             ## end if False
 
         # image summarizing forecast
-        fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+        fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
                       + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
         fc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of forecast kts %s"></a>\n' \
                    % (fc_img_path, fc_img_path, IMGH, IMGW, self.LcID)
 
         # image showing e0s
-        e0_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+        e0_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
                       + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + E0S_IMAGE_NAME
         e0_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of empirical e0s %s"></a>\n' \
                    % (e0_img_path, e0_img_path, IMGH, IMGW, self.LcID)

@@ -18,12 +18,12 @@
 #for $objectRow in $OBJECT_LIST
 <tr> 
 	<td width=15%><a notes="$objectRow[4]" $LCFIT_OBJECT_ID_KEY=$objectRow[0] 
-                        href=$LCFIT_WWW_DISPLAY_OBJECT?$LCFIT_OBJECT_ID_KEY=$objectRow[0]>$objectRow[0]</a></td>
+                        href=$LCFIT_WWW_DISPLAY_OBJECT&$LCFIT_OBJECT_ID_KEY=$objectRow[0]>$objectRow[0]</a></td>
 	<td width=15%>$objectRow[1]&nbsp;</td>
 	<td>$objectRow[2]&nbsp;</td>
 	<td>$objectRow[3] &nbsp;</td>
 	<td>$objectRow[4] &nbsp;</td>
-	<td><a href=$LCFIT_WWW_DELETE_OBJECT?$LCFIT_OBJECT_ID_KEY=$objectRow[0]>Delete</a></td>
+	<td><a href=$LCFIT_WWW_DELETE_OBJECT&$LCFIT_OBJECT_ID_KEY=$objectRow[0]>Delete</a></td>
 </tr>
 #end for 
 

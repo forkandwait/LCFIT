@@ -491,16 +491,16 @@ class LcSinglePop(object):
 				
 		# Start year
 		if start_year == '':
-			raise LcInputException, "Must enter a start year for Lc Object"
+			raise LcException, "Must enter a start year for Lc Object"
 		self.start_year_text = start_year
 		try:
 			self.start_year = int(start_year)
 		except (ValueError), e:
-			raise LcInputException, "Bad value for start date.  Make sure using integer."
+			raise LcException, "Bad value for start date.  Make sure using integer."
 
 		# Notes
 		if notes == '':
-			raise LcInputException, "Must enter notes for Lc Object--describe the data at least"
+			raise LcException, "Must enter notes for Lc Object--describe the data at least"
 		self.notes = notes				# Arbitrary notes from user 
 
 		# Setup directory to store results and images. Uses md5 of
@@ -938,9 +938,9 @@ class LcSinglePop(object):
 		run_info += '</pre>'
 
 		# ... include a link to the text dump of the object...
-		dumpLink = LCFIT_WWW_OBJECT_DUMP + '?LC_OBJECT_ID=' + str(self.LcID)
-		run_info += "<p><form action='%s'> <button name='LC_OBJECT_ID' value='%s'> Object Dump </button></form></p>" % \
-					(dumpLink,str(self.LcID))
+		dumpLink = LCFIT_WWW_OBJECT_DUMP + '&LC_OBJECT_ID=' + str(self.LcID)
+		run_info += "<p><a href='%s'> OBJECT DUMP </button></a></p>" % (dumpLink,)
+ 
 
 		# ... close run info.
 		run_info += ''
@@ -971,25 +971,25 @@ class LcSinglePop(object):
 		projResultsTable =  LcUtil.tablefy(dataList = projDataList, headings=projHeadings)
 
 		# image summarizing inference
-		lc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+		lc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
 					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LC_IMAGE_NAME
 		lc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (lc_img_path, lc_img_path, IMGH, IMGW, self.LcID)
 
 		# image tracing log rates 
-		lnmx_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+		lnmx_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
 					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + LNMX_IMAGE_NAME
 		lnmx_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of selected LNMXes %s"></a>\n' \
 				   % (lnmx_img_path, lnmx_img_path, IMGH, IMGW, self.LcID)
 
 		# image summarizing forecast
-		fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+		fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
 					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + FC_IMAGE_NAME
 		fc_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of LC Summary %s"></a>\n' \
 				   % (fc_img_path, fc_img_path, IMGH, IMGW, self.LcID)
 
 		# image w/ three mortality profiles
-		mortp_img_path = LCFIT_WWW_DISPLAY_IMAGE + '?' + LCFIT_OBJECT_ID_KEY + '=' \
+		mortp_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
 					  + str(self.LcID) + '&' + LCFIT_IMAGE_NAME_KEY + '=' + MORTP_IMAGE_NAME
 		mortp_image = '<a href=%s><img src="%s" height = %i width = %i alt="PNG of Mort Profiles %s"></a>\n' \
 				   % (mortp_img_path, mortp_img_path, IMGH, IMGW, self.LcID)
