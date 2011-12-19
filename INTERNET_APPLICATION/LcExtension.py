@@ -169,17 +169,17 @@ def checkExtData(mx, ageCutoff, ageClose, closeRate, closeAddend, closeAddAge):
 
     cutoffIndex = LCFIT_AGE_INDICES[ageCutoff] 
 
-    assert ((len(mx) >= cutoffIndex)), \
-           LcException("mx vector too small. Age cutoff: %s, mx: %s." % (ageCutoff, zip(LCFIT_AGES,mx)))
+    if not ((len(mx) >= cutoffIndex)):
+        raise LcException("mx vector too small. Age cutoff: %s, mx: %s." % (ageCutoff, zip(LCFIT_AGES,mx)))
 
-    assert N.isfinite(mx[0:cutoffIndex]).all(), \
-           LcException("mx vector need defined data before cutoff.  cutoff: %s. mx: %s." % (ageCutoff, mx[0:cutoffIndex]))
+    if not N.isfinite(mx[0:cutoffIndex]).all():
+        raise LcException("mx vector need defined data before cutoff.  cutoff: %s. mx: %s." % (ageCutoff, mx[0:cutoffIndex]))
 
-    assert (mx[0:cutoffIndex]>1.0e-06).all(), \
-           LcException("mx has implausibly low values (zeros?): %s." % mx[0:cutoffIndex])
+    if not (mx[0:cutoffIndex]>1.0e-06).all():
+        raise LcException("mx has implausibly low values (zeros?): %s." % mx[0:cutoffIndex])
 
-    assert ((ageClose % 5 == 0) & (ageClose > 0)), \
-           LcException("Closing age must be multiple of 5 and over age 90: %s" % ageClose)
+    if not ((ageClose % 5 == 0) & (ageClose > 0)):
+        raise LcException("Closing age must be multiple of 5 and over age 90: %s" % ageClose)
 
     return True
 
@@ -187,8 +187,8 @@ def checkExtResult(mx, mx_extended, ageCutoff, ageClose, closeRate, closeAddend,
 
     cutoffIndex = LCFIT_AGE_INDICES[ageCutoff] + 1
 
-    assert len(mx_extended) == LCFIT_AGE_INDICES[ageClose]+1, \
-           LcException("Weird mx length: %s\n%s\n" % (len(mx_extended), mx_extended))
+    if not  (len(mx_extended) == LCFIT_AGE_INDICES[ageClose]+1):
+        raise LcException("Weird mx length: %s\n%s\n" % (len(mx_extended), mx_extended))
 
     return True
 
@@ -237,9 +237,9 @@ def mxExtend_Boe(mx, ageCutoff=LCFIT_DEFAULT_AGE_CUTOFF, ageClose=110, closeRate
 
 		# ... start the figuring of C-G at ageCutoff+5 ...
 		tmp = mFinish * N.exp(K - s)
-		assert N.isfinite(tmp), \
-			   AssertionError("non-finite tmp: \ntmp:%s\n mFinish: %s\n K: %s\n s: %s\n mx: %s" % \
-							  (tmp, mFinish, K, s, zip(LCFIT_AGES, mx)))
+		if not  N.isfinite(tmp):
+                    raise LcException("non-finite tmp: \ntmp:%s\n mFinish: %s\n K: %s\n s: %s\n mx: %s" % \
+                                          (tmp, mFinish, K, s, zip(LCFIT_AGES, mx)))
 		addedmx[0] = tmp                    # age 85 ?
 		tmpdiff = 0
 

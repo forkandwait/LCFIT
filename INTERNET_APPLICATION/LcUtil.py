@@ -260,8 +260,8 @@ def lifeTable (nmxp,  ageCutoff=None, extensionMethod=LCFIT_DEFAULT_EXTENSION_ME
 
 	# Sanity
 	
-	assert 10 < Ex[0] < 100, \
-		   AssertionError ("Unreasonable LifeExp: %s. %s" % (Ex[0], pprint.pformat(locals())))
+	if not (10 < Ex[0] < 100):
+		raise LcException ("Unreasonable LifeExp: %s. %s" % (Ex[0], pprint.pformat(locals())))
 
 	# Decide what to return.  For the functionals, use the parameters
 	# to figure out what parts of the lifetable want.
@@ -462,7 +462,7 @@ def parseDate(data):
 	try:
 		return int(data)
 	except ValueError, e:			# This gets raised if you try to parse 'California' as a number
-		raise LcInputException, e 
+		raise LcException("Unable to convert data to integers")
 
 
 def parseRates(data, numAgeWidths = LCFIT_DEFAULT_NO_AGEWIDTHS):
@@ -493,13 +493,13 @@ def parseRates(data, numAgeWidths = LCFIT_DEFAULT_NO_AGEWIDTHS):
 			try:
 				lineSplit = map(float, line.split())
 			except ValueError, e:
-				raise LcInputException('Bad value for a row of floating point numbers: "%s".' % line)
+				raise LcException('Problems parsing rates: Bad value for a row of floating point numbers: "%s".' % line)
 			out[i,0:len(lineSplit)] = lineSplit 
 			pass
 		
 	# Check for reasonable values
 	if (out<0).any() or N.isinf(out).any():
-		raise LcInputException, "Succesffuly parsed but infs or negatives mx in array." + \
+		raise LcException, "Succesffuly parsed but infs or negatives mx in array." + \
 			  "Here is the parsed array: %r\n"  % (out)
 			
 	# Adjust for zero values, just for the hell of it

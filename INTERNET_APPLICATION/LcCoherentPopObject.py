@@ -141,8 +141,8 @@ class LcCoherentPop(LcSinglePop):
                    AssertionError("Bad data in mx[%r]:\n %r" % (N.round_(data, 2), i))
         # Check for weird (ie > 1.0) numbers
         for i, data in enumerate(self.mortRatesList + [self.averagedMx]):
-            assert (data<1.2).all(), \
-               AssertionError("Weird mx: \n%s\n%s" % (data[data<1.2], i))
+            if not (data<1.2).all():
+                raise LcException("Weird mx: \n%s\n%s" % (data[data<1.2], i))
 
 
     def _do_lc(self):
