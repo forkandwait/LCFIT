@@ -180,13 +180,20 @@ if __name__ == '__main__':
                 sys.stdout.write("<b>Unknown task: %s</b>\n" % task) 
         else:
             sys.stdout.write("Content-type:text/html\n\nNo task parameter set\n")
+
     except LcException, e:
         if session is not None:
             sys.stdout.write(session.output().strip() + "\n") 
         sys.stdout.write("Content-type: text/html\n\n")
-        sys.stdout.write("<b>Error:</b> %s<br>" % repr(e))
+        if repr(e) == "'no session id stored in cookie'":
+            sys.stdout.write("<p>You are not logged in.  Go to the login page ")
+            sys.stdout.write("<a href=http://lcfit.demog.berkeley.edu/cgi-bin/lc-cgi.py?task=Login>HERE.</a></p>")
+        else:
+            sys.stdout.write("<b>There was an error from the LcFIT program.  Please go \"back\" and correct it:</b><br>")
+            sys.stdout.write("<p>%s</p>" % repr(e))
         sys.stdout.flush()
         exit(0)
+
     except Exception:
         # catch exception, send email, re-raise
         exc_type, exc_value, exc_traceback = sys.exc_info()
