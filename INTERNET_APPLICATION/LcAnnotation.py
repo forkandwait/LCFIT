@@ -27,10 +27,10 @@ LCFIT_VAR_ANNOTATION_SINGLESEX = [
 	]
 
 LCFIT_VAR_ANNOTATION_COHERENT = [
-	['R_S', 'List of R_S for each individual pop'],
-	['R_S_terms', ''],
-	['R_C', 'List of R_C for each individual pop'],
-	['R_AC', 'List of R_AC for each individual pop'],
+	['R_S', 'List of R_S (separate LC explanation ratios) for each individual pop'],
+	['R_S_terms', 'what?'],
+	['R_C', 'List of R_C (explanation ratio for common factor) for each individual pop'],
+	['R_AC', 'List of R_AC (explanation ratio for common and specific factors together) for each individual pop'],
 	['combinedLc', 'LC results for the weighted average mx'],
 	['individualLc', 'List of LC results for each set of rates (structured as a "dictionary"'],
 	['individualResidualLc', 'List of LC results on the residuals for each population'],

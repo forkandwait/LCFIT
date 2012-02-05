@@ -949,8 +949,8 @@ class LcSinglePop(object):
 		yearlyDataList =  [self.years, self.kt_graph, self.kt_unfit_graph, self.e0s_emp_graph,
 						   self.e0s_kt_unfit_graph]
 		yearlyHeadings = ['Year', 'kt, after second stage', 'kt, from SVD',
-						  '%s, from second stage kt' % ltFuncType,
-						  '%s, from empirical nmx' % ltFuncType ]
+						  'e0, from second stage kt',
+						  'e0, from empirical nmx' ]
 		yearlyResultsTable = LcUtil.tablefy(dataList = yearlyDataList, headings=yearlyHeadings)
 
 		# Empirical data by age
@@ -964,10 +964,10 @@ class LcSinglePop(object):
 		projDataList = [projectedYears, self.lowerE0Projected, self.medianE0Projected,
 						self.upperE0Projected, self.e0s_projected[2, :]]
 		projHeadings = ['Year (projected)',
-						'low analytical %s' % ltFuncType,
-						'median analytical %s' % ltFuncType,
-						'high analytical %s'  % ltFuncType,
-						'median proj %s' % ltFuncType]
+						'low analytical e0' ,
+						'median analytical e0' ,
+						'high analytical e0'  ,
+						'median proj e0' ]
 		projResultsTable =  LcUtil.tablefy(dataList = projDataList, headings=projHeadings)
 
 		# image summarizing inference
