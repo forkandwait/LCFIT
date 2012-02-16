@@ -141,6 +141,34 @@
   <a href="./JPGS/simple_entry.jpg"> <img class="scrnsht" src="./JPGS/simple_entry.jpg" alt="simple
   entry 1" /> </a>
 
+  <p> There are a couple of other controls in this input screen (we suggest not
+  using them until you are comfortable with LCFIT, though):<p>
+
+  <ul>
+
+  <li><b>"Select number of stochastic runs to perform"</b> -- This dropdown allows
+    you to choose many simulations to do before calculating the summary
+    numbers. Performing more runs gives better results, but performing fewer
+    runs is much faster if you are only testing your data. 
+
+  <li><b>"Select age for extension"</b>  -- This dropdown allows you to choose at
+    what age to begin Coale Guo high age mortality smoothing.  We smooth data at
+    high ages (85 and above by default) because otherwise small sample sizes
+    yield implausible rates at high ages where the populations are really small.
+    We suggest never changing this parameter at all..
+
+  <li><b>"Flatten negative bx" </b> Choosing this option forces bx to be
+    non-negative at every age, so that there is no way for mortality to increase
+    in a forecast. This option was added because in some countries, mortality
+    has increased recently, and any increasing mortality would be reflected in a
+    negative b_x at the appropriate ages. Often researchers think those
+    mortality increases will reverse and shouldn't be included in a mortality
+    forecast, since the trend since demographic transition is almost universally
+    toward lower mortality.  If a population has only mortality decrease,
+    choosing this option would make no difference.
+
+  </ul>
+
   <p> Once everything is filled out, press "Submit", and you will get
     a listing of LCFIT objects with the latest forecast run at the top
     (circled).  The ID of that entry is clickable, pointed to by the
