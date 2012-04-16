@@ -489,7 +489,7 @@ class LcCoherentPop(LcSinglePop):
                                    headings=['R_S', 'R_C', 'R_AC', 'R_RW', 'R_AR1', 'R_Foo']) + "</p>\n"
         run_info += "<p>EPCR: %s</p>\n" % self.proportion_first_eigenvalue_from_combined
 
-        if False:
+        if True:
             # Ax for each input
             tmp_list =[L['ax'] for L in self.individualLc] + [self.combinedLc['ax']]
             tmp_str = LcUtil.tablefy(dataList=N.array(tmp_list),
@@ -519,20 +519,7 @@ class LcCoherentPop(LcSinglePop):
             run_info += "<p>Yearly Kt's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
             del  tmp_array, tmp_list, tmp_str
 
-            # forecast e0 for each input (think I switch indexing
-            # conventions between inference and simulation ... not
-            # good... [1]['kt_unfit'] vs ['kt_unfit'][1]
-            tmp_list = [L for L in self.Simulation['e0_indiv']]
-
-            tmp_array = N.array(tmp_list)
-
-            tmp_str = LcUtil.tablefy(dataList=tmp_array,
-                                     sideLabels=self.years,
-                                     headings=self.labels,
-                                     itemName='Year') 
-            run_info += "<p>Yearly Forecast e0's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
-            del  tmp_array, tmp_list, tmp_str
-
+        if True:
             # AR(1) model for all residuals
             #self.individualResidualLc[i]['ktunfit_ar1']['c0, sda0, c1, sda1, Rsq, stderr_est']
             AR1_stuff = N.zeros((len(self.individualResidualLc),6))
@@ -548,7 +535,20 @@ class LcCoherentPop(LcSinglePop):
                                        itemName='AR1 Model') + \
                                        "</p>\n"
             del(tmp_array, pop)
-            ## end if False
+
+        if False:               # XXX This doesn't work!
+            # forecast e0 for each input (think I switch indexing
+            # conventions between inference and simulation ... not
+            # good... [1]['kt_unfit'] vs ['kt_unfit'][1]
+            tmp_list = [L for L in self.Simulation['e0_indiv']]
+            tmp_array = N.array(tmp_list)
+            tmp_str = LcUtil.tablefy(dataList=tmp_array,
+                                     sideLabels=self.years,
+                                     headings=self.labels,
+                                     itemName='Year') 
+            run_info += "<p>Yearly Forecast e0's:</p>\n" + "<p>\n" + tmp_str + "</p>\n"
+            del  tmp_array, tmp_list, tmp_str
+
 
         # image summarizing forecast
         fc_img_path = LCFIT_WWW_DISPLAY_IMAGE + '&' + LCFIT_OBJECT_ID_KEY + '=' \
