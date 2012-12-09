@@ -384,8 +384,7 @@ def lcInfer(nmx,  lifeTableParams, ageCutoff=None, doFit=True, returnDict=False,
 		#Rsq = 1 - (N.sum(e**2))/(N.sum(e0**2))
 		Rsq = 1 - (N.cov(e)/N.cov(_kt))	# need to use cov not var in order to get unbiased (N-1)
 		exRatio = 1 - (stderr_est**2)/N.cov(_kt)
-		exRatio = None
-		
+				
 		# %prob of a1>1
 		# z=(1-a1)/sda1;%t-score
 
@@ -521,6 +520,7 @@ class LcSinglePop(object):
 		self.imagesDict = {}
 
 		# Parse, store, validate, etc the rates.  Lots of side effects
+		#raise Exception(str(kwargs))
 		self._dealWithRates(**kwargs) 
 		
 		# Do the inference.	 Note that there are side effects within instance.

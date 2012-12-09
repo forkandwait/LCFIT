@@ -8,7 +8,7 @@ trend, a base set of age specific mortality rates ("a_x"), and a
 vector ("b_x") that describes the amount of mortality change at a give
 age for a unit of overall mortality change.
 
-This project uses mod_python + apache to serve the pages, postgresql
+This project uses cgi + apache to serve the pages, postgresql
 to store the data, scipy + numpy to do the calculations, and
 matplotlib to make graphics.
 

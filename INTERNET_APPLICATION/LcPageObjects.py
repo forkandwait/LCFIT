@@ -508,7 +508,7 @@ class LcProcess(LcPage):
         inserter.insertObject(obj)
         del(inserter)
 
-        lcfitlogger.debug( 'LcProcess:  __call__.  Object ID: %s.  Datapath: %s. Class: %s' % \
+        lcfitlogger.warn( 'LcProcess:  __call__.  Object ID: %s.  Datapath: %s. Class: %s' % \
                                (obj.LcID, obj.datapath, str(obj.__class__)))
             
         # Grab all the images from the new object and stuff them
