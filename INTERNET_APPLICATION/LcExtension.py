@@ -175,7 +175,7 @@ def checkExtData(mx, ageCutoff, ageClose, closeRate, closeAddend, closeAddAge):
     if not N.isfinite(mx[0:cutoffIndex]).all():
         raise LcException("mx vector need defined data before cutoff.  cutoff: %s. mx: %s." % (ageCutoff, mx[0:cutoffIndex]))
 
-    if not (mx[0:cutoffIndex]>1.0e-06).all():
+    if not (mx[0:cutoffIndex]>1.0e-12).all():
         raise LcException("mx has implausibly low values (zeros?): %s." % mx[0:cutoffIndex])
 
     if not ((ageClose % 5 == 0) & (ageClose > 0)):
