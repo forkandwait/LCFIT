@@ -479,7 +479,7 @@ def parseRates(data, numAgeWidths = LCFIT_DEFAULT_NO_AGEWIDTHS):
 	# Read in data to float/nan: Split data into lines, create nan
 	# matrix, look fo for 'NA' in bgin and let nan data stay or split
 	# into fields and insert
-	lines = re.sub(LCFIT_END_WS_RE, '', data).split('\n')
+	lines = re.sub(LCFIT_END_WS_RE, '', data).split("\n")
 	lines = [x for x in lines if not LCFIT_COMMENT_LINE_RE.match(x)] # Pull out full line comments
 	lines = [LCFIT_COMMENT_TRAILING_RE.sub('',x) for x in lines] # Get rid of trailing comments
 	

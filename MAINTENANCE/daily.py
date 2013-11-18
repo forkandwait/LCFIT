@@ -27,7 +27,6 @@ LCFIT_TMP_FILE_ROOT = '/other/webbs/daily' # put the tar  of the database here
 LCFIT_TRUNK ='/home/webbs/lcfit.git'
 LCFIT_DATA_DIR = LCFIT_WWW_FILE_ROOT + '/larry-data'
 PASSPHRASE = 'hdy352!!%jf'
-#SVN_ROOT = '/var/lib/svn/DEMOG_SVN'
 TEMPLATE_FILE = '/home/webbs/lcfit.git/MAINTENANCE/daily_email.tmpl'
 USER_NAME = 'webbs'
 TESTER_NAME = 'webbs_tester'			# name under which testing stuff is stored
@@ -74,9 +73,12 @@ except:
 	raise
 
 #  Check disk size
-p = os.popen('df -h')
-search_dict['DF_OUTPUT'] = p.read()
-p.close()
+##p = os.popen('df -h')
+##search_dict['DF_OUTPUT'] = p.read()
+##p.close()
+search_dict['DF_OUTPUT'] = 'No  df permissions'
+
+
 
 #  Check uptime and logins
 p = os.popen('w')
@@ -134,7 +136,8 @@ except:
 search_dict['LC_PENDING_REG'] = strip_q(curs.fetchall())
 
 #  Do something with the log as analyzed by analog
-search_dict['ANALOG_OUTPUT'] = file('/var/log/analog/index.txt').read()
+## search_dict['ANALOG_OUTPUT'] = file('/var/log/analog/index.txt').read()
+search_dict['ANALOG_OUTPUT'] = 'no analog webstat thingy installed'
 
 #  Create text report using template, including registration scripts for pending users
 search_dict['RUN_END_TIME'] = time.strftime('%Y-%m-%d %H:%M:%S')

@@ -203,7 +203,7 @@ LCFIT_NOTWANTED_ATTRIBUTE_DUMPS = {'imagesDict':0, 'rates_text':0}
 ## String patterns for input verification
 # spaces year spaces age-width spaces rates spaces rates spaces rates spaces
 LCFIT_HMD_ROW_RE		= re.compile("^\s*\d{4}\s+[0-9-+]{1,7}\s+[0-9.]+\s+[0-9.]+\s+[0-9.]+\s*$")
-LCFIT_END_WS_RE			= re.compile("(\n+$)|\r")	# Use this re to split on whitespace
+LCFIT_END_WS_RE			= re.compile("(\n+$)|((\r\n)+$)")	# Use this re to split on whitespace
 LCFIT_TAIL_WS_RE		= re.compile("\s+$")	# strip tail whitespace
 LCFIT_HEAD_WS_RE		= re.compile("^\s+")	# strip head whitespace
 LCFIT_EMPTY_ROW_RE		= re.compile("^\s*[nN][aA]\s*$")	# For rows that represent missing years of data
